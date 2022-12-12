@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PulsarExceptionHandlerAspect.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.aspect</a> &gt; <span class="el_source">PulsarExceptionHandlerAspect.kt</span></div><h1>PulsarExceptionHandlerAspect.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.aspect
+
+import com.intuit.spring.pulsar.client.exceptions.PulsarExceptionAnnotationProcessor
+import org.aspectj.lang.ProceedingJoinPoint
+import org.aspectj.lang.annotation.Around
+import org.aspectj.lang.annotation.Aspect
+import org.aspectj.lang.annotation.Pointcut
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
+
+/**
+ * Aspect class to provide exception handling advice when
+ * executing Pulsar producer/Pulsar consumer actions
+ */
+<span class="fc" id="L15">@Aspect</span>
+@Component
+<span class="fc" id="L17">class PulsarExceptionHandlerAspect(val pulsarExceptionAnnotationProcessor: PulsarExceptionAnnotationProcessor) {</span>
+
+    companion object {
+        @JvmStatic
+<span class="fc" id="L21">        private val log = LoggerFactory.getLogger(javaClass.enclosingClass)</span>
+    }
+
+    /**
+     * Pointcut definition for all consumer actions
+     */
+    @Suppress(&quot;EmptyFunctionBlock&quot;, &quot;UnusedPrivateMember&quot;)
+    @Pointcut(&quot;@annotation(pulsarConsumerAction)&quot;)
+<span class="nc" id="L29">    private fun getPulsarConsumerActions(pulsarConsumerAction: PulsarConsumerAction) {}</span>
+
+    /**
+     * Pointcut definition for all producer actions
+     */
+    @Suppress(&quot;EmptyFunctionBlock&quot;, &quot;UnusedPrivateMember&quot;)
+    @Pointcut(&quot;@annotation(pulsarProducerAction)&quot;)
+<span class="nc" id="L36">    private fun getPulsarProducerActions(pulsarProducerAction: PulsarProducerAction) {}</span>
+
+    /**
+     * Advice when executing pulsar consumer actions
+     * Any pre/post-actions including exception handling delegation will be done here
+     */
+    @Suppress(&quot;UnusedPrivateMember&quot;)
+    @Around(&quot;getPulsarConsumerActions(pulsarConsumerAction)&quot;)
+    fun handleConsumerExceptions(joinPoint: ProceedingJoinPoint, pulsarConsumerAction: PulsarConsumerAction) {
+<span class="fc" id="L45">        try {</span>
+<span class="fc" id="L46">            joinPoint.proceed()</span>
+<span class="fc" id="L47">        } catch (ex: Exception) {</span>
+<span class="fc" id="L48">            log.error(ex.message, ex)</span>
+<span class="fc" id="L49">            pulsarExceptionAnnotationProcessor</span>
+<span class="fc" id="L50">                .onPulsarConsumerException(ExceptionHandlerParams(ex, pulsarConsumerAction.action))</span>
+        }
+<span class="fc" id="L52">    }</span>
+
+    /**
+     * Advice when executing pulsar producer actions
+     * Any pre/post-actions including exception handling delegation will be done here
+     */
+    @Suppress(&quot;UnusedPrivateMember&quot;)
+    @Around(&quot;getPulsarProducerActions(pulsarProducerAction)&quot;)
+    fun handleProducerExceptions(joinPoint: ProceedingJoinPoint, pulsarProducerAction: PulsarProducerAction) {
+<span class="fc" id="L61">        try {</span>
+<span class="fc" id="L62">            joinPoint.proceed()</span>
+<span class="fc" id="L63">        } catch (ex: Exception) {</span>
+<span class="fc" id="L64">            log.error(ex.message, ex)</span>
+<span class="fc" id="L65">            pulsarExceptionAnnotationProcessor</span>
+<span class="fc" id="L66">                .onPulsarProducerException(ExceptionHandlerParams(ex, pulsarProducerAction.action))</span>
+        }
+<span class="fc" id="L68">    }</span>
+
+<span class="pc" id="L70">    data class ExceptionHandlerParams (val exception: Exception, val action:String)</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

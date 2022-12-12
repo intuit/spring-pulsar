@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Ack.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.annotations.consumer</a> &gt; <span class="el_source">Ack.kt</span></div><h1>Ack.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.annotations.consumer
+
+import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
+import com.intuit.spring.pulsar.client.config.AckConfig
+import org.apache.commons.lang3.StringUtils
+
+/**
+ * Properties mapping class for acknowledgement configuration
+ * Defined in yaml as &quot;ack&quot; property inside
+ * &quot;consumer&quot; property.
+ */
+@Target(AnnotationTarget.ANNOTATION_CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Ack(
+    val acknowledgementsGroupTime: String = StringUtils.EMPTY,
+    val ackTimeout: String = StringUtils.EMPTY,
+    val tickDuration: String = StringUtils.EMPTY,
+    val sync: String = true.toString()
+)
+
+/**
+ * Extension function to map [Ack] to [AckConfig].
+ *
+ * Takes [IAnnotationPropertyResolver] as an argument
+ * and uses it to resolve property path definitions
+ * in [Ack]
+ */
+fun Ack.map(resolver: IAnnotationPropertyResolver) : AckConfig {
+<span class="fc" id="L29">    return AckConfig(</span>
+<span class="fc" id="L30">        acknowledgementsGroupTime = resolver.resolve(this.acknowledgementsGroupTime),</span>
+<span class="fc" id="L31">        ackTimeout = resolver.resolve(this.ackTimeout),</span>
+<span class="fc" id="L32">        tickDuration = resolver.resolve(this.tickDuration),</span>
+<span class="fc" id="L33">        sync = resolver.resolve(this.sync).toBoolean()</span>
+    )    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

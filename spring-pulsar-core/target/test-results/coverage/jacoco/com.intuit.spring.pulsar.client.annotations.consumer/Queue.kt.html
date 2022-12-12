@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Queue.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.annotations.consumer</a> &gt; <span class="el_source">Queue.kt</span></div><h1>Queue.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.annotations.consumer
+
+import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
+import com.intuit.spring.pulsar.client.config.QueueConfig
+
+/**
+ * Properties mapping class for queue configuration
+ * Defined in yaml as &quot;queue&quot; property inside
+ * &quot;consumer&quot; property.
+ */
+@Target(AnnotationTarget.ANNOTATION_CLASS)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Queue(
+    val receiverQueueSize: String = Int.MIN_VALUE.toString(),
+    val maxTotalReceiverQueueSizeAcrossPartitions: String = Int.MIN_VALUE.toString(),
+    val readCompacted: String = false.toString(),
+    val patternAutoDiscoveryPeriod: String = Int.MIN_VALUE.toString(),
+    val autoUpdatePartitions: String = true.toString()
+)
+
+/**
+ * Extension function to map [Queue] to [QueueConfig].
+ *
+ * Takes [IAnnotationPropertyResolver] as an argument
+ * and uses it to resolve property path definitions
+ * in [Queue]
+ */
+fun Queue.map(resolver: IAnnotationPropertyResolver) : QueueConfig {
+<span class="fc" id="L29">    return QueueConfig(</span>
+<span class="fc" id="L30">        receiverQueueSize = resolver.resolve(this.receiverQueueSize).toInt(),</span>
+<span class="fc" id="L31">        maxTotalReceiverQueueSizeAcrossPartitions = resolver.resolve(this.maxTotalReceiverQueueSizeAcrossPartitions)</span>
+<span class="fc" id="L32">            .toInt(),</span>
+<span class="fc" id="L33">        readCompacted = resolver.resolve(this.readCompacted).toBoolean(),</span>
+<span class="fc" id="L34">        patternAutoDiscoveryPeriod = resolver.resolve(this.patternAutoDiscoveryPeriod).toInt(),</span>
+<span class="fc" id="L35">        autoUpdatePartitions = resolver.resolve(this.autoUpdatePartitions).toBoolean()</span>
+    )
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

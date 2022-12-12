@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PulsarProducerTemplate.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.template</a> &gt; <span class="el_source">PulsarProducerTemplate.kt</span></div><h1>PulsarProducerTemplate.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.template
+
+import org.apache.pulsar.client.api.MessageId
+import org.apache.pulsar.client.api.ProducerStats
+import org.apache.pulsar.client.api.PulsarClientException
+import org.springframework.util.concurrent.ListenableFutureCallback
+import java.util.concurrent.CompletableFuture
+
+/**
+ * Defines the contract between the spring client library
+ * and users of the library for publishing messages and
+ * accessing producer related details.
+ */
+interface PulsarProducerTemplate&lt;T&gt; {
+
+    /**
+     * Returns the topic which producer is publishing to.
+     */
+    fun getProducerTopic(): String?
+
+    /**
+     * Returns the producer name which could have been assigned by the system or specified by the client
+     */
+    fun getProducerName(): String?
+
+    /**
+     * Sends a message.This call will be blocking until is successfully acknowledged by the Pulsar broker.
+     */
+<span class="fc" id="L29">    fun send(</span>
+        message: T,
+<span class="fc" id="L31">        messageKey: String? = null,</span>
+<span class="fc" id="L32">        properties: Map&lt;String, String&gt; = mapOf(),</span>
+<span class="fc" id="L33">        eventTime: Long? = null</span>
+    ): MessageId
+
+    /**
+     * Send a message asynchronously.When the producer queue is full, by default this method will complete
+     * the future with an exception [PulsarClientException].
+     */
+    @Suppress(&quot;LongParameterList&quot;)
+<span class="fc" id="L41">    fun sendAsync(</span>
+        message: T,
+<span class="fc" id="L43">        responseHandler: ListenableFutureCallback&lt;MessageId&gt;? = null,</span>
+<span class="fc" id="L44">        messageKey: String? = null,</span>
+<span class="fc" id="L45">        properties: Map&lt;String, String&gt; = mapOf(),</span>
+<span class="fc" id="L46">        eventTime: Long? = null</span>
+    ): CompletableFuture&lt;MessageId&gt;
+
+    /**
+     * Get the last sequence id that was published by this producer.
+     */
+    fun getLastSequenceId(): Long
+
+    /**
+     * Get statistics for the producer numMsgsSent : Number of messages sent in the current interval numBytesSent :
+     * Number of bytes sent in the current interval numSendFailed : Number of messages failed to send in the current
+     * interval numAcksReceived : Number of acks received in the current interval totalMsgsSent : Total number of
+     * messages sent totalBytesSent :Total number of bytes sent totalSendFailed : Total number of messages failed
+     * to send totalAcksReceived: Total number of acks received
+     */
+    fun getStats(): ProducerStats?
+
+    /**
+     * Whether the producer is connected to the broker
+     */
+    fun isConnected(): Boolean
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

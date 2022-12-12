@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PulsarConsumerAnnotationExtractor.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.annotations.extractor</a> &gt; <span class="el_source">PulsarConsumerAnnotationExtractor.kt</span></div><h1>PulsarConsumerAnnotationExtractor.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.annotations.extractor
+
+import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
+import com.intuit.spring.pulsar.client.annotations.consumer.map
+import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
+import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFoundSpringException
+import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedSpringException
+import org.apache.pulsar.client.api.MessageListener
+import org.springframework.core.annotation.AnnotationUtils
+import org.springframework.stereotype.Component
+
+/**
+ * Concrete class used for extraction of [PulsarConsumer]
+ * annotation from a spring bean.
+ *
+ * If the annotation is defined on the bean then
+ * returns [AnnotationDetail] about the bean
+ * which includes as instance variable bean,
+ * bean name and annotation object which was
+ * found on the bean.
+ */
+<span class="fc" id="L22">@Component</span>
+<span class="fc" id="L23">class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolver) :</span>
+    IPulsarAnnotationExtractor {
+
+    override fun extract(annotatedBeans: MutableMap&lt;String, Any&gt;): MutableList&lt;AnnotationDetail&gt; {
+<span class="fc" id="L27">        val annotatedBeanDetails: MutableList&lt;AnnotationDetail&gt; = mutableListOf()</span>
+<span class="fc" id="L28">        annotatedBeans.forEach { (beanName, bean) -&gt;</span>
+<span class="fc" id="L29">            val annotatedBeanDetail = extractConsumerAnnotation(beanName, bean)</span>
+<span class="fc" id="L30">            annotatedBeanDetail.let {</span>
+<span class="fc" id="L31">                annotatedBeanDetails.add(annotatedBeanDetail)</span>
+<span class="fc" id="L32">            }</span>
+<span class="fc" id="L33">        }</span>
+<span class="fc" id="L34">        return annotatedBeanDetails</span>
+    }
+
+    private fun extractConsumerAnnotation(beanName: String, bean: Any): AnnotationDetail {
+<span class="fc" id="L38">        val annotation: PulsarConsumer? = AnnotationUtils.findAnnotation(bean.javaClass, PulsarConsumer::class.java)</span>
+<span class="fc bfc" id="L39" title="All 2 branches covered.">        annotation?.let {</span>
+<span class="fc bfc" id="L40" title="All 2 branches covered.">            if (bean is MessageListener&lt;*&gt;) {</span>
+<span class="fc" id="L41">                return AnnotationDetail(bean, beanName, annotation.map(resolver))</span>
+            } else {
+<span class="fc" id="L43">                throw PulsarListenerTypeNotSupportedSpringException(beanName)</span>
+            }
+        }
+<span class="fc" id="L46">        throw PulsarConsumerAnnotationNotFoundSpringException(beanName)</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

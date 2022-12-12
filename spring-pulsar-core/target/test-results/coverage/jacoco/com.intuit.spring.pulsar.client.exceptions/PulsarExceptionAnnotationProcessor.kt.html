@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PulsarExceptionAnnotationProcessor.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.exceptions</a> &gt; <span class="el_source">PulsarExceptionAnnotationProcessor.kt</span></div><h1>PulsarExceptionAnnotationProcessor.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.exceptions
+
+import com.intuit.spring.pulsar.client.aspect.PulsarExceptionHandlerAspect.ExceptionHandlerParams
+import org.slf4j.LoggerFactory
+import org.springframework.context.ApplicationContext
+import org.springframework.stereotype.Component
+import javax.annotation.PostConstruct
+import kotlin.reflect.KClass
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.createType
+import kotlin.reflect.full.memberProperties
+
+/**
+ * This class is responsible for processing the classes and functions
+ * that have annotations defined to be identified as exception handlers for Pulsar producers/consumers
+ */
+<span class="fc" id="L17">@Component</span>
+<span class="fc" id="L18">class PulsarExceptionAnnotationProcessor(private val applicationContext: ApplicationContext) {</span>
+<span class="fc" id="L19">    private val consumerExceptionHandlerMap: MutableMap&lt;KClass&lt;out Exception&gt;, PulsarExceptionHandler&gt; = mutableMapOf()</span>
+<span class="fc" id="L20">    private val producerExceptionHandlerMap: MutableMap&lt;KClass&lt;out Exception&gt;, PulsarExceptionHandler&gt; = mutableMapOf()</span>
+<span class="fc" id="L21">    private val handlerClassAnnotation = PulsarExceptionHandlerClass::class.java</span>
+
+    companion object {
+        @JvmStatic
+<span class="fc" id="L25">        private val log = LoggerFactory.getLogger(javaClass.enclosingClass)</span>
+    }
+
+    /**
+     * This method will construct the map(s) required for exception handling when producing/consuming Pulsar events
+     * It will look up the spring beans with the class handler annotation
+     * Will further look up the methods within such classes and identify the handler functions for each exception
+     * Note to consumers: Define handler classes[PulsarExceptionHandlerClass]
+     * and functions[PulsarConsumerExceptionHandlerFunction]/[PulsarProducerExceptionHandlerFunction] within your module
+     */
+    @Suppress(&quot;NestedBlockDepth&quot;)
+    @PostConstruct
+    fun loadExceptionHandlerMap() {
+<span class="fc" id="L38">        val beansWithClassAnnotation = applicationContext.getBeansWithAnnotation(handlerClassAnnotation)</span>
+<span class="fc" id="L39">        beansWithClassAnnotation.values.forEach { bean-&gt;</span>
+<span class="fc" id="L40">            bean.javaClass.kotlin.memberProperties.forEach { memberProperty -&gt;</span>
+<span class="fc" id="L41">                memberProperty.annotations.forEach { annotation -&gt;</span>
+<span class="fc" id="L42">                    updateHandlerMap(annotation, bean, memberProperty)</span>
+<span class="fc" id="L43">                }</span>
+<span class="fc" id="L44">            }</span>
+<span class="fc" id="L45">        }</span>
+<span class="fc" id="L46">    }</span>
+
+    /**
+     * This method will update the handler maps by processing the annotation detail
+     * The bean and property is used to get an instance of the handler
+     * This handler is then mapped to the exception
+     */
+    private fun updateHandlerMap(annotation: Annotation, bean: Any, property: KProperty1&lt;Any, *&gt;) {
+<span class="pc bpc" id="L54" title="1 of 4 branches missed.">        if (annotation is PulsarConsumerExceptionHandlerFunction &amp;&amp; isPulsarExceptionHandler(property)) {</span>
+<span class="fc" id="L55">            annotation.exceptions.forEach { exception -&gt;</span>
+<span class="fc" id="L56">                val handler = getHandlerFromProperty(bean, property)</span>
+<span class="fc" id="L57">                checkForExistingHandlerAndUpdateMap(consumerExceptionHandlerMap, exception, handler)</span>
+<span class="fc" id="L58">            }</span>
+<span class="pc bpc" id="L59" title="1 of 4 branches missed.">        } else if (annotation is PulsarProducerExceptionHandlerFunction &amp;&amp; isPulsarExceptionHandler(property)) {</span>
+<span class="fc" id="L60">            annotation.exceptions.forEach { exception -&gt;</span>
+<span class="fc" id="L61">                val handler = getHandlerFromProperty(bean, property)</span>
+<span class="fc" id="L62">                checkForExistingHandlerAndUpdateMap(producerExceptionHandlerMap, exception, handler)</span>
+<span class="fc" id="L63">            }</span>
+        }
+<span class="fc" id="L65">    }</span>
+
+    /**
+     * This method checks if the handler map is already registered to handle the exception
+     * If yes, an error is logged for tracking and the latest handler overrides the previous one
+     */
+    private fun checkForExistingHandlerAndUpdateMap(
+        map: MutableMap&lt;KClass&lt;out Exception&gt;, PulsarExceptionHandler&gt;,
+        exception: KClass&lt;out Exception&gt;,
+        handler: PulsarExceptionHandler
+    ) {
+<span class="fc bfc" id="L76" title="All 2 branches covered.">        if (map.containsKey(exception)) {</span>
+<span class="fc" id="L77">            log.error(&quot;Multiple exception handlers defined for the same exception&quot; +</span>
+<span class="fc" id="L78">                    &quot; - ${map[exception]}, $handler, will use the last processed one&quot;)</span>
+        }
+<span class="fc" id="L80">        map[exception] = handler</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Checks if the defined exception handler conforms to [PulsarExceptionHandler]
+     * This is required to ensure the exception handler method signatures are consistent
+     * If the underlying property is not of type [PulsarExceptionHandler] then this would throw an exception
+     * effectively stopping the application from coming up
+     */
+    private fun isPulsarExceptionHandler(property: KProperty1&lt;Any, *&gt;): Boolean {
+<span class="fc bfc" id="L90" title="All 2 branches covered.">        if(property.returnType == PulsarExceptionHandler::class.createType()) {</span>
+<span class="fc" id="L91">            return true</span>
+        }
+<span class="fc" id="L93">        throw IncompatiblePulsarExceptionHandlerException(</span>
+<span class="fc" id="L94">            &quot;${property.name} does not conform to the contract defined by PulsarExceptionHandler&quot;)</span>
+    }
+
+    /**
+     * Get the instance of handler from the bean and property
+     */
+    private fun getHandlerFromProperty(bean: Any, property: KProperty1&lt;Any, *&gt;): PulsarExceptionHandler {
+<span class="fc" id="L101">        return property.get(bean) as PulsarExceptionHandler</span>
+    }
+
+    /**
+     * Use the map to invoke the appropriate consumer exception handler method
+     */
+    fun onPulsarConsumerException(exceptionHandlerParams: ExceptionHandlerParams) {
+<span class="fc" id="L108">        val pulsarExceptionHandler = consumerExceptionHandlerMap[exceptionHandlerParams.exception.javaClass.kotlin]</span>
+<span class="fc" id="L109">        handleException(pulsarExceptionHandler, exceptionHandlerParams)</span>
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Use the map to invoke the appropriate producer exception handler method
+     */
+    fun onPulsarProducerException(exceptionHandlerParams: ExceptionHandlerParams) {
+<span class="fc" id="L116">        val pulsarExceptionHandler = producerExceptionHandlerMap[exceptionHandlerParams.exception.javaClass.kotlin]</span>
+<span class="fc" id="L117">        handleException(pulsarExceptionHandler, exceptionHandlerParams)</span>
+<span class="fc" id="L118">    }</span>
+
+    /**
+     * Use the handler passed to handle the exception
+     * If the handler is null, log an error for tracking
+     */
+    private fun handleException(
+        pulsarExceptionHandler: PulsarExceptionHandler?,
+        exceptionHandlerParams: ExceptionHandlerParams
+    ) {
+<span class="fc bfc" id="L128" title="All 4 branches covered.">        pulsarExceptionHandler?.also {</span>
+<span class="fc" id="L129">            it.handleException(exceptionHandlerParams)</span>
+<span class="fc" id="L130">        }?: log.error(&quot;No exception handler found for ${exceptionHandlerParams.exception}&quot;)</span>
+<span class="fc" id="L131">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PulsarAnnotationHandler.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Spring Pulsar Core</a> &gt; <a href="index.source.html" class="el_package">com.intuit.spring.pulsar.client.annotations.handler</a> &gt; <span class="el_source">PulsarAnnotationHandler.kt</span></div><h1>PulsarAnnotationHandler.kt</h1><pre class="source lang-java linenums">package com.intuit.spring.pulsar.client.annotations.handler
+
+import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
+import com.intuit.spring.pulsar.client.annotations.extractor.IPulsarAnnotationExtractor
+import com.intuit.spring.pulsar.client.consumer.IPulsarConsumerFactory
+import org.springframework.beans.factory.config.BeanPostProcessor
+import org.springframework.boot.context.event.ApplicationStartedEvent
+import org.springframework.context.ApplicationContext
+import org.springframework.context.event.EventListener
+import org.springframework.stereotype.Component
+
+/**
+ * Concrete class which handles creations of consumers
+ * by finding the [PulsarConsumer] annotated spring beans and
+ * then creating consumer using the configs defined in
+ * annotation.
+ */
+<span class="fc" id="L18">@Component</span>
+<span class="fc" id="L19">class PulsarAnnotationHandler&lt;T&gt;(</span>
+<span class="fc" id="L20">    val pulsarConsumerFactory: IPulsarConsumerFactory&lt;T&gt;,</span>
+<span class="fc" id="L21">    val applicationContext: ApplicationContext,</span>
+<span class="fc" id="L22">    val annotationExtractor: IPulsarAnnotationExtractor</span>
+) : BeanPostProcessor, IPulsarAnnotationHandler&lt;T&gt; {
+
+    @EventListener(ApplicationStartedEvent::class)
+    override fun handle() {
+<span class="fc" id="L27">        annotationExtractor.extract(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java))</span>
+<span class="fc" id="L28">            .forEach { annotatedBeanDetail -&gt;</span>
+<span class="fc" id="L29">                pulsarConsumerFactory.createConsumer(annotatedBeanDetail)</span>
+<span class="fc" id="L30">            }</span>
+<span class="fc" id="L31">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
