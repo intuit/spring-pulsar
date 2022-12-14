@@ -238,10 +238,8 @@
         <version>${dokka.version}</version>
         <executions>
           <execution>
-            <phase>pre-site</phase>
+            <phase>package</phase>
             <goals>
-              <goal>dokka</goal>
-              <goal>javadoc</goal>
               <goal>javadocJar</goal>
             </goals>
           </execution>
@@ -262,6 +260,20 @@
               </link>
             </sourceLinks>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
