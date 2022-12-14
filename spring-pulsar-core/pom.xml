@@ -4,8 +4,12 @@
   <groupId>com.intuit.pulsar</groupId>
   <artifactId>spring-pulsar-core</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <name>Spring Pulsar Core</name>
-  <url>http://maven.apache.org</url>
+  <name>${project.groupId}:${project.artifactId}</name>
+  <description>
+    Spring For Apache Pulsar allows any java/kotlin application to easily integrate with Apache Pulsar
+    avoiding boilerplate code. It supports configuration and annotation based creation of pulsar components.
+  </description>
+  <url>https://github.com/intuit/spring-pulsar</url>
   <packaging>jar</packaging>
 
   <properties>
@@ -277,5 +281,27 @@
       </plugin>
     </plugins>
   </build>
+
+  <licenses>
+    <license>
+      <name>MIT License</name>
+      <url>http://www.opensource.org/licenses/mit-license.php</url>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <name>Zulfiquiar Khan</name>
+      <email>faiziykhan@gmail.com</email>
+      <organization>Intuit</organization>
+      <organizationUrl>https://www.intuit.com/</organizationUrl>
+    </developer>
+  </developers>
+
+  <scm>
+    <connection>scm:git:git://github.com/intuit/spring-pulsar.git</connection>
+    <developerConnection>scm:git:ssh://github.com:intuit/spring-pulsar.git</developerConnection>
+    <url>https://github.com/intuit/spring-pulsar</url>
+  </scm>
 
 </project>
