@@ -22,4 +22,4 @@ jobs:
            cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
            gpg --list-secret-keys --keyid-format LONG
     - name: Build project with Maven
-      run: mvn -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} clean install
+      run: mvn -Dgpg.passphrase=${{ secrets.OSSRH_GPG_PASSPHRASE }} clean install
