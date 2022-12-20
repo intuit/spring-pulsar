@@ -23,7 +23,5 @@ jobs:
            gpg --list-secret-keys --keyid-format LONG
     - name: Build project with Maven
       run: mvn \
-          --no-transfer-progress \
-          --batch-mode \
           -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }} \
           clean install
