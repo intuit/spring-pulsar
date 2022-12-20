@@ -1,4 +1,4 @@
-name: Maven CI/CD
+name: Build and Test
 
 on:
  push:
@@ -8,9 +8,7 @@ on:
 
 jobs:
   build_and_test:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
