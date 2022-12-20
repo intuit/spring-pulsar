@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.intuit.pulsar</groupId>
         <artifactId>spring-pulsar</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.0.0</version>
     </parent>
 
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar-samples</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.0</version>
     <name>Spring Pulsar Samples</name>
     <packaging>pom</packaging>
 
@@ -31,7 +31,7 @@
         <kotlin-stdlib-jdk8.version>1.7.20</kotlin-stdlib-jdk8.version>
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <spring-boot-starter-test.version>2.7.4</spring-boot-starter-test.version>
-        <spring-pulsar-core.version>1.0.0-SNAPSHOT</spring-pulsar-core.version>
+        <spring-pulsar-core.version>0.0.0</spring-pulsar-core.version>
     </properties>
 
     <dependencyManagement>
