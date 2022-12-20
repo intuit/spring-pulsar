@@ -8,6 +8,7 @@
 .settings/
 target/
 .idea/
+settings.xml
 
 ## All the folders underneath site folder
 **/site

@@ -5,13 +5,13 @@
     <parent>
         <artifactId>spring-pulsar-samples</artifactId>
         <groupId>com.intuit.pulsar</groupId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>0.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar-java-sample-with-exception-handlers</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.0</version>
     <packaging>jar</packaging>
     <name>Spring Pulsar Sample Java Project</name>
 
