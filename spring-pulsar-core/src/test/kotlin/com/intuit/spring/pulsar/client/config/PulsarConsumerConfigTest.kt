@@ -33,7 +33,8 @@ class PulsarConsumerConfigTest {
             name = "name",
             priorityLevel = 1,
             cryptoFailureAction = "fail",
-            count = 2
+            count = 2,
+            properties = mutableListOf(PropertyConfig(key = "key", value = "value"))
         )
 
         assertEquals("client",pulsarConsumerConfig.client)
