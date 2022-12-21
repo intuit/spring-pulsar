@@ -12,17 +12,17 @@ pulsar:
       password: apachepulsar
   sample01:
     topic:
-      name: my-topic01
+      name: java-sample-topic01
     subscription:
-      name: my-sub01
+      name: java-sample-sub01
       type: Key_Shared
     consumer:
       count: 1
   sample02:
     topic:
-      name: my-topic01
+      name: java-sample-topic02
     subscription:
-      name: my-sub01
+      name: java-sample-sub02
       type: Key_Shared
     consumer:
       count: 1

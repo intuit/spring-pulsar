@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample02
+package com.intuit.spring.pulsar.kotlin.sample02
 
 import com.intuit.spring.pulsar.client.aspect.PulsarProducerAction
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate

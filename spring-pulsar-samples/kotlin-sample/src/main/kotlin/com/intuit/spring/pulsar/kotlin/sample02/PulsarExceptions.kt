@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample02
+package com.intuit.spring.pulsar.kotlin.sample02
 
 import java.lang.RuntimeException
 

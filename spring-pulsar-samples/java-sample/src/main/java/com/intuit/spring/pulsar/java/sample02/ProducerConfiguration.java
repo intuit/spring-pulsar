@@ -6,6 +6,7 @@ import com.intuit.spring.pulsar.client.config.PulsarProducerMessageConfig;
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate;
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplateImpl;
 import org.apache.pulsar.client.api.Schema;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +15,12 @@ import org.springframework.context.annotation.Configuration;
 public class ProducerConfiguration {
 
     private final ApplicationContext applicationContext;
+    private final String topicName;
 
-    public ProducerConfiguration(ApplicationContext applicationContext) {
+    public ProducerConfiguration(ApplicationContext applicationContext,
+                                 @Value("${pulsar.sample02.topic.name}") String topicName) {
         this.applicationContext = applicationContext;
+        this.topicName = topicName;
     }
 
     @Bean
@@ -24,7 +28,7 @@ public class ProducerConfiguration {
         return new PulsarProducerTemplateImpl(
                 new PulsarProducerConfig(
                         Schema.BYTES,
-                        "my-topic",
+                        topicName,
                         null,
                         null,
                         null,
