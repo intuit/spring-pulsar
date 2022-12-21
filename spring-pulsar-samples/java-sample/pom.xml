@@ -12,7 +12,7 @@
     <artifactId>spring-pulsar-java-sample</artifactId>
     <version>0.0.0</version>
     <packaging>jar</packaging>
-    <name>Spring Pulsar Sample Java Project</name>
+    <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>
         <dependency>
@@ -50,7 +50,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.intuit.spring.pulsar.sample01.SampleApp</mainClass>
+                    <mainClass>com.intuit.spring.pulsar.java.SampleApp</mainClass>
                 </configuration>
             </plugin>
         </plugins>

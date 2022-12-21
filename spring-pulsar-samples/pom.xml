@@ -11,15 +11,13 @@
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar-samples</artifactId>
     <version>0.0.0</version>
-    <name>Spring Pulsar Samples</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
 
     <modules>
         <module>kotlin-sample</module>
         <module>java-sample</module>
-        <module>kotlin-sample-with-exception-handlers</module>
-        <module>java-sample-with-exception-handlers</module>
     </modules>
 
     <properties>

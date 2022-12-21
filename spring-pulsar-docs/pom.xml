@@ -8,7 +8,7 @@
 
     <modelVersion>4.0.0</modelVersion>
     <artifactId>spring-pulsar-docs</artifactId>
-    <name>Archetype - spring-pulsar-docs</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <url>http://maven.apache.org</url>
 
 </project>
