@@ -5,7 +5,7 @@
     <artifactId>spring-pulsar</artifactId>
     <version>0.0.0</version>
     <packaging>pom</packaging>
-    <name>Spring Apache Pulsar</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <url>{Add github repo url here}</url>
 
     <modules>

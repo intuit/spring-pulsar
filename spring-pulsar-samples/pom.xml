@@ -11,7 +11,7 @@
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar-samples</artifactId>
     <version>0.0.0</version>
-    <name>Spring Pulsar Samples</name>
+    <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
 
