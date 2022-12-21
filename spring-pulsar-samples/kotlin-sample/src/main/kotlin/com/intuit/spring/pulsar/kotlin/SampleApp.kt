@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample01
+package com.intuit.spring.pulsar.kotlin
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

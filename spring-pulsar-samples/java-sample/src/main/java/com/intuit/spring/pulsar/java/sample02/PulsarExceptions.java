@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample04;
+package com.intuit.spring.pulsar.java.sample02;
 
 import kotlin.reflect.KClass;
 

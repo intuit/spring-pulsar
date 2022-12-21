@@ -18,8 +18,6 @@
     <modules>
         <module>kotlin-sample</module>
         <module>java-sample</module>
-        <module>kotlin-sample-with-exception-handlers</module>
-        <module>java-sample-with-exception-handlers</module>
     </modules>
 
     <properties>

@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample01;
+package com.intuit.spring.pulsar.java.sample01;
 
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate;
 import kotlin.collections.MapsKt;

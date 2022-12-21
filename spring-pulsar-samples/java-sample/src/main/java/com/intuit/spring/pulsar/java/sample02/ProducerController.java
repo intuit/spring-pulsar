@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.sample04;
+package com.intuit.spring.pulsar.java.sample02;
 
 import com.intuit.spring.pulsar.client.aspect.PulsarProducerAction;
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate;

@@ -60,7 +60,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.intuit.spring.pulsar.sample01.SampleApp</mainClass>
+                    <mainClass>com.intuit.spring.pulsar.java.SampleApp</mainClass>
                 </configuration>
             </plugin>
             <plugin>
