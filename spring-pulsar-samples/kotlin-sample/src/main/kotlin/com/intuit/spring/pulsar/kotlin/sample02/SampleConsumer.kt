@@ -9,16 +9,14 @@ import org.apache.pulsar.client.api.Message
 import org.apache.pulsar.client.api.MessageListener
 import org.springframework.stereotype.Component
 
-@Component
+@Component("sampleConsumer02")
 @PulsarConsumer(
-    topic = Topic(
-        topicNames = "#{pulsar.topic.name}"
-    ),
+    topic = Topic(topicNames = "#{pulsar.sample02.topic.name}"),
     subscription = Subscription(
-        subscriptionName = "#{pulsar.topic.subscription.name}",
-        subscriptionType = "#{pulsar.topic.subscription.type}"
+        subscriptionName = "#{pulsar.sample02.subscription.name}",
+        subscriptionType = "#{pulsar.sample02.subscription.type}"
     ),
-    count = "#{pulsar.topic.consumer.count}"
+    count = "#{pulsar.sample02.consumer.count}"
 )
 class SampleConsumer: MessageListener<ByteArray> {
     @PulsarConsumerAction("myConsumerBL")

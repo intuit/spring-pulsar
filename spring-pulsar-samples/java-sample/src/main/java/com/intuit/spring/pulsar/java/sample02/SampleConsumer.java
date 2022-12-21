@@ -12,16 +12,16 @@ import org.apache.pulsar.client.api.MessageListener;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("sampleConsumer02")
 @PulsarConsumer(
         topic = @Topic(
-                topicNames = "#{pulsar.topic.name}"
+                topicNames = "#{pulsar.sample02.topic.name}"
         ),
         subscription = @Subscription(
-                subscriptionName = "#{pulsar.topic.subscription.name}",
-                subscriptionType = "#{pulsar.topic.subscription.type}"
+                subscriptionName = "#{pulsar.sample02.subscription.name}",
+                subscriptionType = "#{pulsar.sample02.subscription.type}"
         ),
-        count = "#{pulsar.topic.consumer.count}"
+        count = "#{pulsar.sample02.consumer.count}"
 )
 public class SampleConsumer implements MessageListener {
 

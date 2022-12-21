@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController
-@RequestMapping("/sample")
-class ProducerController(private val producerTemplate: PulsarProducerTemplate<ByteArray>) {
+@RestController("producerController01")
+@RequestMapping("/sample01")
+class ProducerController(private val producerTemplate01: PulsarProducerTemplate<ByteArray>) {
 
     @PostMapping("/produce")
     fun produce(@RequestBody message: String): String {
-        val messageId =  producerTemplate.send(message.toByteArray())
+        val messageId =  producerTemplate01.send(message.toByteArray())
         return messageId.toString()
     }
 }

@@ -8,11 +8,11 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-@Configuration
+@Configuration("producerConf01")
 class ProducerConfiguration(val applicationContext: ApplicationContext) {
 
     @Bean
-    fun producerTemplate(): PulsarProducerTemplate<ByteArray> {
+    fun producerTemplate01(): PulsarProducerTemplate<ByteArray> {
         return PulsarProducerTemplateImpl<ByteArray>(
             pulsarProducerConfig = PulsarProducerConfig(
                 schema = Schema.BYTES,

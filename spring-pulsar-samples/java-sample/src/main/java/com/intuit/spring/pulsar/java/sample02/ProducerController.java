@@ -4,6 +4,7 @@ import com.intuit.spring.pulsar.client.aspect.PulsarProducerAction;
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate;
 import kotlin.collections.MapsKt;
 import org.apache.pulsar.client.api.MessageId;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,13 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
 
-@RestController
-@RequestMapping("/sample")
+@RestController("producerController02")
+@RequestMapping("/sample02")
 public class ProducerController {
 
     private final PulsarProducerTemplate producerTemplate;
 
-    public ProducerController(PulsarProducerTemplate producerTemplate) {
+    public ProducerController(@Qualifier("producerTemplate02") PulsarProducerTemplate producerTemplate) {
         this.producerTemplate = producerTemplate;
     }
 

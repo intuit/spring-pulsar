@@ -1,3 +1,6 @@
+server:
+  port: 8081
+
 pulsar:
   client:
     serviceUrl: pulsar://localhost:6650
@@ -5,15 +8,21 @@ pulsar:
       tlsAllowInsecureConnection: true
       tlsHostnameVerificationEnable: false
     auth:
-      userName: <username>
-      password: <password>
-  topic:
-    name: my-topic
+      userName: admin
+      password: apachepulsar
+  sample01:
+    topic:
+      name: my-topic01
     subscription:
-      name: my-sub
+      name: my-sub01
       type: Key_Shared
     consumer:
       count: 1
-
-server:
-  port: 8081
+  sample02:
+    topic:
+      name: my-topic01
+    subscription:
+      name: my-sub01
+      type: Key_Shared
+    consumer:
+      count: 1

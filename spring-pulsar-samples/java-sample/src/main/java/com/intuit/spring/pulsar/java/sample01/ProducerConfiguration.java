@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@Configuration("producerConf01")
 public class ProducerConfiguration {
 
     private final ApplicationContext applicationContext;
@@ -20,7 +20,7 @@ public class ProducerConfiguration {
     }
 
     @Bean
-    public PulsarProducerTemplate producerTemplate() {
+    public PulsarProducerTemplate producerTemplate01() {
         return new PulsarProducerTemplateImpl(
                 new PulsarProducerConfig(
                         Schema.BYTES,

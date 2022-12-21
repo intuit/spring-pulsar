@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController
-@RequestMapping("/sample")
-class ProducerController(private val producerTemplate: PulsarProducerTemplate<ByteArray>) {
+@RestController("producerController02")
+@RequestMapping("/sample02")
+class ProducerController(private val producerTemplate02: PulsarProducerTemplate<ByteArray>) {
 
     @PostMapping("/produce")
     @PulsarProducerAction("myProducerAction")
@@ -18,7 +18,7 @@ class ProducerController(private val producerTemplate: PulsarProducerTemplate<By
         if(message.length < 2) {
             throw ShortMessageProducerException(message)
         }
-        val messageId =  producerTemplate.send(message.toByteArray())
+        val messageId =  producerTemplate02.send(message.toByteArray())
         return messageId.toString()
     }
 }
