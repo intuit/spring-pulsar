@@ -1,4 +1,8 @@
+<<<<<<<< HEAD:spring-pulsar-samples/kotlin-sample/src/main/kotlin/com/intuit/spring/pulsar/kotlin/sample01/ProducerConfiguration.kt
 package com.intuit.spring.pulsar.kotlin.sample01
+========
+package com.intuit.spring.pulsar.kotlin.sample02
+>>>>>>>> master:spring-pulsar-samples/kotlin-sample/src/main/kotlin/com/intuit/spring/pulsar/kotlin/sample02/ProducerConfiguration.kt
 
 import com.intuit.spring.pulsar.client.config.PulsarProducerConfig
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
@@ -9,6 +13,7 @@ import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+<<<<<<<< HEAD:spring-pulsar-samples/kotlin-sample/src/main/kotlin/com/intuit/spring/pulsar/kotlin/sample01/ProducerConfiguration.kt
 @Configuration("producerConf01")
 class ProducerConfiguration(val applicationContext: ApplicationContext) {
 
@@ -17,6 +22,16 @@ class ProducerConfiguration(val applicationContext: ApplicationContext) {
 
     @Bean
     fun producerTemplate01(): PulsarProducerTemplate<ByteArray> {
+========
+@Configuration("producerConf02")
+class ProducerConfiguration(val applicationContext: ApplicationContext) {
+
+    @Value("\${pulsar.sample02.topic.name}")
+    private lateinit var topicName: String
+
+    @Bean
+    fun producerTemplate02(): PulsarProducerTemplate<ByteArray> {
+>>>>>>>> master:spring-pulsar-samples/kotlin-sample/src/main/kotlin/com/intuit/spring/pulsar/kotlin/sample02/ProducerConfiguration.kt
         return PulsarProducerTemplateImpl<ByteArray>(
             pulsarProducerConfig = PulsarProducerConfig(
                 schema = Schema.BYTES,
