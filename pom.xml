@@ -12,6 +12,7 @@
         <module>spring-pulsar-core</module>
         <module>spring-pulsar-samples</module>
         <module>spring-pulsar-docs</module>
+        <module>spring-pulsar-test</module>
     </modules>
 
     <properties>
