@@ -1,6 +1,6 @@
 pulsar:
   client:
-    serviceUrl: pulsar:6650
+    serviceUrl: pulsar://localhost:6650
     tls:
       tlsAllowInsecureConnection: true
       tlsHostnameVerificationEnable: false

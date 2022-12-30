@@ -9,6 +9,18 @@ on:
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
+    services:
+      pulsar:
+        image: apachepulsar/pulsar:latest
+        command: bin/pulsar standalone
+        hostname: pulsar
+        container_name: pulsar
+        ports:
+          - "8080:8080"
+          - "6650:6650"
+        restart: always
+        volumes:
+          - "./data:/pulsar/data"
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -18,11 +30,5 @@ jobs:
     - name: Install gpg secret key
       run: cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
     - name: Build project with Maven
-      run: mvn -Dgpg.passphrase=${{ secrets.OSSRH_GPG_PASSPHRASE }} -pl !spring-pulsar-test --batch-mode clean install
-    - name: Setup Pulsar Cluster
-      uses: yu-ichiro/spin-up-docker-compose-action@v1
-      with:
-        file: spring-pulsar-test/src/test/resources/docker-compose.yml
-    - name: Run Integration tests
-      run: mvn --batch-mode clean test -f spring-pulsar-test/pom.xml
+      run: mvn -Dgpg.passphrase=${{ secrets.OSSRH_GPG_PASSPHRASE }} --batch-mode clean install
 
