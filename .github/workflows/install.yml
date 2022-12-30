@@ -19,3 +19,4 @@ jobs:
       run: cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
     - name: Build project with Maven
       run: mvn -Dgpg.passphrase=${{ secrets.OSSRH_GPG_PASSPHRASE }} -pl !spring-pulsar-test --batch-mode clean install
+

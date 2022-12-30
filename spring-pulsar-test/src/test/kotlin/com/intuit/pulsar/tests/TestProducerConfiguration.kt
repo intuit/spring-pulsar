@@ -12,9 +12,6 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class TestProducerConfiguration(val applicationContext: ApplicationContext) {
 
-    @Value("\${pulsar.sample01.topic.name}")
-    private lateinit var topicName: String
-
     @Bean
     fun byteSchemeProducerTemplate(): PulsarProducerTemplate<ByteArray> {
         return PulsarProducerTemplateImpl<ByteArray>(
