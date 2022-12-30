@@ -12,15 +12,3 @@ services:
     restart: always
     volumes:
       - "./data:/pulsar/data"
-  dashboard:
-    image: apachepulsar/pulsar-manager:latest
-    ports:
-      - "9527:9527"
-      - "7750:7750"
-    container_name: dashboard
-    depends_on:
-      - pulsar
-    links:
-      - pulsar
-    environment:
-      SPRING_CONFIGURATION_FILE: /pulsar-manager/pulsar-manager/application.properties
