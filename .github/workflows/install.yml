@@ -13,7 +13,6 @@ jobs:
       pulsar:
         image: apachepulsar/pulsar:latest
         command: bin/pulsar standalone
-        container_name: pulsar
         ports:
           - "8080:8080"
           - "6650:6650"
