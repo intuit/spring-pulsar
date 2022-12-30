@@ -17,8 +17,7 @@ jobs:
           - 6650:6650
         volumes:
           - data:/pulsar/data
-        options:
-          --name bin/pulsar standalone
+        run: bin/pulsar standalone
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
