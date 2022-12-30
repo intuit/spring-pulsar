@@ -12,12 +12,11 @@ jobs:
     services:
       pulsar:
         image: apachepulsar/pulsar:latest
-        command: bin/pulsar standalone
         ports:
-          - "8080:8080"
-          - "6650:6650"
+          - 8080:8080
+          - 6650:6650
         volumes:
-          - "./data:/pulsar/data"
+          - ./data:/pulsar/data
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
