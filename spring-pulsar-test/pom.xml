@@ -22,6 +22,7 @@
     </properties>
 
     <artifactId>spring-pulsar-test</artifactId>
+    <version>0.0.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>jar</packaging>
 
