@@ -8,6 +8,7 @@
 .settings/
 target/
 .idea/
+*.iml
 
 ## All the folders underneath site folder
 **/site
