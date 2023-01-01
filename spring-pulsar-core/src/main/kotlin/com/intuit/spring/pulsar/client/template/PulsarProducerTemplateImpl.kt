@@ -2,12 +2,14 @@ package com.intuit.spring.pulsar.client.template
 
 import com.intuit.spring.pulsar.client.client.PulsarClientFactory
 import com.intuit.spring.pulsar.client.config.PulsarProducerConfig
+import com.intuit.spring.pulsar.client.config.PulsarProducerConfigMapper
 import com.intuit.spring.pulsar.client.producer.IPulsarProducerMessageFactory
 import com.intuit.spring.pulsar.client.producer.PulsarProducer
 import com.intuit.spring.pulsar.client.producer.PulsarProducerFactory
 import com.intuit.spring.pulsar.client.producer.PulsarProducerMessageFactory
 import org.apache.pulsar.client.api.MessageId
 import org.apache.pulsar.client.api.ProducerStats
+import org.apache.pulsar.client.api.Schema
 import org.springframework.context.ApplicationContext
 import org.springframework.util.concurrent.ListenableFutureCallback
 import java.util.concurrent.CompletableFuture
@@ -20,8 +22,18 @@ import java.util.concurrent.CompletableFuture
 @Suppress("TooManyFunctions")
 class PulsarProducerTemplateImpl<T>(
     pulsarProducerConfig: PulsarProducerConfig<T>,
-    applicationContext: ApplicationContext
+    applicationContext: ApplicationContext,
 ) : PulsarProducerTemplate<T> {
+
+    constructor(
+        schema: Schema<T>,
+        config: MutableMap<String, String>,
+        applicationContext: ApplicationContext
+    ) :
+            this(
+                PulsarProducerConfigMapper<T>().map(schema = schema, config = config),
+                applicationContext
+            )
 
     private val producer: PulsarProducer<T> = PulsarProducerFactory(
         pulsarProducerConfig,
