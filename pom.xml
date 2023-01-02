@@ -47,8 +47,8 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <dokka.version>1.7.20</dokka.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
-        <kotlin-logging-jvm.version>2.1.23</kotlin-logging-jvm.version>
-        <logback-classic.version>1.4.5</logback-classic.version>
+        <kotlin-logging-jvm.version>2.0.11</kotlin-logging-jvm.version>
+        <logback-classic.version>1.2.6</logback-classic.version>
     </properties>
 
     <dependencyManagement>
