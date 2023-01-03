@@ -1,12 +1,31 @@
-Samples
+#Samples
+
+Introduction
 ===
----
-* java-sample - Contains samples in java language
-* kotlin-sample - Contains samples in kotlin language
+Different samples have been added in this module for using the spring-pulsar-core library.
+
+The java-sample module contains two samples in java language and one SpringBootApplication class(SampleApp) which can be run to test these samples. 
+
+Each sample has rest endpoint which can be used to trigger producers to publish message to queue.
+
+The kotlin-sample module has similar structure to java-sample module, it's just written in kotlin programming language.
+
+Steps for running samples
+===
+1. Make sure you have maven and java setup properly.
+2. Use the docker-compose.yml to bring up pulsar cluster. 
+     ```
+   docker compose up
+    ```
+3. Or start a pulsar cluster [locally](https://pulsar.apache.org/docs/2.6.4/getting-started-standalone/).
+4. Change directory to java/kotlin sample and run the application.
+    ```
+    cd spring-pulsar-samples/java-sample
+    mvn spring-boot:run
+    ```
 
 Sample01
 ===
----
 This sample demonstrates a simple producer and consumer.
 
 Producer uses PulsarProducerTemplate to send data to queue. It publishes the string posted to the rest controller.
@@ -25,7 +44,6 @@ Console:
 
 Sample02
 ===
----
 This sample demonstrates exception handling (@PulsarExceptionHandlerClass) with a simple producer and consumer.
 
 The producer uses a PulsarProducerTemplate to send data to queue. It publishes the string posted to the rest controller.
