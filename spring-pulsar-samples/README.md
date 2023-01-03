@@ -1,11 +1,8 @@
-#Samples
-
 Introduction
 ===
 Different samples have been added in this module for using the spring-pulsar-core library.
 
 The java-sample module contains two samples in java language and one SpringBootApplication class(SampleApp) which can be run to test these samples. 
-
 Each sample has rest endpoint which can be used to trigger producers to publish message to queue.
 
 The kotlin-sample module has similar structure to java-sample module, it's just written in kotlin programming language.
