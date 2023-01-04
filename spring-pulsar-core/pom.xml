@@ -18,16 +18,6 @@
     <version>0.0.0</version>
   </parent>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
   <licenses>
     <license>
       <name>MIT License</name>
@@ -43,12 +33,6 @@
       <organizationUrl>https://www.intuit.com/</organizationUrl>
     </developer>
   </developers>
-
-  <scm>
-    <connection>scm:git:git://github.com/intuit/spring-pulsar.git</connection>
-    <developerConnection>scm:git:ssh://github.com:intuit/spring-pulsar.git</developerConnection>
-    <url>https://github.com/intuit/spring-pulsar</url>
-  </scm>
 
   <dependencies>
     <dependency>
