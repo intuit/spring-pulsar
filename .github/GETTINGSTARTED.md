@@ -4,7 +4,7 @@
 
 To set up the codebase and build it on your local, execute the following commands on your terminal:
 
-    git clone https://<repository-url>/spring-apache-pulsar.git
-    cd spring-apache-pulsar
-    ./mvnw clean install -s settings.xml
+    git clone https://<repository-url>/spring-pulsar.git
+    cd spring-pulsar
+    mvn clean install
 
