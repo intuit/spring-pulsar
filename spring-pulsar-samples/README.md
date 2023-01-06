@@ -31,7 +31,7 @@ The consumer uses the IPulsarListener to listen to messages and provides impleme
 
 Run the application and use curl to send some data:
 
-`$ curl -X POST http://localhost:8081/sample01/produce -H "Content-Type: text/plain" --data <messageData>`
+`$ curl -X POST http://localhost:<portNumber>/sample01/produce -H "Content-Type: text/plain" --data <messageData>`
 
 Console:
 ```
@@ -52,7 +52,7 @@ It acknowledges the successfully consumed messages.
 
 Run the application and use curl to send some data:
 
-`$ curl -X POST http://localhost:8081/sample02/produce -H "Content-Type: text/plain" --data <messageData>`
+`$ curl -X POST http://localhost:<portNumber>/sample02/produce -H "Content-Type: text/plain" --data <messageData>`
 
 Console:
 ```
