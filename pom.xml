@@ -35,7 +35,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <detekt-maven-plugin.version>1.18.1.1</detekt-maven-plugin.version>
+        <detekt-maven-plugin.version>1.22.0</detekt-maven-plugin.version>
         <minimum-test-coverage-criteria>0.95</minimum-test-coverage-criteria>
         <spring-beans-version>5.3.18</spring-beans-version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -301,7 +301,7 @@
                     <artifactId>detekt-maven-plugin</artifactId>
                     <version>${detekt-maven-plugin.version}</version>
                     <configuration>
-                        <config>${project.parent.basedir}/checkstyle-spotbugs.yml</config>
+                        <config>checkstyle-spotbugs.yml</config>
                     </configuration>
                     <executions>
                         <execution>

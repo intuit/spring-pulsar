@@ -13,11 +13,17 @@ import com.intuit.spring.pulsar.client.config.PulsarConfigKey.MAX_PENDING_MESSAG
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.MESSAGE_ROUTING_MODE
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.PRODUCER_NAME
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.SEND_TIMEOUT
-import org.junit.jupiter.api.Test
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.TOPIC_NAME
-import org.apache.pulsar.client.api.*
-import org.junit.jupiter.api.Assertions.*
-
+import org.apache.pulsar.client.api.CompressionType
+import org.apache.pulsar.client.api.HashingScheme
+import org.apache.pulsar.client.api.MessageRoutingMode
+import org.apache.pulsar.client.api.ProducerCryptoFailureAction
+import org.apache.pulsar.client.api.Schema
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 
 class PulsarProducerConfigMapperTest {
 
