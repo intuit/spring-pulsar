@@ -50,21 +50,21 @@ class PulsarProducerConfigMapperTest {
 
         val producerConfig = configMapper.map(config, Schema.BYTES)
 
-        assertEquals(Schema.BYTES,producerConfig.schema)
-        assertEquals("test-topic",producerConfig.topicName)
-        assertEquals("test-producer",producerConfig.name)
+        assertEquals(Schema.BYTES, producerConfig.schema)
+        assertEquals("test-topic", producerConfig.topicName)
+        assertEquals("test-producer", producerConfig.name)
         assertEquals(10000, producerConfig.sendTimeout!!.toMillis())
         assertTrue(producerConfig.blockIfQueueFull!!)
-        assertEquals(ProducerCryptoFailureAction.FAIL,producerConfig.cryptoFailureAction)
+        assertEquals(ProducerCryptoFailureAction.FAIL, producerConfig.cryptoFailureAction)
         assertFalse(producerConfig.autoFlush)
         assertTrue(producerConfig.batch.batchingEnabled!!)
-        assertEquals(100,producerConfig.batch.batchingMaxMessages)
-        assertEquals(1000,producerConfig.batch.batchingMaxPublishDelayMicros)
-        assertEquals(100,producerConfig.message.maxPendingMessages)
-        assertEquals(100,producerConfig.message.maxPendingMessagesAcrossPartitions)
-        assertEquals(HashingScheme.JavaStringHash,producerConfig.message.hashingScheme)
-        assertEquals(CompressionType.ZLIB,producerConfig.message.compressionType)
-        assertEquals(MessageRoutingMode.RoundRobinPartition,producerConfig.message.messageRoutingMode)
+        assertEquals(100, producerConfig.batch.batchingMaxMessages)
+        assertEquals(1000, producerConfig.batch.batchingMaxPublishDelayMicros)
+        assertEquals(100, producerConfig.message.maxPendingMessages)
+        assertEquals(100, producerConfig.message.maxPendingMessagesAcrossPartitions)
+        assertEquals(HashingScheme.JavaStringHash, producerConfig.message.hashingScheme)
+        assertEquals(CompressionType.ZLIB, producerConfig.message.compressionType)
+        assertEquals(MessageRoutingMode.RoundRobinPartition, producerConfig.message.messageRoutingMode)
     }
 
     @Test
@@ -75,8 +75,8 @@ class PulsarProducerConfigMapperTest {
 
         val producerConfig = configMapper.map(config, Schema.BYTES)
 
-        assertEquals(Schema.BYTES,producerConfig.schema)
-        assertEquals("test-topic",producerConfig.topicName)
+        assertEquals(Schema.BYTES, producerConfig.schema)
+        assertEquals("test-topic", producerConfig.topicName)
         assertNull(producerConfig.name)
         assertNull(producerConfig.sendTimeout)
         assertNull(producerConfig.blockIfQueueFull)
@@ -91,5 +91,4 @@ class PulsarProducerConfigMapperTest {
         assertNull(producerConfig.message.compressionType)
         assertNull(producerConfig.message.messageRoutingMode)
     }
-
 }

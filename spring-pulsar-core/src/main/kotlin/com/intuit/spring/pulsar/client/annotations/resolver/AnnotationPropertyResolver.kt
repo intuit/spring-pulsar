@@ -26,7 +26,7 @@ interface IAnnotationPropertyResolver {
  * property resolution.
  */
 @Component
-class AnnotationPropertyResolver(private val env: Environment) : IAnnotationPropertyResolver {
+class AnnotationPropertyResolver(private val env: Environment): IAnnotationPropertyResolver {
 
     private val startFormat = "#{"
     private val endFormat = "}"

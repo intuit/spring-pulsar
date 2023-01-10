@@ -40,7 +40,7 @@ class PulsarClientFactoryTest {
         pulsarClient = mock(PulsarClient::class.java)
         clientConfig = mock(PulsarClientConfig::class.java)
         pulsarClientBuidler = mock(ClientBuilder::class.java)
-        mockedPulsarClient =  Mockito.mockStatic(PulsarClient::class.java)
+        mockedPulsarClient = Mockito.mockStatic(PulsarClient::class.java)
         mockedPulsarClient.`when`<ClientBuilder>(PulsarClient::builder).thenReturn(pulsarClientBuidler)
         `when`(pulsarClientBuidler.build()).thenReturn(pulsarClient)
         `when`(clientConfig.auth).thenReturn(TestData.getAuthConfig())
@@ -52,8 +52,6 @@ class PulsarClientFactoryTest {
     fun tearDown() {
         mockedPulsarClient.close()
     }
-
-
 
     @Test
     fun `validate withNetwork with all properties set`() {
@@ -209,7 +207,7 @@ class PulsarClientFactoryTest {
             serviceUrl = "serviceurl",
             auth = PulsarClientConfig.PulsarAuthConfig(
                 userName = "username",
-                password = "password",
+                password = "password"
             ),
             statsInterval = "100ms"
         )

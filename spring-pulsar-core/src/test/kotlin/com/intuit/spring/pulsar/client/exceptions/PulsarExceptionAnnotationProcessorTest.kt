@@ -13,20 +13,20 @@ import java.io.IOException
 import kotlin.test.assertFailsWith
 
 @ExtendWith(MockitoExtension::class)
-class PulsarExceptionAnnotationProcessorTest(@Mock val applicationContext:ApplicationContext) {
+class PulsarExceptionAnnotationProcessorTest(@Mock val applicationContext: ApplicationContext) {
 
-    companion object{
-        var exampleHandlerClassHandleException1Called=0
-        var exampleHandlerClassHandleException2Called=0
-        var exampleHandlerClassWithDupeHandlersHandleException1Called=0
-        var exampleHandlerClassWithDupeHandlersHandleException2Called=0
+    companion object {
+        var exampleHandlerClassHandleException1Called = 0
+        var exampleHandlerClassHandleException2Called = 0
+        var exampleHandlerClassWithDupeHandlersHandleException1Called = 0
+        var exampleHandlerClassWithDupeHandlersHandleException2Called = 0
     }
 
     private fun resetCalledCount() {
-        exampleHandlerClassHandleException1Called=0
-        exampleHandlerClassHandleException2Called=0
-        exampleHandlerClassWithDupeHandlersHandleException1Called=0
-        exampleHandlerClassWithDupeHandlersHandleException2Called=0
+        exampleHandlerClassHandleException1Called = 0
+        exampleHandlerClassHandleException2Called = 0
+        exampleHandlerClassWithDupeHandlersHandleException1Called = 0
+        exampleHandlerClassWithDupeHandlersHandleException2Called = 0
     }
 
     class ExampleHandlerClass {
@@ -54,8 +54,8 @@ class PulsarExceptionAnnotationProcessorTest(@Mock val applicationContext:Applic
 
         @Suppress("EmptyFunctionBlock", "UnusedPrivateMember")
         @PulsarProducerExceptionHandlerFunction(NumberFormatException::class)
-        var handleException3 =  {
-            fun handleException(){
+        var handleException3 = {
+            fun handleException() {
             }
         }
     }
@@ -102,7 +102,6 @@ class PulsarExceptionAnnotationProcessorTest(@Mock val applicationContext:Applic
             .onPulsarProducerException(exceptionHandlerParams)
         assertEquals(0, exampleHandlerClassHandleException1Called)
         assertEquals(1, exampleHandlerClassHandleException2Called)
-
     }
 
     @Test

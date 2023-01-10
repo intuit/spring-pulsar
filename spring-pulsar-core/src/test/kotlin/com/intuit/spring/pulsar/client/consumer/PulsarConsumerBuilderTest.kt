@@ -33,10 +33,10 @@ import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.ArgumentMatchers.anyLong
 import org.mockito.ArgumentMatchers.anyString
+import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
-import org.mockito.Mockito.`when`
 import org.mockito.junit.jupiter.MockitoExtension
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
@@ -102,7 +102,7 @@ class PulsarConsumerBuilderTest {
 
     @Test
     fun `validate withQueue with all optional properties set`() {
-         val consumerQueueConfig = mock(QueueConfig::class.java)
+        val consumerQueueConfig = mock(QueueConfig::class.java)
         `when`(consumerQueueConfig.readCompacted).thenReturn(true)
         `when`(consumerQueueConfig.receiverQueueSize).thenReturn(10)
         `when`(consumerQueueConfig.autoUpdatePartitions).thenReturn(true)
@@ -200,12 +200,12 @@ class PulsarConsumerBuilderTest {
 
     @Test
     fun `validate withDeadLetter with only max redelivery count`() {
-         val deadLetterPolicy = mockDeadLetterTopic(
-             deadLetterTopic = "",
-             retryLetterTopic = "",
-             maxRedeliveryCount = 10,
-             negativeAckRedeliveryDelay = ""
-         )
+        val deadLetterPolicy = mockDeadLetterTopic(
+            deadLetterTopic = "",
+            retryLetterTopic = "",
+            maxRedeliveryCount = 10,
+            negativeAckRedeliveryDelay = ""
+        )
         pulsarConsumerBuilder = pulsarConsumerBuilder.withDeadLetterPolicy(deadLetterPolicy)
         verify(consumerBuilder, times(1)).enableRetry(anyBoolean())
         verify(consumerBuilder, times(1)).deadLetterPolicy(any(DeadLetterPolicy::class.java))
@@ -264,7 +264,7 @@ class PulsarConsumerBuilderTest {
         assertEquals(consumerBuilder, pulsarConsumerBuilder.build())
     }
 
-    class TestPulsarListener: IPulsarListener<ByteArray> {
+    class TestPulsarListener : IPulsarListener<ByteArray> {
         override fun onException(e: Exception, consumer: Consumer<ByteArray>, message: Message<ByteArray>) {
             TODO("Not yet implemented")
         }
@@ -276,13 +276,11 @@ class PulsarConsumerBuilderTest {
         override fun processMessage(consumer: Consumer<ByteArray>, message: Message<ByteArray>) {
             TODO("Not yet implemented")
         }
-
     }
 
-    class TestMessageListener: MessageListener<ByteArray> {
+    class TestMessageListener : MessageListener<ByteArray> {
         override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
             TODO("Not yet implemented")
         }
     }
-
 }

@@ -4,7 +4,6 @@ import com.intuit.spring.pulsar.client.config.PulsarProducerConfig
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplateImpl
 import org.apache.pulsar.client.api.Schema
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.ApplicationContext
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -19,7 +18,7 @@ class TestProducerConfiguration(val applicationContext: ApplicationContext) {
                 schema = Schema.BYTES,
                 topicName = "producer_test_01"
             ),
-            applicationContext  = applicationContext
+            applicationContext = applicationContext
         )
     }
 }

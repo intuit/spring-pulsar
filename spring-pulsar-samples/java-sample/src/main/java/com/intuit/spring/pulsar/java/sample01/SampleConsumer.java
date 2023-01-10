@@ -30,7 +30,7 @@ public class SampleConsumer implements IPulsarListener {
     }
 
     public void processMessage(Consumer consumer, Message message) {
-        String messageString = new String((byte[])message.getValue(), Charsets.UTF_8);
+        String messageString = new String((byte[]) message.getValue(), Charsets.UTF_8);
         System.out.println("[RECEIVED] " + message.getMessageId() + " -> " + messageString);
     }
 

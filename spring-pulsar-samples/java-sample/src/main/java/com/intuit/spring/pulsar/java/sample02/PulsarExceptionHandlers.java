@@ -12,13 +12,13 @@ public class PulsarExceptionHandlers {
 
     @PulsarProducerExceptionHandlerFunction(exceptions = {ShortMessageProducerException.class})
     PulsarExceptionHandler producerExceptionHandler = exceptionHandlerParams -> {
-        System.out.println("Exception occurred while performing " +exceptionHandlerParams.getAction());
+        System.out.println("Exception occurred while performing " + exceptionHandlerParams.getAction());
         System.out.println("Handling producer exception " + exceptionHandlerParams.getException());
     };
 
     @PulsarConsumerExceptionHandlerFunction(exceptions = {LongMessageConsumerException.class})
     PulsarExceptionHandler consumerExceptionHandler = exceptionHandlerParams -> {
-        System.out.println("Exception occurred while performing " +exceptionHandlerParams.getAction());
+        System.out.println("Exception occurred while performing " + exceptionHandlerParams.getAction());
         System.out.println("Handling consumer exception " + exceptionHandlerParams.getException());
     };
 }

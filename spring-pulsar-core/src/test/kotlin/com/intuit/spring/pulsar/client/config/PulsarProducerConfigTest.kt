@@ -12,7 +12,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
-
 class PulsarProducerConfigTest {
 
     @Test
@@ -72,7 +71,7 @@ class PulsarProducerConfigTest {
             cryptoFailureAction = ProducerCryptoFailureAction.FAIL,
             message = PulsarProducerMessageConfig(),
             batch = PulsarProducerBatchingConfig(),
-            autoFlush = false,
+            autoFlush = false
         )
 
         assertEquals("my-topic", producerConfig.topicName)
@@ -101,5 +100,4 @@ class PulsarProducerConfigTest {
         assertNotNull(producerConfig.batch)
         assertTrue(producerConfig.autoFlush)
     }
-
 }

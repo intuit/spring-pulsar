@@ -96,7 +96,7 @@ fun mockPulsarConsumerWithDummyValues(): PulsarConsumerConfig {
     val queue = mockQueueWithDefaults()
     val subscription = mockSubscriptionWithDefaults()
     val deadLetterTopic = mockDeadLetterTopicWithDefaults()
-    val properties = mutableListOf(Mockito.mock(PropertyConfig::class.java),Mockito.mock(PropertyConfig::class.java))
+    val properties = mutableListOf(Mockito.mock(PropertyConfig::class.java), Mockito.mock(PropertyConfig::class.java))
     val consumer: PulsarConsumerConfig = Mockito.mock(PulsarConsumerConfig::class.java)
     Mockito.`when`(consumer.priorityLevel).thenReturn(1)
     Mockito.`when`(consumer.cryptoFailureAction).thenReturn(ConsumerCryptoFailureAction.CONSUME.name)
@@ -110,7 +110,7 @@ fun mockPulsarConsumerWithDummyValues(): PulsarConsumerConfig {
 }
 
 fun validateDeadLetterPolicyDefaults(deadLetterPolicy: DeadLetterPolicyConfig) {
-    //Validate dead letter policy configs
+    // Validate dead letter policy configs
     assertEquals("", deadLetterPolicy.negativeAckRedeliveryDelay)
     assertEquals(Int.MIN_VALUE, deadLetterPolicy.maxRedeliverCount)
     assertEquals("", deadLetterPolicy.retryLetterTopic)
@@ -160,7 +160,7 @@ fun validateDeadLetterPolicy(
     expectedDeadLetterTopic: String,
     actual: DeadLetterPolicyConfig
 ) {
-    //Validate dead letter policy configs
+    // Validate dead letter policy configs
     assertEquals(expectedNegativeAckRedeliveryDelay, actual.negativeAckRedeliveryDelay)
     assertEquals(expectedMaxRedeliverCount, actual.maxRedeliverCount)
     assertEquals(expectedRetryLetterTopic, actual.retryLetterTopic)
@@ -236,7 +236,6 @@ fun validatePulsarConsumer(
     assertEquals(expectedCryptoFailureAction, actual.cryptoFailureAction)
     assertEquals(expectedCount, actual.count)
 }
-
 
 fun validateTopicWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
     validateTopic(

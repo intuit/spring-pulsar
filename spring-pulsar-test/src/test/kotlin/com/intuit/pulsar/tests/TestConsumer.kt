@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component
     ),
     count = "1"
 )
-class TestConsumer(@Volatile var message:ByteArray? = null): MessageListener<ByteArray> {
+class TestConsumer(@Volatile var message: ByteArray? = null): MessageListener<ByteArray> {
 
     override fun received(consumer: Consumer<ByteArray>?, message: Message<ByteArray>?) {
         this.message = message!!.value
@@ -25,8 +25,10 @@ class TestConsumer(@Volatile var message:ByteArray? = null): MessageListener<Byt
         consumer!!.acknowledge(message.messageId)
     }
 
-    @Synchronized fun getReceivedMessage() : ByteArray? {
-        while(this.message==null){}
+    @Synchronized
+    fun getReceivedMessage(): ByteArray? {
+        while (this.message == null) {
+        }
         return this.message
     }
 }

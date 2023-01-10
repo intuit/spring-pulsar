@@ -11,7 +11,6 @@ import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.Schema
 import org.springframework.stereotype.Component
 
-
 /**
  * Contract to create [Consumer]
  */
@@ -23,7 +22,6 @@ interface IPulsarConsumerFactory<T> {
     fun createConsumer(annotationDetail: AnnotationDetail)
 }
 
-
 /**
  * Creates consumer builder object using consumer config.
  * Act as a factory for creating low level pulsar consumer.
@@ -32,9 +30,10 @@ interface IPulsarConsumerFactory<T> {
 @Component
 class PulsarConsumerFactory<T>(
     private val clientFactory: IPulsarClientFactory
-) : IPulsarConsumerFactory<T> {
+): IPulsarConsumerFactory<T> {
 
-    private val logger = KotlinLogging.logger{}
+    private val logger = KotlinLogging.logger {}
+
     /**
      * Creates low level pulsar [ConsumerBuilder]
      * Uses the client name to fetch the consumer config from
@@ -48,7 +47,7 @@ class PulsarConsumerFactory<T>(
         logger.info { annotationDetail }
         while (consumerCount > 0) {
             startConsumer(createPulsarConsumer(annotationDetail))
-            consumerCount -= 1;
+            consumerCount -= 1
         }
         logger.info { "Consumer created and started consumerName=${annotationDetail.pulsarConsumer.name}" }
     }
@@ -73,8 +72,7 @@ class PulsarConsumerFactory<T>(
         return consumerBuilder.subscribe()
     }
 
-    private fun createSchema(definedSchema: SchemaConfig)
-            : Schema<T> {
+    private fun createSchema(definedSchema: SchemaConfig): Schema<T> {
         return when (definedSchema.type) {
             SchemaType.BYTES -> Schema.BYTES
             SchemaType.AVRO -> Schema.AVRO(definedSchema.typeClass.java)

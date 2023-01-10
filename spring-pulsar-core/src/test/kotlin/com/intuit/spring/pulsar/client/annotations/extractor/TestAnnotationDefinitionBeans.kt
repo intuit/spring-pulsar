@@ -11,7 +11,6 @@ import org.apache.pulsar.client.api.Consumer
 import org.apache.pulsar.client.api.Message
 import org.apache.pulsar.client.api.MessageListener
 
-
 @PulsarConsumer(
     client = "myClient",
     name = "myConsumer",
@@ -50,13 +49,11 @@ import org.apache.pulsar.client.api.MessageListener
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithAnnotation: MessageListener<ByteArray> {
+class TestBeanWithAnnotation : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
-
     }
-
 }
 
 @PulsarConsumer(
@@ -91,12 +88,11 @@ class TestBeanWithAnnotation: MessageListener<ByteArray> {
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithMissingDeadLetterPolicy: MessageListener<ByteArray> {
+class TestBeanWithMissingDeadLetterPolicy : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
     }
-
 }
 
 @PulsarConsumer(
@@ -131,12 +127,11 @@ class TestBeanWithMissingDeadLetterPolicy: MessageListener<ByteArray> {
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithMissingAck: MessageListener<ByteArray> {
+class TestBeanWithMissingAck : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
     }
-
 }
 
 @PulsarConsumer(
@@ -170,12 +165,11 @@ class TestBeanWithMissingAck: MessageListener<ByteArray> {
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithMissingSubscription: MessageListener<ByteArray> {
+class TestBeanWithMissingSubscription : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
     }
-
 }
 
 @PulsarConsumer(
@@ -209,13 +203,11 @@ class TestBeanWithMissingSubscription: MessageListener<ByteArray> {
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithWithMissingQueue: MessageListener<ByteArray> {
+class TestBeanWithWithMissingQueue : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
-
     }
-
 }
 
 @PulsarConsumer(
@@ -252,14 +244,12 @@ class TestBeanWithWithMissingQueue: MessageListener<ByteArray> {
     )
 )
 @Suppress("EmptyClassBlock")
-class TestBeanWithMissingTopic: MessageListener<ByteArray> {
+class TestBeanWithMissingTopic : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
     }
-
 }
-
 
 @PulsarConsumer(
     client = "#{pulsar.client}",
@@ -271,38 +261,32 @@ class TestBeanWithMissingTopic: MessageListener<ByteArray> {
         subscriptionType = "#{pulsar.subscription.type}",
         subscriptionName = "#{pulsar.subscription.name}"
     ),
-    properties = [Property(
-        key = "myKey",
-        value = "myValue"
-    )]
+    properties = [
+        Property(
+            key = "myKey",
+            value = "myValue"
+        )
+    ]
 )
-class TestBeanWithPropertyResolver: MessageListener<ByteArray> {
+class TestBeanWithPropertyResolver : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
     }
-
 }
-
-
 
 @PulsarConsumer
 @Suppress("EmptyClassBlock")
-class TestBeanWithDefaultAnnotationValues: MessageListener<ByteArray> {
+class TestBeanWithDefaultAnnotationValues : MessageListener<ByteArray> {
 
     @Suppress("EmptyFunctionBlock")
     override fun received(p0: Consumer<ByteArray>?, p1: Message<ByteArray>?) {
-
     }
-
 }
 
 @PulsarConsumer
 @Suppress("EmptyClassBlock")
-class TestBeanWithAnnotationButNoListener {
-
-}
+class TestBeanWithAnnotationButNoListener
 
 @Suppress("EmptyClassBlock")
-class TestBeanWithoutAnnotation{
-}
+class TestBeanWithoutAnnotation

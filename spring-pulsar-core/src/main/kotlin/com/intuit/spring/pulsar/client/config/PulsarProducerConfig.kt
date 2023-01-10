@@ -28,7 +28,7 @@ data class PulsarProducerConfig<T>(
      *
      * If set to true flush will be called on producer after each message publish
      */
-    val autoFlush: Boolean = true,
+    val autoFlush: Boolean = true
 )
 
 /**
@@ -39,7 +39,7 @@ data class PulsarProducerConfig<T>(
 data class PulsarProducerBatchingConfig(
     val batchingMaxPublishDelayMicros: Long? = null,
     val batchingMaxMessages: Int? = null,
-    val batchingEnabled: Boolean? = null,
+    val batchingEnabled: Boolean? = null
 )
 
 /**
@@ -54,5 +54,3 @@ data class PulsarProducerMessageConfig(
     val hashingScheme: HashingScheme? = null,
     val compressionType: CompressionType? = null
 )
-
-

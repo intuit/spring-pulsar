@@ -23,9 +23,9 @@ public class ProducerController {
     }
 
     @PostMapping("/produce")
-    @PulsarProducerAction(action="this is my producer BL")
+    @PulsarProducerAction(action = "this is my producer BL")
     public String produce(@RequestBody String message) {
-        if(message.length()<2) {
+        if (message.length() < 2) {
             throw new ShortMessageProducerException(message);
         }
         MessageId messageId = producerTemplate.send(

@@ -30,7 +30,6 @@ class PulsarConsumerFactoryTest {
         consumerFactory = PulsarConsumerFactory(clientFactory)
     }
 
-
     @Test
     fun `validate createAndStartConsumer creates and start zero consumer`() {
         val beanDetails: AnnotationDetail = mock(AnnotationDetail::class.java)
@@ -40,5 +39,4 @@ class PulsarConsumerFactoryTest {
         consumerFactory.createConsumer(beanDetails)
         verify(consumerBuilder, times(0)).subscribe()
     }
-
 }
