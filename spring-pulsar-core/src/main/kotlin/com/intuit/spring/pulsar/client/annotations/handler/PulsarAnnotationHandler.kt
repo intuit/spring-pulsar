@@ -3,7 +3,6 @@ package com.intuit.spring.pulsar.client.annotations.handler
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
 import com.intuit.spring.pulsar.client.annotations.extractor.IPulsarAnnotationExtractor
 import com.intuit.spring.pulsar.client.consumer.IPulsarConsumerFactory
-import mu.KotlinLogging
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.ApplicationContext
@@ -23,15 +22,11 @@ class PulsarAnnotationHandler<T>(
     val annotationExtractor: IPulsarAnnotationExtractor
 ): BeanPostProcessor, IPulsarAnnotationHandler<T> {
 
-    private val logger = KotlinLogging.logger { }
-
     @EventListener(ApplicationStartedEvent::class)
     override fun handle() {
-        logger.info { "Looking for annotated pulsar consumer" }
         annotationExtractor.extract(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java))
             .forEach { annotatedBeanDetail ->
                 pulsarConsumerFactory.createConsumer(annotatedBeanDetail)
             }
-        logger.info { "All annotated consumer started" }
     }
 }
