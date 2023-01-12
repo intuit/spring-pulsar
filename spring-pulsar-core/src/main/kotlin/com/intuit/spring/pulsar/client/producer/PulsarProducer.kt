@@ -14,7 +14,7 @@ class PulsarProducer<T>(
     private val delegate: Producer<T>,
     val autoFlush: Boolean,
     val schema: Schema<T>
-) : Producer<T> by delegate {
+): Producer<T> by delegate {
 
     override fun newMessage(): TypedMessageBuilder<T> {
         return newMessage(this.schema)

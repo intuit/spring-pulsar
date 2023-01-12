@@ -21,7 +21,7 @@ import javax.annotation.PreDestroy
 @Component
 class PulsarClientFactory(
     clientConfig: PulsarClientConfig
-) : IPulsarClientFactory {
+): IPulsarClientFactory {
 
     /**
      * Create client object from the client configuration. If client cannot be created with
@@ -169,10 +169,8 @@ class PulsarClientFactory(
     private fun buildClient(clientConfig: PulsarClientConfig): PulsarClient {
         logger.info { "Creating client with config $clientConfig" }
         withClientConfig(clientConfig)
-        val pulsarClient =  pulsarClientBuilder.build()
+        val pulsarClient = pulsarClientBuilder.build()
         logger.info { "Client created successfully $pulsarClient" }
         return pulsarClient
     }
 }
-
-

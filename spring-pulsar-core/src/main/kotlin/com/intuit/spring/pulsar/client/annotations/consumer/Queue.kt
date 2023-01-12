@@ -25,7 +25,7 @@ annotation class Queue(
  * and uses it to resolve property path definitions
  * in [Queue]
  */
-fun Queue.map(resolver: IAnnotationPropertyResolver) : QueueConfig {
+fun Queue.map(resolver: IAnnotationPropertyResolver): QueueConfig {
     return QueueConfig(
         receiverQueueSize = resolver.resolve(this.receiverQueueSize).toInt(),
         maxTotalReceiverQueueSizeAcrossPartitions = resolver.resolve(this.maxTotalReceiverQueueSizeAcrossPartitions)

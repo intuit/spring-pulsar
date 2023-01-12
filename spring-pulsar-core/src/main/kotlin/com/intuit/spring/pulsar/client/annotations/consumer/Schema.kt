@@ -19,7 +19,7 @@ annotation class Schema(
  * and uses it to resolve property path definitions
  * in [Schema]
  */
-fun Schema.map(resolver: IAnnotationPropertyResolver) : SchemaConfig {
+fun Schema.map(resolver: IAnnotationPropertyResolver): SchemaConfig {
     return if (StringUtils.EMPTY == this.typeClass) {
         SchemaConfig(type = SchemaType.valueOf(resolver.resolve(this.type)))
     } else {

@@ -67,5 +67,5 @@ class PulsarExceptionHandlerAspect(val pulsarExceptionAnnotationProcessor: Pulsa
         }
     }
 
-    data class ExceptionHandlerParams (val exception: Exception, val action:String)
+    data class ExceptionHandlerParams(val exception: Exception, val action: String)
 }

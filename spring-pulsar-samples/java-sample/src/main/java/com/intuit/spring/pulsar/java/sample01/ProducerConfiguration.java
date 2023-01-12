@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,9 +29,9 @@ public class ProducerConfiguration {
 
     @Bean
     public PulsarProducerTemplate producerTemplate01() {
-        Map<String,String> config = new HashMap<>();
-        config.put(TOPIC_NAME,topicName);
-        config.put(AUTO_FLUSH,"true");
+        Map<String, String> config = new HashMap<>();
+        config.put(TOPIC_NAME, topicName);
+        config.put(AUTO_FLUSH, "true");
 
         return new PulsarProducerTemplateImpl(
                 Schema.BYTES,

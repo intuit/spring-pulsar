@@ -49,4 +49,3 @@ fun getDurationUnit(value: String): DurationUnit {
         else -> DurationUnit.DEFAULT
     }
 }
-

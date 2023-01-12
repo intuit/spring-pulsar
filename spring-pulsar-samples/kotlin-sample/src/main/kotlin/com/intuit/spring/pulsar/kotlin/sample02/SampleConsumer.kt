@@ -24,8 +24,8 @@ class SampleConsumer: MessageListener<ByteArray> {
         val messageString: String = String(message.value)
         println("[RECEIVED] ${message.messageId} -> $messageString")
 
-        //throwing sample exception to demo exception handling on consumer side
-        if(messageString.length > 10) {
+        // throwing sample exception to demo exception handling on consumer side
+        if (messageString.length > 10) {
             throw LongMessageConsumerException(messageString)
         }
 

@@ -14,11 +14,11 @@ class ProducerController(private val producerTemplate02: PulsarProducerTemplate<
     @PostMapping("/produce")
     @PulsarProducerAction("myProducerAction")
     fun produce(@RequestBody message: String): String {
-        //throwing sample exception to demo exception handling on producer side
-        if(message.length < 2) {
+        // throwing sample exception to demo exception handling on producer side
+        if (message.length < 2) {
             throw ShortMessageProducerException(message)
         }
-        val messageId =  producerTemplate02.send(message.toByteArray())
+        val messageId = producerTemplate02.send(message.toByteArray())
         return messageId.toString()
     }
 }

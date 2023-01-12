@@ -12,7 +12,7 @@ class ProducerController(private val producerTemplate01: PulsarProducerTemplate<
 
     @PostMapping("/produce")
     fun produce(@RequestBody message: String): String {
-        val messageId =  producerTemplate01.send(message.toByteArray())
+        val messageId = producerTemplate01.send(message.toByteArray())
         return messageId.toString()
     }
 }

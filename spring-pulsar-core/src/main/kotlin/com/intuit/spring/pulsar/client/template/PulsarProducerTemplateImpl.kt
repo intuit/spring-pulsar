@@ -22,18 +22,18 @@ import java.util.concurrent.CompletableFuture
 @Suppress("TooManyFunctions")
 class PulsarProducerTemplateImpl<T>(
     pulsarProducerConfig: PulsarProducerConfig<T>,
-    applicationContext: ApplicationContext,
-) : PulsarProducerTemplate<T> {
+    applicationContext: ApplicationContext
+): PulsarProducerTemplate<T> {
 
     constructor(
         schema: Schema<T>,
         config: MutableMap<String, String>,
         applicationContext: ApplicationContext
-    ) :
-            this(
-                PulsarProducerConfigMapper<T>().map(schema = schema, config = config),
-                applicationContext
-            )
+    ):
+        this(
+            PulsarProducerConfigMapper<T>().map(schema = schema, config = config),
+            applicationContext
+        )
 
     private val producer: PulsarProducer<T> = PulsarProducerFactory(
         pulsarProducerConfig,

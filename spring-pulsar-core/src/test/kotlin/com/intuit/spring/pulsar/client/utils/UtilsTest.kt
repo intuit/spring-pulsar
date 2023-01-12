@@ -17,5 +17,4 @@ class UtilsTest {
         Mockito.`when`(property.value).thenReturn("x").thenReturn("y")
         assertTrue(convertToPropertiesMap(properties).size == 1)
     }
-
 }

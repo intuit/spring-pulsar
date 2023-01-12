@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @EnableAutoConfiguration
-@SpringBootTest(classes = [TestConfig::class,TestProducerConfiguration::class,TestConsumer::class])
+@SpringBootTest(classes = [TestConfig::class, TestProducerConfiguration::class, TestConsumer::class])
 @TestPropertySource("classpath:application.yml")
 class SpringPulsarIntegrationTests {
 
@@ -23,7 +23,7 @@ class SpringPulsarIntegrationTests {
     private lateinit var consumer: TestConsumer
 
     @Test
-    fun `validate producer template send()`(){
+    fun `validate producer template send()`() {
         producerTemplate.send("test message".toByteArray())
         val messageData = consumer.getReceivedMessage()
         assertEquals("test message", String(messageData!!))

@@ -29,7 +29,7 @@ annotation class PulsarConsumer(
  * and uses it to resolve property path definitions
  * in [PulsarConsumer]
  */
-fun PulsarConsumer.map(resolver: IAnnotationPropertyResolver) : PulsarConsumerConfig {
+fun PulsarConsumer.map(resolver: IAnnotationPropertyResolver): PulsarConsumerConfig {
     return PulsarConsumerConfig(
         client = resolver.resolve(this.client),
         name = resolver.resolve(this.name),

@@ -5,5 +5,4 @@ import org.springframework.context.annotation.Configuration
 
 @Configuration
 @ComponentScan("com.intuit.spring.pulsar.client")
-class TestConfig {
-}
+class TestConfig

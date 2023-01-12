@@ -21,9 +21,9 @@ class PulsarAnnotationHandler<T>(
     val pulsarConsumerFactory: IPulsarConsumerFactory<T>,
     val applicationContext: ApplicationContext,
     val annotationExtractor: IPulsarAnnotationExtractor
-) : BeanPostProcessor, IPulsarAnnotationHandler<T> {
+): BeanPostProcessor, IPulsarAnnotationHandler<T> {
 
-    private val logger = KotlinLogging.logger {  }
+    private val logger = KotlinLogging.logger { }
 
     @EventListener(ApplicationStartedEvent::class)
     override fun handle() {

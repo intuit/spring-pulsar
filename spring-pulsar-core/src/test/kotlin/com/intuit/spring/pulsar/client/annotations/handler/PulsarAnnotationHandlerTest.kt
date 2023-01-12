@@ -39,12 +39,11 @@ class PulsarAnnotationHandlerTest {
         `when`(applicationContext.getBean(PulsarConsumerAnnotationExtractor::class.java))
             .thenReturn(PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)))
 
-        annotationHandler = PulsarAnnotationHandler (
+        annotationHandler = PulsarAnnotationHandler(
             annotationExtractor = PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)),
             pulsarConsumerFactory = PulsarConsumerFactory<MessageData>(clientFactory),
             applicationContext = applicationContext
         )
-
     }
 
     @Test
@@ -58,10 +57,11 @@ class PulsarAnnotationHandlerTest {
     fun validateHandleWhenConsumerIsDefined() {
         val pulsarClient: PulsarClient = mock(PulsarClient::class.java)
         val consumerBuilder: ConsumerBuilder<ByteArray> = mock(ConsumerBuilder::class.java)
-                as ConsumerBuilder<ByteArray>
-        val consumerBeansMap = mutableMapOf<String,Any>(
+            as ConsumerBuilder<ByteArray>
+        val consumerBeansMap = mutableMapOf<String, Any>(
             "bean1" to TestAnnotatedBeanClass<MessageData>(),
-            "bean2" to TestAnnotatedBeanClass<MessageData>())
+            "bean2" to TestAnnotatedBeanClass<MessageData>()
+        )
         `when`(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java)).thenReturn(consumerBeansMap)
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
@@ -75,10 +75,11 @@ class PulsarAnnotationHandlerTest {
     fun validateHandleWhenConsumerIsDefinedWithBytesSchema() {
         val pulsarClient: PulsarClient = mock(PulsarClient::class.java)
         val consumerBuilder: ConsumerBuilder<ByteArray> = mock(ConsumerBuilder::class.java)
-                as ConsumerBuilder<ByteArray>
-        val consumerBeansMap = mutableMapOf<String,Any>(
+            as ConsumerBuilder<ByteArray>
+        val consumerBeansMap = mutableMapOf<String, Any>(
             "bean1" to BytesSchemaListener<MessageData>(),
-            "bean2" to BytesSchemaListener<MessageData>())
+            "bean2" to BytesSchemaListener<MessageData>()
+        )
         `when`(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java)).thenReturn(consumerBeansMap)
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
@@ -88,15 +89,15 @@ class PulsarAnnotationHandlerTest {
         verify(consumerBuilder, times(2)).subscribe()
     }
 
-
     @Test
     fun validateHandleWhenConsumerIsDefinedWithAvroSchema() {
         val pulsarClient: PulsarClient = mock(PulsarClient::class.java)
         val consumerBuilder: ConsumerBuilder<ByteArray> = mock(ConsumerBuilder::class.java)
-                as ConsumerBuilder<ByteArray>
-        val consumerBeansMap = mutableMapOf<String,Any>(
+            as ConsumerBuilder<ByteArray>
+        val consumerBeansMap = mutableMapOf<String, Any>(
             "bean1" to AvroSchemaListener<MessageData>(),
-            "bean2" to AvroSchemaListener<MessageData>())
+            "bean2" to AvroSchemaListener<MessageData>()
+        )
         `when`(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java)).thenReturn(consumerBeansMap)
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
@@ -121,7 +122,7 @@ class PulsarAnnotationHandlerTest {
         typeClass = "com.intuit.spring.pulsar.client.annotations.handler.MessageData"
     )
 )
-class TestAnnotatedBeanClass<MessageData>:IPulsarListener<MessageData> {
+class TestAnnotatedBeanClass<MessageData> : IPulsarListener<MessageData> {
 
     override fun onException(e: Exception, consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
@@ -134,7 +135,6 @@ class TestAnnotatedBeanClass<MessageData>:IPulsarListener<MessageData> {
     override fun processMessage(consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
     }
-
 }
 
 @PulsarConsumer(
@@ -151,7 +151,7 @@ class TestAnnotatedBeanClass<MessageData>:IPulsarListener<MessageData> {
         typeClass = "com.intuit.spring.pulsar.client.annotations.handler.MessageData"
     )
 )
-class AvroSchemaListener<MessageData>:IPulsarListener<MessageData> {
+class AvroSchemaListener<MessageData> : IPulsarListener<MessageData> {
 
     override fun onException(e: Exception, consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
@@ -164,9 +164,7 @@ class AvroSchemaListener<MessageData>:IPulsarListener<MessageData> {
     override fun processMessage(consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
     }
-
 }
-
 
 @PulsarConsumer(
     client = "myClient",
@@ -178,7 +176,7 @@ class AvroSchemaListener<MessageData>:IPulsarListener<MessageData> {
         subscriptionType = "Key_Shared"
     )
 )
-class BytesSchemaListener<MessageData>:IPulsarListener<MessageData> {
+class BytesSchemaListener<MessageData> : IPulsarListener<MessageData> {
 
     override fun onException(e: Exception, consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
@@ -191,7 +189,6 @@ class BytesSchemaListener<MessageData>:IPulsarListener<MessageData> {
     override fun processMessage(consumer: Consumer<MessageData>, message: Message<MessageData>) {
         print(message.data.toString())
     }
-
 }
 
 data class MessageData(
