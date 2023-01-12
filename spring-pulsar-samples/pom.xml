@@ -45,7 +45,7 @@
                 <version>${jackson-module-kotlin.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
+                <groupId>org.jetbrains.kotlin</groupId>F
                 <artifactId>kotlin-reflect</artifactId>
                 <version>${kotlin-reflect.version}</version>
             </dependency>

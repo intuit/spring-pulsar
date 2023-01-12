@@ -5,7 +5,6 @@ import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.SchemaConfig
 import com.intuit.spring.pulsar.client.config.SchemaType
 import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFoundSpringException
-import mu.KotlinLogging
 import org.apache.pulsar.client.api.Consumer
 import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.Schema
@@ -32,8 +31,6 @@ class PulsarConsumerFactory<T>(
     private val clientFactory: IPulsarClientFactory
 ): IPulsarConsumerFactory<T> {
 
-    private val logger = KotlinLogging.logger {}
-
     /**
      * Creates low level pulsar [ConsumerBuilder]
      * Uses the client name to fetch the consumer config from
@@ -43,13 +40,10 @@ class PulsarConsumerFactory<T>(
      */
     override fun createConsumer(annotationDetail: AnnotationDetail) {
         var consumerCount: Int = annotationDetail.pulsarConsumer.count
-        logger.info { "Creating consumer with below configuration" }
-        logger.info { annotationDetail }
         while (consumerCount > 0) {
             startConsumer(createPulsarConsumer(annotationDetail))
             consumerCount -= 1
         }
-        logger.info { "Consumer created and started consumerName=${annotationDetail.pulsarConsumer.name}" }
     }
 
     /**

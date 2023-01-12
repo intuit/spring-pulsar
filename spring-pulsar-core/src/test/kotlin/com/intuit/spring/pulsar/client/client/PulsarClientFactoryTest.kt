@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.MockedStatic
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -197,7 +198,7 @@ class PulsarClientFactoryTest {
         clientFactory = PulsarClientFactory(clientConfig)
         val pulsarClient = mockPulsarClient()
         `when`(pulsarClient.close()).thenThrow(PulsarClientException::class.java)
-        clientFactory.callPrivateFunc("close")
+        assertThrows<Exception> { clientFactory.callPrivateFunc("close") }
         verify(pulsarClient, times(1)).close()
     }
 
