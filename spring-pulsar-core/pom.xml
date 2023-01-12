@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.intuit.pulsar</groupId>
   <artifactId>spring-pulsar-core</artifactId>
-  <version>0.0.0</version>
+  <version>1.0.0-SNAPSHOT</version>
   <name>${project.groupId}:${project.artifactId}</name>
   <description>
     Spring For Apache Pulsar allows any java/kotlin application to easily integrate with Apache Pulsar
@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar</artifactId>
-    <version>0.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
 
   <distributionManagement>
