@@ -22,7 +22,7 @@ class ProducerConfiguration(val applicationContext: ApplicationContext) {
                 schema = Schema.BYTES,
                 topicName = topicName
             ),
-            applicationContext  = applicationContext
+            applicationContext = applicationContext
         )
     }
 }

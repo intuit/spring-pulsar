@@ -26,7 +26,7 @@ annotation class Subscription(
  * and uses it to resolve property path definitions
  * in [Subscription]
  */
-fun Subscription.map(resolver: IAnnotationPropertyResolver) : SubscriptionConfig {
+fun Subscription.map(resolver: IAnnotationPropertyResolver): SubscriptionConfig {
     return SubscriptionConfig(
         subscriptionName = resolver.resolve(this.subscriptionName),
         subscriptionType = resolver.resolve(this.subscriptionType),
@@ -35,4 +35,3 @@ fun Subscription.map(resolver: IAnnotationPropertyResolver) : SubscriptionConfig
         replicateSubscriptionState = resolver.resolve(this.replicateSubscriptionState).toBoolean()
     )
 }
-

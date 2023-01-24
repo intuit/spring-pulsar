@@ -5,18 +5,17 @@ import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
-
 class PulsarConsumerConfigTest {
 
     @Test
     fun `validate PulsarConsumer creation with default value`() {
         val pulsarConsumerConfig = PulsarConsumerConfig()
 
-        assertEquals(StringUtils.EMPTY,pulsarConsumerConfig.client)
-        assertEquals(StringUtils.EMPTY,pulsarConsumerConfig.name)
-        assertEquals(Int.MIN_VALUE,pulsarConsumerConfig.priorityLevel)
-        assertEquals(StringUtils.EMPTY,pulsarConsumerConfig.cryptoFailureAction)
-        assertEquals(1,pulsarConsumerConfig.count)
+        assertEquals(StringUtils.EMPTY, pulsarConsumerConfig.client)
+        assertEquals(StringUtils.EMPTY, pulsarConsumerConfig.name)
+        assertEquals(Int.MIN_VALUE, pulsarConsumerConfig.priorityLevel)
+        assertEquals(StringUtils.EMPTY, pulsarConsumerConfig.cryptoFailureAction)
+        assertEquals(1, pulsarConsumerConfig.count)
         assertNotNull(pulsarConsumerConfig.deadLetterPolicy)
         assertNotNull(pulsarConsumerConfig.topic)
         assertNotNull(pulsarConsumerConfig.queue)
@@ -37,11 +36,11 @@ class PulsarConsumerConfigTest {
             properties = mutableListOf(PropertyConfig(key = "key", value = "value"))
         )
 
-        assertEquals("client",pulsarConsumerConfig.client)
-        assertEquals("name",pulsarConsumerConfig.name)
-        assertEquals(1,pulsarConsumerConfig.priorityLevel)
-        assertEquals("fail",pulsarConsumerConfig.cryptoFailureAction)
-        assertEquals(2,pulsarConsumerConfig.count)
+        assertEquals("client", pulsarConsumerConfig.client)
+        assertEquals("name", pulsarConsumerConfig.name)
+        assertEquals(1, pulsarConsumerConfig.priorityLevel)
+        assertEquals("fail", pulsarConsumerConfig.cryptoFailureAction)
+        assertEquals(2, pulsarConsumerConfig.count)
         assertNotNull(pulsarConsumerConfig.deadLetterPolicy)
         assertNotNull(pulsarConsumerConfig.topic)
         assertNotNull(pulsarConsumerConfig.queue)

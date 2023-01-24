@@ -25,11 +25,11 @@ annotation class Ack(
  * and uses it to resolve property path definitions
  * in [Ack]
  */
-fun Ack.map(resolver: IAnnotationPropertyResolver) : AckConfig {
+fun Ack.map(resolver: IAnnotationPropertyResolver): AckConfig {
     return AckConfig(
         acknowledgementsGroupTime = resolver.resolve(this.acknowledgementsGroupTime),
         ackTimeout = resolver.resolve(this.ackTimeout),
         tickDuration = resolver.resolve(this.tickDuration),
         sync = resolver.resolve(this.sync).toBoolean()
-    )    
+    )
 }

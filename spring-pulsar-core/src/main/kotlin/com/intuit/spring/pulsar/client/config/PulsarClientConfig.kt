@@ -43,7 +43,7 @@ data class PulsarClientConfig(
         var requestTimeout: String = "60000ms",
         var defaultBackoffInterval: String = "100ms",
         var maxBackoffInterval: String = "30s",
-        var operationTimeout: String = "30000ms",
+        var operationTimeout: String = "30000ms"
     )
 
     /**

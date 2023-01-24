@@ -26,7 +26,7 @@ interface IAnnotationPropertyResolver {
  * property resolution.
  */
 @Component
-class AnnotationPropertyResolver(private val env: Environment) : IAnnotationPropertyResolver {
+class AnnotationPropertyResolver(private val env: Environment): IAnnotationPropertyResolver {
 
     private val startFormat = "#{"
     private val endFormat = "}"
@@ -35,11 +35,10 @@ class AnnotationPropertyResolver(private val env: Environment) : IAnnotationProp
         if (property.startsWith(startFormat) and property.endsWith(endFormat)) {
             val resolvedValue = env.getProperty(property.substring(2, property.lastIndex))
             if (resolvedValue != null) {
-                return resolvedValue;
+                return resolvedValue
             }
             return StringUtils.EMPTY
         }
         return property
     }
-
 }

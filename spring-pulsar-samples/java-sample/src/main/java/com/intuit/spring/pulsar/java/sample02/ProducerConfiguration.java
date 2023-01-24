@@ -28,9 +28,9 @@ public class ProducerConfiguration {
 
     @Bean
     public PulsarProducerTemplate producerTemplate02() {
-        Map<String,String> config = new HashMap<>();
-        config.put(TOPIC_NAME,topicName);
-        config.put(AUTO_FLUSH,"true");
+        Map<String, String> config = new HashMap<>();
+        config.put(TOPIC_NAME, topicName);
+        config.put(AUTO_FLUSH, "true");
 
         return new PulsarProducerTemplateImpl(
                 Schema.BYTES,

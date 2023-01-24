@@ -13,13 +13,13 @@ import com.intuit.spring.pulsar.client.config.PulsarConfigKey.MAX_PENDING_MESSAG
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.MESSAGE_ROUTING_MODE
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.PRODUCER_NAME
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.SEND_TIMEOUT
-import org.apache.pulsar.client.api.Schema
-import java.time.Duration
 import com.intuit.spring.pulsar.client.config.PulsarConfigKey.TOPIC_NAME
 import org.apache.pulsar.client.api.CompressionType
 import org.apache.pulsar.client.api.HashingScheme
 import org.apache.pulsar.client.api.MessageRoutingMode
 import org.apache.pulsar.client.api.ProducerCryptoFailureAction
+import org.apache.pulsar.client.api.Schema
+import java.time.Duration
 
 /**
  * Config mapping class to map producer config
@@ -45,7 +45,8 @@ class PulsarProducerConfigMapper<T> {
             sendTimeout = config[SEND_TIMEOUT]?.let { Duration.ofMillis(config[SEND_TIMEOUT]!!.toLong()) },
             blockIfQueueFull = config[BLOCK_IF_QUEUE_FULL]?.toBoolean(),
             cryptoFailureAction = config[CRYPTO_FAILURE_ACTION]?.let {
-                ProducerCryptoFailureAction.valueOf(config[CRYPTO_FAILURE_ACTION]!!) },
+                ProducerCryptoFailureAction.valueOf(config[CRYPTO_FAILURE_ACTION]!!)
+            },
             autoFlush = config[AUTO_FLUSH]?.toBoolean() ?: true,
             message = mapMessageConfig(config),
             batch = mapBatchingConfig(config)
@@ -77,7 +78,8 @@ class PulsarProducerConfigMapper<T> {
             maxPendingMessages = config[MAX_PENDING_MESSAGES]?.toInt(),
             maxPendingMessagesAcrossPartitions = config[MAX_PENDING_MESSAGES_ACROSS_PARTITIONS]?.toInt(),
             messageRoutingMode = config[MESSAGE_ROUTING_MODE]?.let {
-                MessageRoutingMode.valueOf(config[MESSAGE_ROUTING_MODE]!!) },
+                MessageRoutingMode.valueOf(config[MESSAGE_ROUTING_MODE]!!)
+            },
             hashingScheme = config[HASHING_SCHEME]?.let { HashingScheme.valueOf(config[HASHING_SCHEME]!!) },
             compressionType = config[COMPRESSION_TYPE]?.let { CompressionType.valueOf(config[COMPRESSION_TYPE]!!) }
         )

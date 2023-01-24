@@ -99,10 +99,9 @@ class PulsarConsumerBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
      * Populate dead letter properties in builder
      */
     fun withDeadLetterPolicy(deadLetterPolicy: DeadLetterPolicyConfig): PulsarConsumerBuilder<T> {
-
-        if (Int.MIN_VALUE != deadLetterPolicy.maxRedeliverCount
-            || deadLetterPolicy.retryLetterTopic.isNotBlank()
-            || deadLetterPolicy.deadLetterTopic.isNotBlank()
+        if (Int.MIN_VALUE != deadLetterPolicy.maxRedeliverCount ||
+            deadLetterPolicy.retryLetterTopic.isNotBlank() ||
+            deadLetterPolicy.deadLetterTopic.isNotBlank()
         ) {
             val policyBuilder = org.apache.pulsar.client.api.DeadLetterPolicy.builder()
             if (deadLetterPolicy.deadLetterTopic.isNotBlank()) {

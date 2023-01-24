@@ -289,16 +289,16 @@ Refer to the [Getting Started](.github/GETTINGSTARTED.md) section which contains
 
 # Code of Conduct
 
-Please see our [Code of conduct](https://github.intuit.com/identity-utilities/spring-apache-pulsar/blob/master/CODEOFCONDUCT.md).
+Please see our [Code of conduct](CODEOFCONDUCT.md).
 
 # Resources
 
 For more information on how to use this library check below reference manual:
-[Reference Manual](https://github.intuit.com/identity-utilities/spring-apache-pulsar/blob/master/spring-pulsar-docs/src/main/docs/index.md)
+Reference Manual
 
 # Contributing to Spring Apache Pulsar
 
-Check [Contributing](https://github.intuit.com/identity-utilities/spring-apache-pulsar/blob/master/CONTRIBUTING.md) for contribution
+Check [Contributing](CONTRIBUTING.md) for contribution
 
 # License
 

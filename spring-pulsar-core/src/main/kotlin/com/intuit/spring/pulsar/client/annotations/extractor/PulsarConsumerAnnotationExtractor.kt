@@ -20,8 +20,7 @@ import org.springframework.stereotype.Component
  * found on the bean.
  */
 @Component
-class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolver) :
-    IPulsarAnnotationExtractor {
+class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolver): IPulsarAnnotationExtractor {
 
     override fun extract(annotatedBeans: MutableMap<String, Any>): MutableList<AnnotationDetail> {
         val annotatedBeanDetails: MutableList<AnnotationDetail> = mutableListOf()

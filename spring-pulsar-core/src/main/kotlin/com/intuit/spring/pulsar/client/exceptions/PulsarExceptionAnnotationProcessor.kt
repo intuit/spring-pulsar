@@ -38,7 +38,7 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
     @PostConstruct
     fun loadExceptionHandlerMap() {
         val beansWithClassAnnotation = applicationContext.getBeansWithAnnotation(handlerClassAnnotation)
-        beansWithClassAnnotation.values.forEach { bean->
+        beansWithClassAnnotation.values.forEach { bean ->
             bean.javaClass.kotlin.memberProperties.forEach { memberProperty ->
                 memberProperty.annotations.forEach { annotation ->
                     updateHandlerMap(annotation, bean, memberProperty)
@@ -76,8 +76,10 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
         handler: PulsarExceptionHandler
     ) {
         if (map.containsKey(exception)) {
-            log.error("Multiple exception handlers defined for the same exception" +
-                    " - ${map[exception]}, $handler, will use the last processed one")
+            log.error(
+                "Multiple exception handlers defined for the same exception" +
+                    " - ${map[exception]}, $handler, will use the last processed one"
+            )
         }
         map[exception] = handler
     }
@@ -89,12 +91,13 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
      * effectively stopping the application from coming up
      */
     private fun isPulsarExceptionHandler(property: KProperty1<Any, *>): Boolean {
-        //Adding a .javaType in the condition to make it compatible with KProperty loaded from a Java class
-        if(property.returnType.javaType == PulsarExceptionHandler::class.createType().javaType) {
+        // Adding a .javaType in the condition to make it compatible with KProperty loaded from a Java class
+        if (property.returnType.javaType == PulsarExceptionHandler::class.createType().javaType) {
             return true
         }
         throw IncompatiblePulsarExceptionHandlerException(
-            "${property.name} does not conform to the contract defined by PulsarExceptionHandler")
+            "${property.name} does not conform to the contract defined by PulsarExceptionHandler"
+        )
     }
 
     /**
@@ -131,6 +134,6 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
     ) {
         pulsarExceptionHandler?.also {
             it.handleException(exceptionHandlerParams)
-        }?: log.error("No exception handler found for ${exceptionHandlerParams.exception}")
+        } ?: log.error("No exception handler found for ${exceptionHandlerParams.exception}")
     }
 }

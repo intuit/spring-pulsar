@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Topic(
     val topicNames: String = StringUtils.EMPTY,
-    val topicsPattern: String = StringUtils.EMPTY,
+    val topicsPattern: String = StringUtils.EMPTY
 )
 
 /**
@@ -23,7 +23,7 @@ annotation class Topic(
  * and uses it to resolve property path definitions
  * in [Topic]
  */
-fun Topic.map(resolver: IAnnotationPropertyResolver) : TopicConfig {
+fun Topic.map(resolver: IAnnotationPropertyResolver): TopicConfig {
     return TopicConfig(
         topicNames = resolver.resolve(this.topicNames),
         topicsPattern = resolver.resolve(this.topicsPattern)

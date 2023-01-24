@@ -52,7 +52,7 @@ data class SubscriptionConfig(
  */
 data class TopicConfig(
     val topicNames: String = StringUtils.EMPTY,
-    val topicsPattern: String = StringUtils.EMPTY,
+    val topicsPattern: String = StringUtils.EMPTY
 )
 
 /**

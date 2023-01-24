@@ -15,7 +15,8 @@ import java.io.IOException
 
 @ExtendWith(MockitoExtension::class)
 class PulsarExceptionHandlerAspectTest(
-    @Mock private val pulsarExceptionAnnotationProcessor: PulsarExceptionAnnotationProcessor) {
+    @Mock private val pulsarExceptionAnnotationProcessor: PulsarExceptionAnnotationProcessor
+) {
 
     @InjectMocks
     private lateinit var pulsarExceptionHandlerAspect: PulsarExceptionHandlerAspect
@@ -45,8 +46,10 @@ class PulsarExceptionHandlerAspectTest(
         pulsarExceptionHandlerAspect.handleConsumerExceptions(proceedingJoinPoint, consumerAction)
         verify(proceedingJoinPoint, times(1)).proceed()
         verify(pulsarExceptionAnnotationProcessor, times(1))
-            .onPulsarConsumerException(PulsarExceptionHandlerAspect
-                .ExceptionHandlerParams(exception, consumerAction.action))
+            .onPulsarConsumerException(
+                PulsarExceptionHandlerAspect
+                    .ExceptionHandlerParams(exception, consumerAction.action)
+            )
     }
 
     @Test
@@ -65,8 +68,9 @@ class PulsarExceptionHandlerAspectTest(
         pulsarExceptionHandlerAspect.handleProducerExceptions(proceedingJoinPoint, producerAction)
         verify(proceedingJoinPoint, times(1)).proceed()
         verify(pulsarExceptionAnnotationProcessor, times(1))
-            .onPulsarProducerException(PulsarExceptionHandlerAspect
-                .ExceptionHandlerParams(exception, producerAction.action))
+            .onPulsarProducerException(
+                PulsarExceptionHandlerAspect
+                    .ExceptionHandlerParams(exception, producerAction.action)
+            )
     }
-
 }

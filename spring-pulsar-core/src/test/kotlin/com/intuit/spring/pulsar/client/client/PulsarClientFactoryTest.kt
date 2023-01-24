@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.mockito.MockedStatic
 import org.mockito.Mockito
 import org.mockito.Mockito.`when`
@@ -40,7 +41,7 @@ class PulsarClientFactoryTest {
         pulsarClient = mock(PulsarClient::class.java)
         clientConfig = mock(PulsarClientConfig::class.java)
         pulsarClientBuidler = mock(ClientBuilder::class.java)
-        mockedPulsarClient =  Mockito.mockStatic(PulsarClient::class.java)
+        mockedPulsarClient = Mockito.mockStatic(PulsarClient::class.java)
         mockedPulsarClient.`when`<ClientBuilder>(PulsarClient::builder).thenReturn(pulsarClientBuidler)
         `when`(pulsarClientBuidler.build()).thenReturn(pulsarClient)
         `when`(clientConfig.auth).thenReturn(TestData.getAuthConfig())
@@ -52,8 +53,6 @@ class PulsarClientFactoryTest {
     fun tearDown() {
         mockedPulsarClient.close()
     }
-
-
 
     @Test
     fun `validate withNetwork with all properties set`() {
@@ -199,7 +198,7 @@ class PulsarClientFactoryTest {
         clientFactory = PulsarClientFactory(clientConfig)
         val pulsarClient = mockPulsarClient()
         `when`(pulsarClient.close()).thenThrow(PulsarClientException::class.java)
-        clientFactory.callPrivateFunc("close")
+        assertThrows<Exception> { clientFactory.callPrivateFunc("close") }
         verify(pulsarClient, times(1)).close()
     }
 
@@ -209,7 +208,7 @@ class PulsarClientFactoryTest {
             serviceUrl = "serviceurl",
             auth = PulsarClientConfig.PulsarAuthConfig(
                 userName = "username",
-                password = "password",
+                password = "password"
             ),
             statsInterval = "100ms"
         )

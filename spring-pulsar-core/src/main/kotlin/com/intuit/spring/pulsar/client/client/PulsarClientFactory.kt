@@ -2,8 +2,8 @@ package com.intuit.spring.pulsar.client.client
 
 import com.intuit.spring.pulsar.client.config.PulsarClientConfig
 import com.intuit.spring.pulsar.client.constant.AuthConstants
+import com.intuit.spring.pulsar.client.exceptions.PulsarSpringException
 import com.intuit.spring.pulsar.client.utils.parseDuration
-import mu.KotlinLogging
 import org.apache.pulsar.client.api.AuthenticationFactory
 import org.apache.pulsar.client.api.ClientBuilder
 import org.apache.pulsar.client.api.PulsarClient
@@ -21,13 +21,12 @@ import javax.annotation.PreDestroy
 @Component
 class PulsarClientFactory(
     clientConfig: PulsarClientConfig
-) : IPulsarClientFactory {
+): IPulsarClientFactory {
 
     /**
      * Create client object from the client configuration. If client cannot be created with
      * the given config, Pulsar will throw a RuntimeException
      */
-    private val logger = KotlinLogging.logger {}
     private var pulsarClientBuilder: ClientBuilder = PulsarClient.builder()
     private val pulsarClient: PulsarClient = buildClient(clientConfig)
 
@@ -42,7 +41,7 @@ class PulsarClientFactory(
         try {
             pulsarClient.close()
         } catch (exception: Exception) {
-            logger.error { "Exception caught while closing client: ${exception.stackTraceToString()}" }
+            throw PulsarSpringException(message = "Error while closing client",cause = exception)
         }
     }
 
@@ -167,12 +166,7 @@ class PulsarClientFactory(
      * Then uses pulsar client builder to build pulsar client.
      */
     private fun buildClient(clientConfig: PulsarClientConfig): PulsarClient {
-        logger.info { "Creating client with config $clientConfig" }
         withClientConfig(clientConfig)
-        val pulsarClient =  pulsarClientBuilder.build()
-        logger.info { "Client created successfully $pulsarClient" }
-        return pulsarClient
+        return pulsarClientBuilder.build()
     }
 }
-
-

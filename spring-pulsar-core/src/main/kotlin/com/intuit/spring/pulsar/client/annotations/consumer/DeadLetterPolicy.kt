@@ -26,7 +26,7 @@ annotation class DeadLetterPolicy(
  * and uses it to resolve property path definitions
  * in [DeadLetterPolicy]
  */
-fun DeadLetterPolicy.map(resolver: IAnnotationPropertyResolver) : DeadLetterPolicyConfig {
+fun DeadLetterPolicy.map(resolver: IAnnotationPropertyResolver): DeadLetterPolicyConfig {
     return DeadLetterPolicyConfig(
         negativeAckRedeliveryDelay = resolver.resolve(this.negativeAckRedeliveryDelay),
         maxRedeliverCount = resolver.resolve(this.maxRedeliverCount).toInt(),

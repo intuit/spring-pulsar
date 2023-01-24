@@ -16,7 +16,7 @@ annotation class Property(
  * and uses it to resolve property path definitions
  * in [Property]
  */
-fun Property.map(resolver: IAnnotationPropertyResolver) : PropertyConfig {
+fun Property.map(resolver: IAnnotationPropertyResolver): PropertyConfig {
     return PropertyConfig(
         key = resolver.resolve(this.key),
         value = resolver.resolve(this.value)
