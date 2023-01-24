@@ -1,5 +1,8 @@
 Spring for Apache Pulsar 
 ==================
+
+[![Join the chat at https://gitter.im/spring-pulsar/community](https://badges.gitter.im/spring-pulsar/community.svg)](https://gitter.im/spring-pulsar/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Spring For Apache Pulsar allows any java/kotlin application to easily integrate with Apache Pulsar avoiding boilerplate code.
 It supports configuration and annotation based creation of pulsar components.
 
