@@ -21,7 +21,7 @@ Defining producer or consumer is a step-by-step process as described below.
 For Spring Pulsar client to work you need to add spring-pulsar library as a dependency
 in your project. So go ahead and add below dependency in your application.
 
-#### For Maven based application
+For Maven application
 
     <dependency>
         <groupId>com.intuit.pulsar</groupId>
@@ -29,7 +29,7 @@ in your project. So go ahead and add below dependency in your application.
         <version>${spring-pulsar-core.version}</version>
     </dependency>
 
-#### For Gradle based application
+For Gradle application
 
     dependencies {
         implementation 'com.intuit.pulsar:spring-pulsar-core:$springPulsarCoreVersion'
