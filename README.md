@@ -17,6 +17,7 @@ Defining producer or consumer is a step-by-step process as described below.
 3. [Create producer using template.](#define-producer)
 4. [Create consumer using annotation.](#define-consumer)
 5. [Define error handlers.](#error-handling)
+6. [Sample applications for reference.](#sample-applications)
 
 ## Add dependencies
 For Spring Pulsar client to work you need to add spring-pulsar library as a dependency
@@ -363,6 +364,17 @@ Ex:
         }
     }
 
+## Sample Applications
+
+If the above descriptions are not enough , and you want to see some sample applications with working code on
+how to use the library, worry not we have you covered. 
+
+We have written some sample spring boot application both in java and kotlin for you to refer to. You can find the 
+samples [here](https://github.com/intuit/spring-pulsar/tree/reformat/spring-pulsar-samples). The samples project also has a README which describes in detail the sample applications and how to run them in your
+local machine. If you are not interested in running these samples and just want to look at the code directly you can visit below links.
+
+* [Kotlin Samples](https://github.com/intuit/spring-pulsar/tree/reformat/spring-pulsar-samples/kotlin-sample)
+* [Java Samples](https://github.com/intuit/spring-pulsar/tree/reformat/spring-pulsar-samples/java-sample)
 
 # Getting Started
 
