@@ -43,7 +43,7 @@ of the spring-pulsar-core package in your Spring boot application.
 Pulsar spring library will automatically detect the client configuration present in your application and generate client
 using defined properties. See the details below on how to create client.
 
-**Add scan base package on pulsar-spring-core package**
+**Add scan base package on spring-pulsar-core package**
 
 For Kotlin application 
 
