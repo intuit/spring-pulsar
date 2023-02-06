@@ -382,7 +382,7 @@ Refer to the [Getting Started](.github/GETTINGSTARTED.md) section which contains
 
 # Code of Conduct
 
-Please see our [Code of conduct](CODEOFCONDUCT.md).
+Please see our [Code of conduct](CODE_OF_CONDUCT.md).
 
 # Resources
 
