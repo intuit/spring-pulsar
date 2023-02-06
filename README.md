@@ -3,7 +3,13 @@ Spring for Apache Pulsar
 
 
 [![Join the chat at https://gitter.im/spring-pulsar/community](https://badges.gitter.im/spring-pulsar/community.svg)](https://gitter.im/spring-pulsar/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/intuit/spring-pulsar/install.yml?label=build)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/intuit/spring-pulsar/release.yml?label=release)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/intuit/spring-pulsar)
+![GitHub issues](https://img.shields.io/github/issues/intuit/spring-pulsar)
+![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/intuit/spring-pulsar?include_prereleases&label=release-version)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/intuit/spring-pulsar)
+![Sonatype Nexus (Snapshots)](https://img.shields.io/nexus/s/com.intuit.pulsar/spring-pulsar-core?server=https%3A%2F%2Foss.sonatype.org)
 
 Spring For Apache Pulsar allows any java/kotlin application to easily integrate with Apache Pulsar avoiding boilerplate code.
 It supports configuration and annotation based creation of pulsar components.
