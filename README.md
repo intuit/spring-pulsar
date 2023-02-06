@@ -16,6 +16,7 @@ Defining producer or consumer is a step-by-step process as described below.
 2. [Define client configuration in property source file.](#define-client-configuration)
 3. [Create producer using template.](#define-producer)
 4. [Create consumer using annotation.](#define-consumer)
+5. [Define error handlers.](#error-handling)
 
 ## Add dependencies
 For Spring Pulsar client to work you need to add spring-pulsar library as a dependency
