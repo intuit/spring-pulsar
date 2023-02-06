@@ -30,11 +30,6 @@ So go ahead and add below dependency in your application pom.
                 <artifactId>spring-pulsar-core</artifactId>
                 <version>${spring-pulsar-core.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.pulsar</groupId>
-                <artifactId>pulsar-client</artifactId>
-                <version>${pulsar-client.version}</version>
-            </dependency>
 
 
 ## Define Client Configuration
@@ -47,7 +42,13 @@ using it. See the details below on how to create client.
 
 **Add scan base package on pulsar-spring-core package**
 
+For Kotlin application 
+
 `@SpringBootApplication(scanBasePackages = ["com.intuit.spring.pulsar.client"])`
+
+For Java application
+`@SpringBootApplication(scanBasePackages = {"com.intuit.spring.pulsar.client"})`
+
 
 **Define client config in application.yml**
 
@@ -97,6 +98,44 @@ your application and use it to publish messages as below.
         }
     }
 
+Below is the code snippet to define producer template and using it in Java based application.
+
+    @Configuration
+    class ProducerConfiguration {
+
+        private ApplicationContext applicationContext;
+
+        ProducerConfiguration(ApplicationContext applicationContext) {
+            this.applicationContext = applicationContext;
+        }
+
+        @Bean
+        public PulsarProducerTemplate<byte[]> producerTemplate() {
+            Map<String, String> config = new HashMap<>();
+            config.put(TOPIC_NAME, "my-test-topic");
+            config.put(AUTO_FLUSH, "true");
+
+            return new PulsarProducerTemplateImpl(
+                Schema.BYTES,
+                config,
+                applicationContext);
+        }
+    }
+
+    @Component
+    public class SomeClass {
+
+	    private final PulsarProducerTemplate<byte[]> producerTemplate;
+
+	    public SomeClass(PulsarProducerTemplate<byte[]> producerTemplate) {
+		    this.producerTemplate = producerTemplate;
+	    }
+
+        public void sendMessage(String message) {
+            this.producerTemplate.send(message.getBytes(StandardCharsets.UTF_8),null,new HashMap<String,String>(),null);
+        }
+
+    }
 
 ## Define Consumer
 
@@ -187,7 +226,6 @@ below example.
 
       @Component
       @PulsarConsumer(
-           client = "Client_Name",  #Name of the client defined in properties/yaml
            topic = Topic(
               topicNames = "Topic_names"
            ),
@@ -195,6 +233,25 @@ below example.
               subscriptionName = "Subscription_Name",
               subscriptionType = "Subscription_Type"))
        class MyMessageListener: MessageListener<MessageData> {
+            override fun received(
+                  org.apache.pulsar.client.api.Consumer<MessageData> consumer,
+                  Message<MessageData> message
+            ) {
+                  // Code to handle mesasge
+            }
+       }
+
+Below is the code snippet to define consumer in Java based application
+
+      @Component
+      @PulsarConsumer(
+           topic = @Topic(
+              topicNames = "Topic_names"
+           ),
+           subscription = @Subscription(
+              subscriptionName = "Subscription_Name",
+              subscriptionType = "Subscription_Type"))
+       class MyMessageListener implements MessageListener<MessageData> {
             override fun received(
                   consumer: org.apache.pulsar.client.api.Consumer<MessageData>?,
                   message: Message<MessageData>?
