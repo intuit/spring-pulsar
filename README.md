@@ -54,7 +54,9 @@ For Java application
     `@SpringBootApplication(scanBasePackages = {"com.intuit.spring.pulsar.client"})`
 
 
-**Define client config in application.yml**
+**Define client config in applications property source**
+
+In application.yml
 
 ```
     pulsar:
@@ -68,7 +70,7 @@ For Java application
                 password: Password
 ```
 
-**Define client config in application.properties**
+In application.properties
 
 ```
     pulsar.client.serviceUrl=pulsar+ssl://your.service.url:6651
@@ -112,7 +114,7 @@ your application and use it to publish messages as below.
         }
     }
 
-Below is the code snippet to define producer template and using it in Java based application.
+Below is the code snippet to define producer template in Java based application.
 
     @Configuration
     class ProducerConfiguration {
