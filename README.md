@@ -12,10 +12,10 @@ It supports configuration and annotation based creation of pulsar components.
 
 Defining producer or consumer is a step-by-step process as described below.
 
-1. Add spring-pulsar library as dependency in your project.
-2. Define client configuration in property/yaml file.
-3. Create producer using template.
-4. Create consumer using annotation.
+1. [Add spring-pulsar library as dependency in your project.](#add-dependencies)
+2. [Define client configuration in property source file.](#define-client-configuration)
+3. [Create producer using template.](#define-producer)
+4. [Create consumer using annotation.](#define-consumer)
 
 ## Add dependencies
 For Spring Pulsar client to work you need to add spring-pulsar library as a dependency
