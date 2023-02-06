@@ -12,25 +12,30 @@ It supports configuration and annotation based creation of pulsar components.
 
 Defining producer or consumer is a step-by-step process as described below.
 
-1. Add spring-pulsar-core and related dependencies in your project's pom.xml.
-2. Define client configuration in property/yaml file.
-3. Create producer using template.
-4. Create consumer using annotation.
+1. [Add spring-pulsar library as dependency in your project.](#add-dependencies)
+2. [Define client configuration in property source file.](#define-client-configuration)
+3. [Create producer using template.](#define-producer)
+4. [Create consumer using annotation.](#define-consumer)
+5. [Define error handlers.](#error-handling)
+6. [Sample applications for reference.](#sample-applications)
 
 ## Add dependencies
+For Spring Pulsar client to work you need to add spring-pulsar library as a dependency
+in your project. So go ahead and add below dependency in your application.
 
-For Spring Pulsar client to work you need two dependencies in your application as below.
-* spring-pulsar-core
-* pulsar-client
+For Maven application
 
-So go ahead and add below dependency in your application pom.
+    <dependency>
+        <groupId>com.intuit.pulsar</groupId>
+        <artifactId>spring-pulsar-core</artifactId>
+        <version>${spring-pulsar-core.version}</version>
+    </dependency>
 
-            <dependency>
-                <groupId>com.intuit.pulsar</groupId>
-                <artifactId>spring-pulsar-core</artifactId>
-                <version>${spring-pulsar-core.version}</version>
-            </dependency>
+For Gradle application
 
+    dependencies {
+        implementation 'com.intuit.pulsar:spring-pulsar-core:$springPulsarCoreVersion'
+    }
 
 ## Define Client Configuration
 
@@ -38,30 +43,43 @@ To create pulsar client you need to define the client properties in your applica
 of the spring-pulsar-core package in your Spring boot application.
 
 Pulsar spring library will automatically detect the client configuration present in your application and generate client
-using it. See the details below on how to create client.
+using defined properties. See the details below on how to create client.
 
-**Add scan base package on pulsar-spring-core package**
+**Add scan base package on spring-pulsar-core package**
 
 For Kotlin application 
 
-`@SpringBootApplication(scanBasePackages = ["com.intuit.spring.pulsar.client"])`
+    `@SpringBootApplication(scanBasePackages = ["com.intuit.spring.pulsar.client"])`
 
 For Java application
-`@SpringBootApplication(scanBasePackages = {"com.intuit.spring.pulsar.client"})`
+
+    `@SpringBootApplication(scanBasePackages = {"com.intuit.spring.pulsar.client"})`
 
 
-**Define client config in application.yml**
+**Define client config in applications property source**
+
+In application.yml
 
 ```
-pulsar:
-  client:
-    serviceUrl: pulsar+ssl://your.service.url:6651
-    tls:
-      tlsAllowInsecureConnection: true
-      tlsHostnameVerificationEnable: false
-    auth:
-      username: UserName
-      password: Password
+    pulsar:
+        client:
+            serviceUrl: pulsar+ssl://your.service.url:6651
+            tls:
+                tlsAllowInsecureConnection: true
+                tlsHostnameVerificationEnable: false
+            auth:
+                username: UserName
+                password: Password
+```
+
+In application.properties
+
+```
+    pulsar.client.serviceUrl=pulsar+ssl://your.service.url:6651
+    pulsar.client.tls.tlsAllowInsecureConnection=true
+    pulsar.client.tls.tlsHostnameVerificationEnable=false
+    pulsar.client.auth.username=UserName
+    pulsar.client.auth.password=Password
 ```
 
 ## Define Producer
@@ -70,7 +88,7 @@ In order to create a producer, you need to register a producer template bean wit
 template is registered, you can autowire the template anywhere in your application and use methods like send() and 
 sendAsync() to publish messages to topic.
 
-Below code shows an example of defining a producer template and using it to publish messages.
+Below code shows an example of defining a producer template.
 
     @Configuration
     open class ProducerConfiguration(val applicationContext: ApplicationContext) {
@@ -98,7 +116,7 @@ your application and use it to publish messages as below.
         }
     }
 
-Below is the code snippet to define producer template and using it in Java based application.
+Below is the code snippet to define producer template in Java based application.
 
     @Configuration
     class ProducerConfiguration {
@@ -122,6 +140,8 @@ Below is the code snippet to define producer template and using it in Java based
         }
     }
 
+Below code uses the producer template define above to produce messages in a Java based application.
+
     @Component
     public class SomeClass {
 
@@ -141,17 +161,17 @@ Below is the code snippet to define producer template and using it in Java based
 
 Defining a consumer is a two-step process as described below.
 * First, you define a consumer listener bean.
-* Second, you register your consumer listener class as pulsar consumer by annotating it with @PulsarConsumer.
+* Second, you register your consumer listener bean as pulsar consumer by annotating it with @PulsarConsumer.
 
 ### Define Listener
 
 Create a consumer listener bean by implementing either of the below interfaces. 
 
-* com.intuit.spring.pulsar.client.consumer.listener.IPulsarListener<?>
-* org.apache.pulsar.client.api.MessageListener<?>
+* [IPulsarListener<?>](https://github.com/intuit/spring-pulsar/blob/master/spring-pulsar-core/src/main/kotlin/com/intuit/spring/pulsar/client/consumer/listener/IPulsarListener.kt)
+* [MessageListener<?>](https://github.com/apache/pulsar/blob/master/pulsar-client-api/src/main/java/org/apache/pulsar/client/api/MessageListener.java)
 
 
-#### Implementing com.intuit.spring.pulsar.client.consumer.listener.IPulsarListener
+#### Implementing [IPulsarListener<?>](https://github.com/intuit/spring-pulsar/blob/master/spring-pulsar-core/src/main/kotlin/com/intuit/spring/pulsar/client/consumer/listener/IPulsarListener.kt)
 
 This interface gives you control over the message and acknowledgement process and also exposes the internal Message and Consumer object.Take a look at below example.
 
@@ -194,7 +214,7 @@ This interface gives you control over the message and acknowledgement process an
 * Automation delegation to onSuccess and onException to provide unified handling capabilities
 * Preferred when corrective action required when an exception occurs is consistent irrespective of the exception
 
-#### Implementing org.apache.pulsar.client.api.MessageListener
+#### Implementing [MessageListener<?>](https://github.com/apache/pulsar/blob/master/pulsar-client-api/src/main/java/org/apache/pulsar/client/api/MessageListener.java)
 
 Standard MessageListener from pulsar gives you full control over what you want to do when your listener receives a message.
 
@@ -219,9 +239,9 @@ Standard MessageListener from pulsar gives you full control over what you want t
 ### Register Listener as Consumer
 
 Once you have created a consumer listener class and registered it as a spring bean, you can now identify your listener
-class as a pulsar consumer by annotating it with @PulsarConsumer annotation defined by pulsar-spring-client.
+class as a pulsar consumer by annotating it with **@PulsarConsumer** annotation defined by pulsar-spring-client.
 
-In this @PulsarConsumer annotation you can pass all the configuration related to the consumer as can be seen in the
+In this **@PulsarConsumer** annotation you can pass all the configuration related to the consumer as can be seen in the
 below example.
 
       @Component
@@ -344,6 +364,17 @@ Ex:
         }
     }
 
+## Sample Applications
+
+If the above descriptions are not enough , and you want to see some sample applications with working code on
+how to use the library, worry not we have you covered. 
+
+We have written some sample spring boot application both in java and kotlin for you to refer to. You can find the 
+samples [here](https://github.com/intuit/spring-pulsar/tree/master/spring-pulsar-samples). The samples project also has a README which describes in detail the sample applications and how to run them in your
+local machine. If you are not interested in running these samples and just want to look at the code directly you can visit below links.
+
+* [Kotlin Samples](https://github.com/intuit/spring-pulsar/tree/master/spring-pulsar-samples/kotlin-sample)
+* [Java Samples](https://github.com/intuit/spring-pulsar/tree/master/spring-pulsar-samples/java-sample)
 
 # Getting Started
 
