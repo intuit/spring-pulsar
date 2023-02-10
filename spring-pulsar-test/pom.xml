@@ -19,7 +19,7 @@
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <spring-boot-starter-test.version>2.7.4</spring-boot-starter-test.version>
         <!--        TODO - update this to release version-->
-        <spring-pulsar-core.version>1.0.0-SNAPSHOT</spring-pulsar-core.version>
+        <spring-pulsar-core.version>1.0.0</spring-pulsar-core.version>
     </properties>
 
     <artifactId>spring-pulsar-test</artifactId>
