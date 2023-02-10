@@ -1,8 +1,15 @@
 package com.intuit.pulsar.tests
 
+import com.intuit.pulsar.tests.TestConstants.EXCLUSIVE_PRODUCER
+import com.intuit.pulsar.tests.TestConstants.FAILOVER_PRODUCER
+import com.intuit.pulsar.tests.TestConstants.KEY_SHARED_PRODUCER
+import com.intuit.pulsar.tests.TestConstants.SHARED_PRODUCER
+import com.intuit.pulsar.tests.TestUtils.publishMessages
+import com.intuit.pulsar.tests.consumers.*
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
@@ -12,20 +19,61 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 @EnableAutoConfiguration
-@SpringBootTest(classes = [TestConfig::class, TestProducerConfiguration::class, TestConsumer::class])
+@SpringBootTest(classes = [
+    TestConfig::class,
+    TestProducerConfiguration::class,
+    KeySharedConsumer::class,
+    SharedConsumer::class,
+    ExclusiveConsumer::class,
+    FailOverConsumer::class])
 @TestPropertySource("classpath:application.yml")
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SpringPulsarIntegrationTests {
 
     @Autowired
-    private lateinit var producerTemplate: PulsarProducerTemplate<ByteArray>
+    private lateinit var producerTemplates: Map<String, PulsarProducerTemplate<ByteArray>>
 
     @Autowired
-    private lateinit var consumer: TestConsumer
+    private lateinit var keySharedConsumer: KeySharedConsumer
+
+    @Autowired
+    private lateinit var sharedConsumer: SharedConsumer
+
+    @Autowired
+    private lateinit var exclusiveConsumer: ExclusiveConsumer
+
+    @Autowired
+    private lateinit var failoverConsumer: FailOverConsumer
 
     @Test
-    fun `validate producer template send()`() {
-        producerTemplate.send("test message".toByteArray())
-        val messageData = consumer.getReceivedMessage()
-        assertEquals("test message", String(messageData!!))
+    fun `validate key shared consumer`() {
+        publishMessages(producerTemplates[KEY_SHARED_PRODUCER]!!, messageCount = 100)
+        Thread.sleep(10)
+        assertEquals(100, keySharedConsumer.messageStore.fetchMessageCount())
+        assertEquals(2, keySharedConsumer.messageStore.getConsumerCount())
+    }
+
+    @Test
+    fun `validate shared consumer`() {
+        publishMessages(producerTemplates[SHARED_PRODUCER]!!, messageCount = 100)
+        Thread.sleep(10)
+        assertEquals(100, sharedConsumer.messageStore.fetchMessageCount())
+        assertEquals(2,sharedConsumer.messageStore.getConsumerCount())
+    }
+
+    @Test
+    fun `validate exclusive consumer`() {
+        publishMessages(producerTemplates[EXCLUSIVE_PRODUCER]!!, messageCount = 100)
+        Thread.sleep(10)
+        assertEquals(100, exclusiveConsumer.messageStore.fetchMessageCount())
+        assertEquals(1,exclusiveConsumer.messageStore.getConsumerCount())
+    }
+
+    @Test
+    fun `validate fail over consumer`() {
+        publishMessages(producerTemplates[FAILOVER_PRODUCER]!!, messageCount = 10)
+        Thread.sleep(1000)
+        assertEquals(10, failoverConsumer.messageStore.fetchMessageCount())
+        assertEquals(1,failoverConsumer.messageStore.getConsumerCount())
     }
 }
