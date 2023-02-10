@@ -1,4 +1,4 @@
-package com.intuit.pulsar.tests
+package com.intuit.pulsar.tests.utils
 
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
 

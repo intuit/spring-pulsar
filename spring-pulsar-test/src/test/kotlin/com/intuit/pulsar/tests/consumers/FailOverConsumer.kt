@@ -1,6 +1,6 @@
 package com.intuit.pulsar.tests.consumers
 
-import com.intuit.pulsar.tests.TestConstants
+import com.intuit.pulsar.tests.utils.TestConstants
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
 import com.intuit.spring.pulsar.client.annotations.consumer.Subscription
 import com.intuit.spring.pulsar.client.annotations.consumer.Topic
