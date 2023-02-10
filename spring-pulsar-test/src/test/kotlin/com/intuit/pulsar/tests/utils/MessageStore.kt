@@ -1,8 +1,7 @@
-package com.intuit.pulsar.tests
+package com.intuit.pulsar.tests.utils
 
 import org.apache.pulsar.client.api.Consumer
 import java.util.concurrent.ConcurrentHashMap
-import java.util.function.BiFunction
 
 class MessageStore<T>(var messageCountMap: ConcurrentHashMap<Consumer<T>,Int> = ConcurrentHashMap()) {
 

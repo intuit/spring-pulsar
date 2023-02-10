@@ -1,5 +1,6 @@
-package com.intuit.pulsar.tests
+package com.intuit.pulsar.tests.producers
 
+import com.intuit.pulsar.tests.utils.TestConstants
 import com.intuit.spring.pulsar.client.config.PulsarProducerConfig
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplateImpl

@@ -1,11 +1,12 @@
 package com.intuit.pulsar.tests
 
-import com.intuit.pulsar.tests.TestConstants.EXCLUSIVE_PRODUCER
-import com.intuit.pulsar.tests.TestConstants.FAILOVER_PRODUCER
-import com.intuit.pulsar.tests.TestConstants.KEY_SHARED_PRODUCER
-import com.intuit.pulsar.tests.TestConstants.SHARED_PRODUCER
-import com.intuit.pulsar.tests.TestUtils.publishMessages
+import com.intuit.pulsar.tests.utils.TestConstants.EXCLUSIVE_PRODUCER
+import com.intuit.pulsar.tests.utils.TestConstants.FAILOVER_PRODUCER
+import com.intuit.pulsar.tests.utils.TestConstants.KEY_SHARED_PRODUCER
+import com.intuit.pulsar.tests.utils.TestConstants.SHARED_PRODUCER
+import com.intuit.pulsar.tests.utils.TestUtils.publishMessages
 import com.intuit.pulsar.tests.consumers.*
+import com.intuit.pulsar.tests.producers.TestProducerConfiguration
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
