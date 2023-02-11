@@ -49,7 +49,7 @@ class SpringPulsarIntegrationTests {
     @Test
     fun `validate key shared consumer`() {
         publishMessages(producerTemplates[KEY_SHARED_PRODUCER]!!, messageCount = 100)
-        Thread.sleep(10)
+        Thread.sleep(1000)
         assertEquals(100, keySharedConsumer.messageStore.fetchMessageCount())
         assertEquals(2, keySharedConsumer.messageStore.getConsumerCount())
     }
@@ -57,7 +57,7 @@ class SpringPulsarIntegrationTests {
     @Test
     fun `validate shared consumer`() {
         publishMessages(producerTemplates[SHARED_PRODUCER]!!, messageCount = 100)
-        Thread.sleep(10)
+        Thread.sleep(1000)
         assertEquals(100, sharedConsumer.messageStore.fetchMessageCount())
         assertEquals(2,sharedConsumer.messageStore.getConsumerCount())
     }
@@ -65,7 +65,7 @@ class SpringPulsarIntegrationTests {
     @Test
     fun `validate exclusive consumer`() {
         publishMessages(producerTemplates[EXCLUSIVE_PRODUCER]!!, messageCount = 100)
-        Thread.sleep(10)
+        Thread.sleep(1000)
         assertEquals(100, exclusiveConsumer.messageStore.fetchMessageCount())
         assertEquals(1,exclusiveConsumer.messageStore.getConsumerCount())
     }
