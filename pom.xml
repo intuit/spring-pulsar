@@ -320,7 +320,7 @@
                     <version>${dokka.version}</version>
                     <executions>
                         <execution>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>javadocJar</goal>
                             </goals>
@@ -350,7 +350,7 @@
                     <executions>
                         <execution>
                             <id>attach-sources</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>jar</goal>
                             </goals>
@@ -381,7 +381,7 @@
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>
-                            <phase>deploy</phase>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>sign</goal>
                             </goals>
