@@ -7,9 +7,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Setup github user email
-        run: github config --global user.email "maven-release@gmail.com"
+        run: git config --global user.email "maven-release@gmail.com"
       - name: Setup github user name
-        run: github config --global user.name "maven-release"
+        run: git config --global user.name "maven-release"
       - name: Start pulsar cluster
         run: docker run -d  -p 6650:6650  -p 8080:8080 -h pulsar --name pulsar apachepulsar/pulsar:latest bin/pulsar standalone
       - name: Install gpg secret key
