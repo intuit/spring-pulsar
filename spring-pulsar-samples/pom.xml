@@ -5,12 +5,12 @@
     <parent>
         <groupId>com.intuit.pulsar</groupId>
         <artifactId>spring-pulsar</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <groupId>com.intuit.pulsar</groupId>
     <artifactId>spring-pulsar-samples</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>pom</packaging>
 
@@ -29,55 +29,51 @@
         <kotlin-stdlib-jdk8.version>1.7.20</kotlin-stdlib-jdk8.version>
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <spring-boot-starter-test.version>2.7.4</spring-boot-starter-test.version>
-<!--        TODO - update this to release version-->
-        <spring-pulsar-core.version>1.0.0</spring-pulsar-core.version>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-web</artifactId>
-                <version>${spring-boot.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.module</groupId>
-                <artifactId>jackson-module-kotlin</artifactId>
-                <version>${jackson-module-kotlin.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-reflect</artifactId>
-                <version>${kotlin-reflect.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-stdlib-jdk8</artifactId>
-                <version>${kotlin-stdlib-jdk8.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-tomcat</artifactId>
-                <scope>provided</scope>
-                <version>${spring-boot-starter-tomcat.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
-                <version>${spring-boot-starter-test.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.intuit.pulsar</groupId>
-                <artifactId>spring-pulsar-core</artifactId>
-                <version>${spring-pulsar-core.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${jackson-core.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
+            <version>${jackson-module-kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin-reflect.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin-stdlib-jdk8.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+            <version>${spring-boot-starter-tomcat.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <version>${spring-boot-starter-test.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.intuit.pulsar</groupId>
+            <artifactId>spring-pulsar-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson-core.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>
