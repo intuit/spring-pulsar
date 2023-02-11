@@ -47,6 +47,7 @@
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <dokka.version>1.7.20</dokka.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
+        <maven-release-plugin.version>2.5.3</maven-release-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -388,8 +389,23 @@
                         </execution>
                     </executions>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>${maven-release-plugin.version}</version>
+                    <configuration>
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <goals>deploy</goals>
+                    </configuration>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
 
+    <scm>
+        <connection>scm:git:git://github.com/intuit/spring-pulsar.git</connection>
+        <developerConnection>scm:git:ssh://github.com:intuit/spring-pulsar.git</developerConnection>
+        <url>https://github.com/intuit/spring-pulsar</url>
+    </scm>
+    
 </project>
