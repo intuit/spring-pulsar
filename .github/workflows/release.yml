@@ -6,6 +6,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Start pulsar cluster
+        run: docker run -d  -p 6650:6650  -p 8080:8080 -h pulsar --name pulsar apachepulsar/pulsar:latest bin/pulsar standalone
       - name: Install gpg secret key
         run: cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
       - name: Set up Maven Central Repository
@@ -18,6 +20,10 @@ jobs:
           server-password: MAVEN_PASSWORD
       - name: Publish package
         run: mvn --no-transfer-progress --batch-mode -Darguments="-Dgpg.passphrase=${{ secrets.OSSRH_GPG_PASSPHRASE}}" -DautoVersionSubmodules=true  release:clean release:prepare release:perform
+      - name: Stop pulsar cluster
+        run: docker container stop pulsar
+      - name: Remove pulsar container
+        run: docker container rm pulsar
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
