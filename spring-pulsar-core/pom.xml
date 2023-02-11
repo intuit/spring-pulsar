@@ -44,12 +44,12 @@
     </developer>
   </developers>
 
-  <scm>
-    <connection>scm:git:ssh://github.com/intuit/spring-pulsar.git</connection>
-    <developerConnection>scm:git:ssh://github.com/intuit/spring-pulsar.git</developerConnection>
-    <url>https://github.com/intuit/spring-pulsar</url>
-  </scm>
-
+    <scm>
+        <connection>scm:git:https://github.com/intuit/spring-pulsar.git</connection>
+        <developerConnection>scm:git:https://github.com/intuit/spring-pulsar.git</developerConnection>
+        <url>https://github.com/intuit/spring-pulsar</url>
+    </scm>
+  
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
