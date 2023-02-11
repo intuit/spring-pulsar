@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.intuit.pulsar</groupId>
         <artifactId>spring-pulsar</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -18,12 +18,10 @@
         <kotlin-stdlib-jdk8.version>1.7.20</kotlin-stdlib-jdk8.version>
         <spring-boot-starter-tomcat.version>2.7.4</spring-boot-starter-tomcat.version>
         <spring-boot-starter-test.version>2.7.4</spring-boot-starter-test.version>
-        <!--        TODO - update this to release version-->
-        <spring-pulsar-core.version>1.0.0</spring-pulsar-core.version>
     </properties>
 
     <artifactId>spring-pulsar-test</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <packaging>jar</packaging>
 
@@ -63,7 +61,7 @@
         <dependency>
             <groupId>com.intuit.pulsar</groupId>
             <artifactId>spring-pulsar-core</artifactId>
-            <version>${spring-pulsar-core.version}</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
