@@ -395,6 +395,7 @@
                     <version>${maven-release-plugin.version}</version>
                     <configuration>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
+                        <tagNameFormat>v@{project.version}</tagNameFormat>
                         <goals>deploy</goals>
                     </configuration>
                 </plugin>
