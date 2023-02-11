@@ -1,7 +1,7 @@
 name: Publish to staging repo
 on:
   release:
-    type: [created]
+    types: [created]
 jobs:
   publish:
     runs-on: ubuntu-latest
