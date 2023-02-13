@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component
     ),
     count = "#{pulsar.sample02.consumer.count}"
 )
-class SampleConsumer: MessageListener<ByteArray> {
+class SampleConsumer(@Volatile var message: ByteArray? = null): MessageListener<ByteArray> {
     @PulsarConsumerAction("myConsumerBL")
     override fun received(consumer: Consumer<ByteArray>?, message: Message<ByteArray>) {
         val messageString: String = String(message.value)
@@ -30,5 +30,12 @@ class SampleConsumer: MessageListener<ByteArray> {
         }
 
         consumer?.acknowledge(message.messageId)
+    }
+
+    @Synchronized
+    fun getReceivedMessage(): ByteArray? {
+        while (this.message == null) {
+        }
+        return this.message
     }
 }

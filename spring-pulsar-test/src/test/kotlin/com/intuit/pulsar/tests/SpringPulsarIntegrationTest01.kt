@@ -1,6 +1,7 @@
 package com.intuit.pulsar.tests
 
 import com.intuit.spring.pulsar.client.template.PulsarProducerTemplate
+import org.apache.commons.lang3.RandomStringUtils
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -14,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @EnableAutoConfiguration
 @SpringBootTest(classes = [TestConfig::class, TestProducerConfiguration::class, TestConsumer::class])
 @TestPropertySource("classpath:application.yml")
-class SpringPulsarIntegrationTests {
+class SpringPulsarIntegrationTest01 {
 
     @Autowired
     private lateinit var producerTemplate: PulsarProducerTemplate<ByteArray>
@@ -24,8 +25,9 @@ class SpringPulsarIntegrationTests {
 
     @Test
     fun `validate producer template send()`() {
-        producerTemplate.send("test message".toByteArray())
+        val message = RandomStringUtils.randomAlphabetic(100);
+        producerTemplate.send(message.toByteArray())
         val messageData = consumer.getReceivedMessage()
-        assertEquals("test message", String(messageData!!))
+        assertEquals(message, String(messageData!!))
     }
 }

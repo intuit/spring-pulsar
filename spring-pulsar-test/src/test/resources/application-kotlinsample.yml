@@ -15,3 +15,11 @@ pulsar:
       type: Key_Shared
     consumer:
       count: 1
+  sample02:
+    topic:
+      name: kotlin-sample-topic02
+    subscription:
+      name: kotlin-sample-sub02
+      type: Key_Shared
+    consumer:
+      count: 1

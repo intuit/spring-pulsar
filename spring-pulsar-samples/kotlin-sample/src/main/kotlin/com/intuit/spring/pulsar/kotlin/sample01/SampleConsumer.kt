@@ -17,17 +17,26 @@ import org.springframework.stereotype.Component
     ),
     count = "#{pulsar.sample01.consumer.count}"
 )
-class SampleConsumer: IPulsarListener<ByteArray> {
+class SampleConsumer(@Volatile var message: ByteArray? = null): IPulsarListener<ByteArray> {
     override fun onException(e: Exception, consumer: Consumer<ByteArray>, message: Message<ByteArray>) {
         println("[EXCEPTION] ${message.messageId} -> ${e.message}")
     }
 
     override fun onSuccess(consumer: Consumer<ByteArray>, message: Message<ByteArray>) {
         println("[SUCCESS] ${message.messageId} ")
+        consumer.acknowledge(message)
     }
 
     override fun processMessage(consumer: Consumer<ByteArray>, message: Message<ByteArray>) {
-        val messageString: String = String(message.value)
+        this.message = message.value
+        val messageString = String(message.value)
         println("[RECEIVED] ${message.messageId} -> $messageString")
+    }
+
+    @Synchronized
+    fun getReceivedMessage(): ByteArray? {
+        while (this.message == null) {
+        }
+        return this.message
     }
 }
