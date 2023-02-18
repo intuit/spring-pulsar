@@ -50,8 +50,8 @@ data class PulsarBasicAuthConfig(
 
 
 data class PulsarTlsAuthConfig(
-    var tlsCertFile: String = StringUtils.EMPTY,
-    var tlsKeyFile: String = StringUtils.EMPTY
+    var tlsCertFile: String,
+    var tlsKeyFile: String
 ) : PulsarAuthConfig(name = AuthType.TLS.name) {
 
     override fun getAuthenticationConfig(): Authentication {
