@@ -1,6 +1,13 @@
 package com.intuit.spring.pulsar.client
 
+import com.intuit.spring.pulsar.client.config.PulsarAuthConfig
+import com.intuit.spring.pulsar.client.config.PulsarBasicAuthConfig
 import com.intuit.spring.pulsar.client.config.PulsarClientConfig
+import com.intuit.spring.pulsar.client.config.PulsarNetworkConfig
+import com.intuit.spring.pulsar.client.config.PulsarRequestConfig
+import com.intuit.spring.pulsar.client.config.PulsarThreadPoolConfig
+import com.intuit.spring.pulsar.client.config.PulsarTlsConfig
+
 
 object TestData {
 
@@ -19,8 +26,8 @@ object TestData {
     const val numListenerThreads = 10
     const val networkDuration: String = "10000ms"
 
-    fun getNetworkConfig(): PulsarClientConfig.PulsarNetworkConfig {
-        return PulsarClientConfig.PulsarNetworkConfig(
+    fun getNetworkConfig(): PulsarNetworkConfig {
+        return PulsarNetworkConfig(
             connectionTimeout = networkDuration,
             keepAliveInterval = networkDuration,
             operationTimeout = networkDuration,
@@ -31,8 +38,8 @@ object TestData {
         )
     }
 
-    fun getTlsConfig(): PulsarClientConfig.PulsarTlsConfig {
-        return PulsarClientConfig.PulsarTlsConfig(
+    fun getTlsConfig(): PulsarTlsConfig {
+        return PulsarTlsConfig(
             useTls = useTls,
             tlsAllowInsecureConnection = tlsAllowInsecureConnection,
             tlsHostnameVerificationEnable = tlsHostnameVerificationEnable,
@@ -40,23 +47,23 @@ object TestData {
         )
     }
 
-    fun getRequestConfig(): PulsarClientConfig.PulsarRequestConfig {
-        return PulsarClientConfig.PulsarRequestConfig(
+    fun getRequestConfig(): PulsarRequestConfig {
+        return PulsarRequestConfig(
             maxLookupRequest = maxLookupRequest,
             concurrentLookupRequest = concurrentLookupRequest,
             maxNumberOfRejectedRequestPerConnection = maxNumberOfRejectedRequestPerConnection
         )
     }
 
-    fun getThreadPoolConfig(): PulsarClientConfig.PulsarThreadPoolConfig {
-        return PulsarClientConfig.PulsarThreadPoolConfig(
+    fun getThreadPoolConfig(): PulsarThreadPoolConfig {
+        return PulsarThreadPoolConfig(
             numIoThreads = numIoThreads,
             numListenerThreads = numListenerThreads
         )
     }
 
-    fun getAuthConfig(): PulsarClientConfig.PulsarAuthConfig {
-        return PulsarClientConfig.PulsarAuthConfig(
+    fun getAuthConfig(): PulsarAuthConfig {
+        return PulsarBasicAuthConfig(
             userName = userName,
             password = password
         )

@@ -1,16 +1,19 @@
 package com.intuit.spring.pulsar.client.client
 
+import com.intuit.spring.pulsar.client.config.PulsarAuthConfig
 import com.intuit.spring.pulsar.client.config.PulsarClientConfig
-import com.intuit.spring.pulsar.client.constant.AuthConstants
+import com.intuit.spring.pulsar.client.config.PulsarNetworkConfig
+import com.intuit.spring.pulsar.client.config.PulsarRequestConfig
+import com.intuit.spring.pulsar.client.config.PulsarThreadPoolConfig
+import com.intuit.spring.pulsar.client.config.PulsarTlsConfig
 import com.intuit.spring.pulsar.client.exceptions.PulsarSpringException
 import com.intuit.spring.pulsar.client.utils.parseDuration
-import org.apache.pulsar.client.api.AuthenticationFactory
 import org.apache.pulsar.client.api.ClientBuilder
 import org.apache.pulsar.client.api.PulsarClient
-import org.apache.pulsar.client.impl.auth.AuthenticationBasic
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 import javax.annotation.PreDestroy
+
 
 /**
  * Client factory class. Builds client objects
@@ -73,7 +76,7 @@ class PulsarClientFactory(
     /**
      * Populates ClientBuilder with network related configs
      */
-    private fun withNetwork(network: PulsarClientConfig.PulsarNetworkConfig) {
+    private fun withNetwork(network: PulsarNetworkConfig) {
         network.connectionTimeout.let {
             pulsarClientBuilder.connectionTimeout(
                 parseDuration(network.connectionTimeout).toSeconds().toInt(),
@@ -110,7 +113,7 @@ class PulsarClientFactory(
     /**
      * Populates ClientBuilder with request related configs
      */
-    private fun withRequest(request: PulsarClientConfig.PulsarRequestConfig) {
+    private fun withRequest(request: PulsarRequestConfig) {
         request.maxLookupRequest
             .let { pulsarClientBuilder.maxLookupRequests(request.maxLookupRequest) }
         request.concurrentLookupRequest
@@ -126,7 +129,7 @@ class PulsarClientFactory(
     /**
      * Populates ClientBuilder with thread pool related configs
      */
-    private fun withThreadPool(threadPool: PulsarClientConfig.PulsarThreadPoolConfig) {
+    private fun withThreadPool(threadPool: PulsarThreadPoolConfig) {
         threadPool.numIoThreads.let { pulsarClientBuilder.ioThreads(threadPool.numIoThreads) }
         threadPool.numListenerThreads
             .let { pulsarClientBuilder.listenerThreads(threadPool.numListenerThreads) }
@@ -135,7 +138,7 @@ class PulsarClientFactory(
     /**
      * Populates ClientBuilder with tls related configs
      */
-    private fun withTls(tls: PulsarClientConfig.PulsarTlsConfig) {
+    private fun withTls(tls: PulsarTlsConfig) {
         tls.useTls.let { pulsarClientBuilder.enableTls(tls.useTls) }
         tls.tlsAllowInsecureConnection
             .let { pulsarClientBuilder.allowTlsInsecureConnection(tls.tlsAllowInsecureConnection) }
@@ -148,17 +151,8 @@ class PulsarClientFactory(
     /**
      * Populates ClientBuilder with authentication related configs
      */
-    private fun withAuth(auth: PulsarClientConfig.PulsarAuthConfig) {
-        val authMap = mutableMapOf<String, String>()
-        authMap[AuthConstants.userId] = auth.userName
-        authMap[AuthConstants.password] = auth.password
-
-        pulsarClientBuilder.authentication(
-            AuthenticationFactory.create(
-                AuthenticationBasic::class.java.name,
-                authMap
-            )
-        )
+    private fun withAuth(auth: PulsarAuthConfig) {
+        pulsarClientBuilder.authentication(auth.getAuthenticationConfig())
     }
 
     /**
