@@ -2,7 +2,12 @@ package com.intuit.spring.pulsar.client.client
 
 import com.intuit.spring.pulsar.client.TestData
 import com.intuit.spring.pulsar.client.callPrivateFunc
+import com.intuit.spring.pulsar.client.config.PulsarBasicAuthConfig
 import com.intuit.spring.pulsar.client.config.PulsarClientConfig
+import com.intuit.spring.pulsar.client.config.PulsarNetworkConfig
+import com.intuit.spring.pulsar.client.config.PulsarRequestConfig
+import com.intuit.spring.pulsar.client.config.PulsarThreadPoolConfig
+import com.intuit.spring.pulsar.client.config.PulsarTlsConfig
 import org.apache.pulsar.client.api.Authentication
 import org.apache.pulsar.client.api.ClientBuilder
 import org.apache.pulsar.client.api.PulsarClient
@@ -15,7 +20,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.MockedStatic
 import org.mockito.Mockito
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.any
 import org.mockito.Mockito.anyBoolean
 import org.mockito.Mockito.anyInt
@@ -24,6 +28,7 @@ import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import java.lang.reflect.Field
 import java.util.concurrent.TimeUnit
 
@@ -58,9 +63,9 @@ class PulsarClientFactoryTest {
     fun `validate withNetwork with all properties set`() {
         val networkConfig = TestData.getNetworkConfig()
         `when`(clientConfig.network).thenReturn(networkConfig)
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).connectionTimeout(anyInt(), any(TimeUnit::class.java))
         verify(pulsarClientBuidler, times(1)).keepAliveInterval(anyInt(), any(TimeUnit::class.java))
@@ -72,11 +77,11 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `validate withNetwork with no properties set`() {
-        val networkConfig = PulsarClientConfig.PulsarNetworkConfig()
+        val networkConfig = PulsarNetworkConfig()
         `when`(clientConfig.network).thenReturn(networkConfig)
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).connectionTimeout(anyInt(), any(TimeUnit::class.java))
         verify(pulsarClientBuidler, times(1)).keepAliveInterval(anyInt(), any(TimeUnit::class.java))
@@ -89,10 +94,10 @@ class PulsarClientFactoryTest {
     @Test
     fun `validate withTls with all properties set`() {
         val tlsConfig = TestData.getTlsConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
         `when`(clientConfig.tls).thenReturn(tlsConfig)
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).enableTls(anyBoolean())
         verify(pulsarClientBuidler, times(1)).allowTlsInsecureConnection(anyBoolean())
@@ -102,11 +107,11 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `validate withTls with no properties set`() {
-        val tlsConfig = PulsarClientConfig.PulsarTlsConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
+        val tlsConfig = PulsarTlsConfig()
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
         `when`(clientConfig.tls).thenReturn(tlsConfig)
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).enableTls(anyBoolean())
         verify(pulsarClientBuidler, times(1)).allowTlsInsecureConnection(anyBoolean())
@@ -117,10 +122,10 @@ class PulsarClientFactoryTest {
     @Test
     fun `validate withRequestConfig with all properties set`() {
         val requestConfig = TestData.getRequestConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
         `when`(clientConfig.request).thenReturn(requestConfig)
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).maxLookupRequests(anyInt())
         verify(pulsarClientBuidler, times(1)).maxConcurrentLookupRequests(anyInt())
@@ -129,11 +134,11 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `validate withRequestConfig with no properties set`() {
-        val requestConfig = PulsarClientConfig.PulsarRequestConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
+        val requestConfig = PulsarRequestConfig()
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
         `when`(clientConfig.request).thenReturn(requestConfig)
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).maxLookupRequests(anyInt())
         verify(pulsarClientBuidler, times(1)).maxConcurrentLookupRequests(anyInt())
@@ -143,9 +148,9 @@ class PulsarClientFactoryTest {
     @Test
     fun `validate withThreadPool with all properties set`() {
         val threadPoolConfig = TestData.getThreadPoolConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
         `when`(clientConfig.threadPool).thenReturn(threadPoolConfig)
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).ioThreads(anyInt())
@@ -154,10 +159,10 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `validate withThreadPool with NO properties set`() {
-        val threadPoolConfig = PulsarClientConfig.PulsarThreadPoolConfig()
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
+        val threadPoolConfig = PulsarThreadPoolConfig()
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
         `when`(clientConfig.threadPool).thenReturn(threadPoolConfig)
         clientFactory = PulsarClientFactory(clientConfig)
         verify(pulsarClientBuidler, times(1)).ioThreads(anyInt())
@@ -166,10 +171,10 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `getClient returns client object`() {
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         val pulsarClient = mockPulsarClient()
         val createdClient = clientFactory.getClient()
@@ -179,10 +184,10 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `tearDown closes all clients`() {
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         val pulsarClient = mockPulsarClient()
         clientFactory.callPrivateFunc("close")
@@ -191,10 +196,10 @@ class PulsarClientFactoryTest {
 
     @Test
     fun `tearDown client close failing with exception`() {
-        `when`(clientConfig.network).thenReturn(PulsarClientConfig.PulsarNetworkConfig())
-        `when`(clientConfig.tls).thenReturn(PulsarClientConfig.PulsarTlsConfig())
-        `when`(clientConfig.request).thenReturn(PulsarClientConfig.PulsarRequestConfig())
-        `when`(clientConfig.threadPool).thenReturn(PulsarClientConfig.PulsarThreadPoolConfig())
+        `when`(clientConfig.network).thenReturn(PulsarNetworkConfig())
+        `when`(clientConfig.tls).thenReturn(PulsarTlsConfig())
+        `when`(clientConfig.request).thenReturn(PulsarRequestConfig())
+        `when`(clientConfig.threadPool).thenReturn(PulsarThreadPoolConfig())
         clientFactory = PulsarClientFactory(clientConfig)
         val pulsarClient = mockPulsarClient()
         `when`(pulsarClient.close()).thenThrow(PulsarClientException::class.java)
@@ -206,7 +211,7 @@ class PulsarClientFactoryTest {
     fun `validate withClientConfig`() {
         val clientConfig = PulsarClientConfig(
             serviceUrl = "serviceurl",
-            auth = PulsarClientConfig.PulsarAuthConfig(
+            auth = PulsarBasicAuthConfig(
                 userName = "username",
                 password = "password"
             ),

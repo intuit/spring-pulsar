@@ -11,7 +11,7 @@ class PulsarClientConfigTest {
 
     @Test
     fun `validate auth config creation with all properties set`() {
-        val auth = TestData.getAuthConfig()
+        val auth:PulsarBasicAuthConfig = TestData.getAuthConfig() as PulsarBasicAuthConfig
         assertEquals(TestData.userName, auth.userName)
         assertEquals(TestData.password, auth.password)
 
@@ -40,7 +40,7 @@ class PulsarClientConfigTest {
 
     @Test
     fun `validate request config creation with no properties set`() {
-        val request = PulsarClientConfig.PulsarRequestConfig()
+        val request = PulsarRequestConfig()
         assertEquals(50000, request.maxLookupRequest)
         assertEquals(5000, request.concurrentLookupRequest)
         assertEquals(50, request.maxNumberOfRejectedRequestPerConnection)
@@ -61,7 +61,7 @@ class PulsarClientConfigTest {
 
     @Test
     fun `validate thread pool config with no properties set`() {
-        val threadPool = PulsarClientConfig.PulsarThreadPoolConfig()
+        val threadPool = PulsarThreadPoolConfig()
         assertEquals(1, threadPool.numIoThreads)
         assertEquals(1, threadPool.numListenerThreads)
     }
@@ -96,7 +96,7 @@ class PulsarClientConfigTest {
 
     @Test
     fun `validate network config creation with no properties set`() {
-        val network = PulsarClientConfig.PulsarNetworkConfig()
+        val network = PulsarNetworkConfig()
         assertEquals("30s", network.keepAliveInterval)
         assertEquals("10000ms", network.connectionTimeout)
         assertEquals("60000ms", network.requestTimeout)
@@ -127,7 +127,7 @@ class PulsarClientConfigTest {
 
     @Test
     fun `validate tls config creation with no properties set`() {
-        val tls = PulsarClientConfig.PulsarTlsConfig()
+        val tls = PulsarTlsConfig()
         assertEquals(false, tls.useTls)
         assertEquals(false, tls.tlsAllowInsecureConnection)
         assertEquals(true, tls.tlsHostnameVerificationEnable)
@@ -139,11 +139,11 @@ class PulsarClientConfigTest {
         val client = PulsarClientConfig(
             serviceUrl = TestData.serviceUrl,
             statsInterval = "100ms",
-            tls = PulsarClientConfig.PulsarTlsConfig(),
-            request = PulsarClientConfig.PulsarRequestConfig(),
-            network = PulsarClientConfig.PulsarNetworkConfig(),
-            threadPool = PulsarClientConfig.PulsarThreadPoolConfig(),
-            auth = PulsarClientConfig.PulsarAuthConfig(TestData.userName, TestData.password)
+            tls = PulsarTlsConfig(),
+            request = PulsarRequestConfig(),
+            network = PulsarNetworkConfig(),
+            threadPool = PulsarThreadPoolConfig(),
+            auth = PulsarBasicAuthConfig(TestData.userName, TestData.password)
         )
         assertEquals(TestData.serviceUrl, client.serviceUrl)
         assertEquals("100ms", client.statsInterval)
@@ -155,11 +155,11 @@ class PulsarClientConfigTest {
 
         client.serviceUrl = "service_url"
         client.statsInterval = "10ms"
-        client.tls = PulsarClientConfig.PulsarTlsConfig()
-        client.request = PulsarClientConfig.PulsarRequestConfig()
-        client.auth = PulsarClientConfig.PulsarAuthConfig()
-        client.network = PulsarClientConfig.PulsarNetworkConfig()
-        client.threadPool = PulsarClientConfig.PulsarThreadPoolConfig()
+        client.tls = PulsarTlsConfig()
+        client.request = PulsarRequestConfig()
+        client.auth = PulsarBasicAuthConfig()
+        client.network = PulsarNetworkConfig()
+        client.threadPool = PulsarThreadPoolConfig()
 
         assertEquals("service_url", client.serviceUrl)
         assertEquals("10ms", client.statsInterval)
