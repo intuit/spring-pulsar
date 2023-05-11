@@ -267,23 +267,24 @@ below example.
        }
 
 Below is the code snippet to define consumer in Java based application
+```java
+    @Component
+    @PulsarConsumer(
+        topic = @Topic(
+                topicNames = "Topic_names"
+        ),
+        subscription = @Subscription(
+                subscriptionName = "Subscription_Name",
+                subscriptionType = "Subscription_Type"))
+    class MyMessageListener implements MessageListener<MessageData> {
+        public void received(final Consumer<MessageData> consumer, 
+                             final Message<MessageData> message) {
+            // Code to handle mesasge
+        }
+    }
+```
 
-      @Component
-      @PulsarConsumer(
-           topic = @Topic(
-              topicNames = "Topic_names"
-           ),
-           subscription = @Subscription(
-              subscriptionName = "Subscription_Name",
-              subscriptionType = "Subscription_Type"))
-       class MyMessageListener implements MessageListener<MessageData> {
-            override fun received(
-                  consumer: org.apache.pulsar.client.api.Consumer<MessageData>?,
-                  message: Message<MessageData>?
-            ) {
-                  // Code to handle mesasge
-            }
-       }
+**Note:** To use dynamic values for the topicNames and subscription from application properties/yml, use `#` with the property name instead of `$` (common java practice) as the property is parsed as kotlin string not java.
 
 ## Error Handling
 
