@@ -7,6 +7,7 @@ import org.apache.pulsar.client.api.ConsumerCryptoFailureAction
 import org.apache.pulsar.client.api.MessageId
 import org.apache.pulsar.client.api.PulsarClient
 import org.apache.pulsar.client.api.ReaderBuilder
+import org.apache.pulsar.client.api.ReaderListener
 import org.apache.pulsar.client.api.Schema
 import java.util.concurrent.TimeUnit
 
@@ -21,7 +22,7 @@ class PulsarReaderBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
     /**
      * Populate reader properties in builder
      */
-    fun withConsumerConfig(reader: PulsarReaderConfig): PulsarReaderBuilder<T> {
+    fun withReaderConfig(reader: PulsarReaderConfig): PulsarReaderBuilder<T> {
         if (reader.topicName.isNotBlank()) {
             builder.topic(reader.topicName)
         }
@@ -96,6 +97,11 @@ class PulsarReaderBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
         if (timeData.duration != Long.MIN_VALUE && timeData.unit.isBlank()) {
             builder.startMessageFromRollbackDuration(timeData.duration, null)
         }
+        return this
+    }
+
+    fun withListener(readerListener: ReaderListener<*>): PulsarReaderBuilder<T> {
+        builder.readerListener(readerListener as ReaderListener<T>)
         return this
     }
 

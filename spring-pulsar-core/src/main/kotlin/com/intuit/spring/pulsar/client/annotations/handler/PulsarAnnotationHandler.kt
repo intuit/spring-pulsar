@@ -1,8 +1,13 @@
 package com.intuit.spring.pulsar.client.annotations.handler
 
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
-import com.intuit.spring.pulsar.client.annotations.extractor.IPulsarAnnotationExtractor
+import com.intuit.spring.pulsar.client.annotations.extractor.CustomerAnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.PulsarConsumerAnnotationExtractor
+import com.intuit.spring.pulsar.client.annotations.extractor.PulsarReaderAnnotationExtractor
+import com.intuit.spring.pulsar.client.annotations.extractor.ReaderAnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.reader.PulsarReader
 import com.intuit.spring.pulsar.client.consumer.IPulsarConsumerFactory
+import com.intuit.spring.pulsar.client.reader.IPulsarReaderFactory
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.boot.context.event.ApplicationStartedEvent
 import org.springframework.context.ApplicationContext
@@ -18,15 +23,33 @@ import org.springframework.stereotype.Component
 @Component
 class PulsarAnnotationHandler<T>(
     val pulsarConsumerFactory: IPulsarConsumerFactory<T>,
+    val pulsarReaderFactory: IPulsarReaderFactory<T>,
     val applicationContext: ApplicationContext,
-    val annotationExtractor: IPulsarAnnotationExtractor
-): BeanPostProcessor, IPulsarAnnotationHandler<T> {
+    val pulsarConsumerAnnotationExtractor: PulsarConsumerAnnotationExtractor,
+    val pulsarReaderAnnotationExtractor: PulsarReaderAnnotationExtractor
+) : BeanPostProcessor, IPulsarAnnotationHandler<T> {
 
     @EventListener(ApplicationStartedEvent::class)
-    override fun handle() {
-        annotationExtractor.extract(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java))
+    override fun createConsumers() {
+        pulsarConsumerAnnotationExtractor.extract(
+            applicationContext.getBeansWithAnnotation(
+                PulsarConsumer::class.java
+            )
+        )
             .forEach { annotatedBeanDetail ->
-                pulsarConsumerFactory.createConsumer(annotatedBeanDetail)
+                pulsarConsumerFactory.createConsumer(annotatedBeanDetail as CustomerAnnotationDetail)
+            }
+    }
+
+    @EventListener(ApplicationStartedEvent::class)
+    override fun createReader() {
+        pulsarReaderAnnotationExtractor.extract(
+            applicationContext.getBeansWithAnnotation(
+                PulsarReader::class.java
+            )
+        )
+            .forEach { annotatedBeanDetail ->
+                pulsarReaderFactory.createReader(annotatedBeanDetail as ReaderAnnotationDetail)
             }
     }
 }

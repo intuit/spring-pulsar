@@ -1,5 +1,7 @@
 package com.intuit.spring.pulsar.client.annotations.consumer
 
+import com.intuit.spring.pulsar.client.annotations.common.Schema
+import com.intuit.spring.pulsar.client.annotations.common.map
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.config.PulsarConsumerConfig
 import org.apache.commons.lang3.StringUtils

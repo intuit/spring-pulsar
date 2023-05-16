@@ -1,6 +1,7 @@
 package com.intuit.spring.pulsar.client.annotations.extractor
 
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
+import com.intuit.spring.pulsar.client.annotations.common.map
 import com.intuit.spring.pulsar.client.annotations.consumer.map
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFoundSpringException
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component
  * bean name and annotation object which was
  * found on the bean.
  */
-@Component
+@Component("pulsarConsumerAnnotationExtractor")
 class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolver): IPulsarAnnotationExtractor {
 
     override fun extract(annotatedBeans: MutableMap<String, Any>): MutableList<AnnotationDetail> {
@@ -37,7 +38,7 @@ class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolve
         val annotation: PulsarConsumer? = AnnotationUtils.findAnnotation(bean.javaClass, PulsarConsumer::class.java)
         annotation?.let {
             if (bean is MessageListener<*>) {
-                return AnnotationDetail(bean, beanName, annotation.map(resolver))
+                return CustomerAnnotationDetail(beanName,bean, annotation.map(resolver))
             } else {
                 throw PulsarListenerTypeNotSupportedSpringException(beanName)
             }

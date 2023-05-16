@@ -16,7 +16,8 @@ data class PulsarReaderConfig(
     val startMessageId: String = StringUtils.EMPTY,
     val startMessageFromRollbackDuration: StartMessageFromRollbackDurationConfig = StartMessageFromRollbackDurationConfig(),
     val defaultCryptoKeyReader: String = StringUtils.EMPTY,
-    val keyHashRange: MutableList<RangeConfig> = ArrayList()
+    val keyHashRange: MutableList<RangeConfig> = ArrayList(),
+    val schema: SchemaConfig = SchemaConfig()
 )
 
 /**
@@ -45,4 +46,3 @@ data class RangeConfig(
     val start: Int = Int.MIN_VALUE,
     val end: Int = Int.MIN_VALUE
 )
-

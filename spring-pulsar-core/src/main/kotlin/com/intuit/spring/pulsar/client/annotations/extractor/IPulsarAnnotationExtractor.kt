@@ -1,7 +1,9 @@
 package com.intuit.spring.pulsar.client.annotations.extractor
 
 import com.intuit.spring.pulsar.client.config.PulsarConsumerConfig
+import com.intuit.spring.pulsar.client.config.PulsarReaderConfig
 import org.apache.pulsar.client.api.MessageListener
+import org.apache.pulsar.client.api.ReaderListener
 
 /**
  * Contract to define method used for extraction of
@@ -35,8 +37,20 @@ interface IPulsarAnnotationExtractor {
  * beanName : Spring context beanName.
  * pulsarConsumer: [PulsarConsumerConfig] object.
  */
-data class AnnotationDetail(
-    val bean: MessageListener<*>,
-    val beanName: String,
-    val pulsarConsumer: PulsarConsumerConfig
+open class AnnotationDetail(
+    open val beanName: String
 )
+
+data class CustomerAnnotationDetail(
+    override val beanName: String,
+    val bean: MessageListener<*>,
+    val pulsarConsumer: PulsarConsumerConfig
+): AnnotationDetail(beanName)
+
+
+data class ReaderAnnotationDetail(
+    override val beanName: String,
+    val bean: ReaderListener<*>,
+    val readerConfig: PulsarReaderConfig
+): AnnotationDetail(beanName)
+

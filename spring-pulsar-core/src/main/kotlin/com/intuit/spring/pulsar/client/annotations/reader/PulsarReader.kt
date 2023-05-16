@@ -1,5 +1,7 @@
 package com.intuit.spring.pulsar.client.annotations.reader
 
+import com.intuit.spring.pulsar.client.annotations.common.Schema
+import com.intuit.spring.pulsar.client.annotations.common.map
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.config.PulsarReaderConfig
 import org.apache.commons.lang3.StringUtils
@@ -17,7 +19,8 @@ annotation class PulsarReader(
     val startMessageId: String = StringUtils.EMPTY,
     val startMessageFromRollbackDuration: StartMessageFromRollbackDuration = StartMessageFromRollbackDuration(),
     val defaultCryptoKeyReader: String = StringUtils.EMPTY,
-    val keyHashRange: Array<Range> = []
+    val keyHashRange: Array<Range> = [],
+    val schema: Schema = Schema()
 )
 
 /**
@@ -41,7 +44,8 @@ fun PulsarReader.map(resolver: IAnnotationPropertyResolver): PulsarReaderConfig 
         ),
         defaultCryptoKeyReader = resolver.resolve(this.defaultCryptoKeyReader),
         keyHashRange = this.keyHashRange.map { range -> range.map(resolver) }
-            .toMutableList()
+            .toMutableList(),
+        schema = this.schema.map(resolver)
     )
 }
 

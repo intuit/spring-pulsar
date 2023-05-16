@@ -11,8 +11,14 @@ package com.intuit.spring.pulsar.client.annotations.handler
 interface IPulsarAnnotationHandler<T> {
 
     /**
-     * Handles creation of consumers or producers
+     * Handles creation of consumers
      * from the annotation found on spring beans.
      */
-    fun handle()
+    fun createConsumers()
+
+    /**
+     * Handles creation of reader
+     * from the annotation found on spring beans.
+     */
+    fun createReader()
 }
