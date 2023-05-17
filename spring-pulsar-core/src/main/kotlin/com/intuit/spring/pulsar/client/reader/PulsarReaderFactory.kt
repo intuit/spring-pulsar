@@ -4,7 +4,6 @@ import com.intuit.spring.pulsar.client.annotations.extractor.ReaderAnnotationDet
 import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.SchemaConfig
 import com.intuit.spring.pulsar.client.config.SchemaType
-import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.ReaderBuilder
 import org.apache.pulsar.client.api.Schema
 import org.springframework.stereotype.Component
@@ -31,16 +30,23 @@ class PulsarReaderFactory<T>(
 ) : IPulsarReaderFactory<T> {
 
 
+    /**
+     * Creates low level pulsar [ReaderBuiler]
+     * Uses the client name to fetch the reader config from
+     * properties file, and creates a reader builder using the
+     * fetched properties.If the passed clientName does not have
+     * any reader defined in props throws [PulsarReaderAnnotationNotFoundSpringException]
+     */
     override fun createReader(annotationDetail: ReaderAnnotationDetail) {
-        val builder = createPulsarReader(annotationDetail)
-        builder.create()
+        val readerBuilder = createPulsarReaderBuilder(annotationDetail)
+        readerBuilder.create()
     }
 
     /**
-     * Creates and return a Pulsar Consumer builder of type
-     * [ConsumerBuilder]
+     * Creates and return a Pulsar Reader builder of type
+     * [ReaderBuilder]
      */
-    private fun createPulsarReader(annotationDetail: ReaderAnnotationDetail): ReaderBuilder<T> {
+    private fun createPulsarReaderBuilder(annotationDetail: ReaderAnnotationDetail): ReaderBuilder<T> {
         val pulsarClient = clientFactory.getClient()
         return PulsarReaderBuilder(
             pulsarClient,

@@ -6,7 +6,7 @@ import com.intuit.spring.pulsar.client.config.ReaderQueueConfig
 /**
  * Properties mapping class for queue configuration
  * Defined in yaml as "queue" property inside
- * "consumer" property.
+ * "reader" property.
  */
 @Target(AnnotationTarget.ANNOTATION_CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -20,7 +20,7 @@ annotation class ReaderQueue(
  *
  * Takes [IAnnotationPropertyResolver] as an argument
  * and uses it to resolve property path definitions
- * in [ReaderQueueConfig]
+ * in [ReaderQueue]
  */
 fun ReaderQueue.map(resolver: IAnnotationPropertyResolver): ReaderQueueConfig {
     return ReaderQueueConfig(

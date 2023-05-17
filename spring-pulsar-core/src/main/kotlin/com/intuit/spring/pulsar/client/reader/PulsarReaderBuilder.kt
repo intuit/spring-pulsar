@@ -108,6 +108,9 @@ class PulsarReaderBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
         return this
     }
 
+    /**
+     * Add a reader listener in builder
+     */
     fun withListener(readerListener: ReaderListener<*>): PulsarReaderBuilder<T> {
         builder.readerListener(readerListener as ReaderListener<T>)
         return this

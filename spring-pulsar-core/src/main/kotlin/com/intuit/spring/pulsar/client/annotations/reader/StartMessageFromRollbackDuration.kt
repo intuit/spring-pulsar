@@ -19,7 +19,7 @@ annotation class StartMessageFromRollbackDuration(
  *
  * Takes [IAnnotationPropertyResolver] as an argument
  * and uses it to resolve property path definitions
- * in [StartMessageFromRollbackDurationConfig]
+ * in [StartMessageFromRollbackDuration]
  */
 fun StartMessageFromRollbackDuration.map(resolver: IAnnotationPropertyResolver): StartMessageFromRollbackDurationConfig {
     return StartMessageFromRollbackDurationConfig(

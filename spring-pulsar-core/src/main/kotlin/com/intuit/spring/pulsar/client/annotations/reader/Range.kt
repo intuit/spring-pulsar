@@ -4,6 +4,13 @@ import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyR
 import com.intuit.spring.pulsar.client.config.RangeConfig
 import org.apache.commons.lang3.StringUtils
 
+/**
+ * Properties mapping class for hash range configuration
+ * Defined in yaml as "range" property inside
+ * "reader" property.
+ */
+@Target(AnnotationTarget.ANNOTATION_CLASS)
+@Retention(AnnotationRetention.RUNTIME)
 annotation class Range(
     val start: String = StringUtils.EMPTY,
     val end: String = StringUtils.EMPTY
