@@ -40,9 +40,17 @@ class PulsarReaderBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
         }
 
         if (reader.startMessageId.isNotBlank()) {
-            builder.startMessageId(
-                MessageId.fromByteArray(reader.startMessageId.toByteArray())
-            )
+            if(reader.startMessageId == "earliest"){
+                builder.startMessageId(MessageId.earliest)
+            }
+            else if(reader.startMessageId == "latest"){
+                builder.startMessageId(MessageId.latest)
+            }
+            else {
+                builder.startMessageId(
+                    MessageId.fromByteArray(reader.startMessageId.toByteArray())
+                )
+            }
         }
 
         if (reader.subscriptionRolePrefix.isNotBlank()) {

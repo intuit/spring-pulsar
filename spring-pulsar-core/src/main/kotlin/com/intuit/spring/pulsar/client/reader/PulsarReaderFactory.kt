@@ -32,7 +32,8 @@ class PulsarReaderFactory<T>(
 
 
     override fun createReader(annotationDetail: ReaderAnnotationDetail) {
-        createPulsarReader(annotationDetail)
+        val builder = createPulsarReader(annotationDetail)
+        builder.create()
     }
 
     /**
