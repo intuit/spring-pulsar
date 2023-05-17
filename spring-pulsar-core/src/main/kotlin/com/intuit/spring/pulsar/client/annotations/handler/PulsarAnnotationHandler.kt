@@ -1,7 +1,7 @@
 package com.intuit.spring.pulsar.client.annotations.handler
 
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
-import com.intuit.spring.pulsar.client.annotations.extractor.CustomerAnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.annotations.extractor.PulsarConsumerAnnotationExtractor
 import com.intuit.spring.pulsar.client.annotations.extractor.PulsarReaderAnnotationExtractor
 import com.intuit.spring.pulsar.client.annotations.extractor.ReaderAnnotationDetail
@@ -37,7 +37,7 @@ class PulsarAnnotationHandler<T>(
             )
         )
             .forEach { annotatedBeanDetail ->
-                pulsarConsumerFactory.createConsumer(annotatedBeanDetail as CustomerAnnotationDetail)
+                pulsarConsumerFactory.createConsumer(annotatedBeanDetail as ConsumerAnnotationDetail)
             }
     }
 

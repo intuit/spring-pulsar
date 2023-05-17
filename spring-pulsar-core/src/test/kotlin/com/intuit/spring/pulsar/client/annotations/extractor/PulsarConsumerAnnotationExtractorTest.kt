@@ -3,7 +3,7 @@ package com.intuit.spring.pulsar.client.annotations.extractor
 import com.intuit.spring.pulsar.client.annotations.resolver.AnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.config.PulsarConsumerConfig
 import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFoundSpringException
-import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedSpringException
+import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedForCustomerSpringException
 import com.intuit.spring.pulsar.client.validateAckDefaults
 import com.intuit.spring.pulsar.client.validateAckWithAllPropertiesSet
 import com.intuit.spring.pulsar.client.validateDeadLetterPolicyDefaults
@@ -44,7 +44,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithAnnotation()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -65,7 +65,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithMissingTopic()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -86,7 +86,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithMissingDeadLetterPolicy()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -107,7 +107,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithWithMissingQueue()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -128,7 +128,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithMissingSubscription()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -149,7 +149,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithDefaultAnnotationValues()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
         assertEquals("testBean", annotatedBeanDetails[0].beanName)
@@ -182,7 +182,7 @@ class PulsarConsumerAnnotationExtractorTest {
     @Test
     fun validateExtractReturnsThrowsExceptionWhenNotAListener() {
         val bean = TestBeanWithAnnotationButNoListener()
-        assertThrows<PulsarListenerTypeNotSupportedSpringException> {
+        assertThrows<PulsarListenerTypeNotSupportedForCustomerSpringException> {
             annotationExtractor.extract(
                 mutableMapOf("testBean" to bean)
             )
@@ -194,7 +194,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithMissingAck()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
@@ -220,7 +220,7 @@ class PulsarConsumerAnnotationExtractorTest {
         val bean = TestBeanWithPropertyResolver()
         val annotatedBeanDetails = annotationExtractor.extract(
             mutableMapOf("testBean" to bean)
-        )
+        ) as MutableList<ConsumerAnnotationDetail>
         assertNotNull(annotatedBeanDetails)
         assertEquals("myClient", annotatedBeanDetails.get(0).pulsarConsumer.client)
         assertEquals("myConsumer", annotatedBeanDetails.get(0).pulsarConsumer.name)

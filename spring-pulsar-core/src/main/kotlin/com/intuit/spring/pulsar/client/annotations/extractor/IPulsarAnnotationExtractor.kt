@@ -47,7 +47,7 @@ open class AnnotationDetail(
  * beanName : Spring context beanName.
  * pulsarConsumer: [PulsarConsumerConfig] object.
  */
-data class CustomerAnnotationDetail(
+data class ConsumerAnnotationDetail(
     override val beanName: String,
     val bean: MessageListener<*>,
     val pulsarConsumer: PulsarConsumerConfig

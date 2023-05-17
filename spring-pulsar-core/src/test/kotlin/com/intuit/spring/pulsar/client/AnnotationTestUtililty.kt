@@ -1,6 +1,6 @@
 package com.intuit.spring.pulsar.client
 
-import com.intuit.spring.pulsar.client.annotations.extractor.AnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.config.AckConfig
 import com.intuit.spring.pulsar.client.config.DeadLetterPolicyConfig
 import com.intuit.spring.pulsar.client.config.PropertyConfig
@@ -237,7 +237,7 @@ fun validatePulsarConsumer(
     assertEquals(expectedCount, actual.count)
 }
 
-fun validateTopicWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateTopicWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validateTopic(
         expectedTopicNames = "myTopic",
         expectedTopicPatterns = "myTopicPattern",
@@ -245,7 +245,7 @@ fun validateTopicWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
     )
 }
 
-fun validateQueueWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateQueueWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validateQueue(
         expectedReceiverQueueSize = 20,
         expectedMaxTotalReceiverQueueSizeAcrossPartitions = 60,
@@ -256,7 +256,7 @@ fun validateQueueWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
     )
 }
 
-fun validateAckWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateAckWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validateAck(
         expectedAckTimeout = "10ms",
         expectedAcknowledgementsGroupTime = "100ms",
@@ -266,7 +266,7 @@ fun validateAckWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
     )
 }
 
-fun validateSubscriptionWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateSubscriptionWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validateSubscription(
         expectedSubscriptionTypes = "Key_Shared",
         expectedSubscriptionName = "mySub",
@@ -277,7 +277,7 @@ fun validateSubscriptionWithAllPropertiesSet(annotationDetail: AnnotationDetail)
     )
 }
 
-fun validateDeadLetterPolicyWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateDeadLetterPolicyWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validateDeadLetterPolicy(
         expectedNegativeAckRedeliveryDelay = "100ms",
         expectedMaxRedeliverCount = 3,
@@ -287,7 +287,7 @@ fun validateDeadLetterPolicyWithAllPropertiesSet(annotationDetail: AnnotationDet
     )
 }
 
-fun validatePulsarConsumerWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validatePulsarConsumerWithAllPropertiesSet(annotationDetail: ConsumerAnnotationDetail) {
     validatePulsarConsumer(
         expectedClient = "myClient",
         expectedName = "myConsumer",
