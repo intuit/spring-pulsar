@@ -5,8 +5,8 @@ package com.intuit.spring.pulsar.client.annotations.handler
  *
  * Implemented by classes which will handle
  * extracting annotation information from beans
- * using the annotation data to create consumers
- * or producers.
+ * using the annotation data to create pulsar components like
+ * consumers, producers, readers etc.
  */
 interface IPulsarAnnotationHandler<T> {
 

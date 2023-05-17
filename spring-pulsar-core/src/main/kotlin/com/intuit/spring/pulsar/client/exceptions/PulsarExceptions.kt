@@ -36,6 +36,13 @@ class PulsarConsumerAnnotationNotFoundSpringException(beanName: String) :
     PulsarSpringException("Consumer annotation is not found on bean $beanName", null)
 
 /**
+ * Exception thrown when the library cannot find reader configuration
+ * for the provided client name.
+ */
+class PulsarReaderAnnotationNotFoundSpringException(beanName: String) :
+    PulsarSpringException("Reader annotation is not found on bean $beanName", null)
+
+/**
  * Exception thrown when library tried to create a consumer without
  * any listener bean configured for it.
  */
@@ -48,8 +55,17 @@ class PulsarConsumerWithoutListenerSpringException :
 /**
  * Exception thrown when listener bean is not of supported types.
  */
-class PulsarListenerTypeNotSupportedSpringException(beanName: String) :
+class PulsarListenerTypeNotSupportedForCustomerSpringException(beanName: String) :
     PulsarSpringException(
         "Only Listener of type IPulsarListener or MessageListener are supported: $beanName",
+        null
+    )
+
+/**
+ * Exception thrown when rader listener bean is not of supported types.
+ */
+class PulsarListenerTypeNotSupportedForReaderSpringException(beanName: String) :
+    PulsarSpringException(
+        "Only Listener of type ReaderListener are supported: $beanName",
         null
     )

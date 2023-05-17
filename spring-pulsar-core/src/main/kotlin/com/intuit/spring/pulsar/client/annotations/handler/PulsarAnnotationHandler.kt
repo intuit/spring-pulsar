@@ -15,9 +15,9 @@ import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
 
 /**
- * Concrete class which handles creations of consumers
- * by finding the [PulsarConsumer] annotated spring beans and
- * then creating consumer using the configs defined in
+ * Concrete class which handles creations of consumers and readers
+ * by finding the respective annotated spring beans and
+ * then creating consumer or reader using the configs defined in
  * annotation.
  */
 @Component

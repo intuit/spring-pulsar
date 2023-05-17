@@ -3,13 +3,21 @@ package com.intuit.spring.pulsar.client.annotations.extractor
 import com.intuit.spring.pulsar.client.annotations.reader.PulsarReader
 import com.intuit.spring.pulsar.client.annotations.reader.map
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
-import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFoundSpringException
-import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedSpringException
+import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedForReaderSpringException
+import com.intuit.spring.pulsar.client.exceptions.PulsarReaderAnnotationNotFoundSpringException
 import org.apache.pulsar.client.api.ReaderListener
 import org.springframework.core.annotation.AnnotationUtils
-import org.springframework.stereotype.Component
 
-@Component("pulsarReaderAnnotationExtractor")
+/**
+ * Concrete class used for extraction of [PulsarReader]
+ * annotation from a spring bean.
+ *
+ * If the annotation is defined on the bean then
+ * returns [AnnotationDetail] about the bean
+ * which includes as instance variable bean,
+ * bean name and annotation object which was
+ * found on the bean.
+ */
 class PulsarReaderAnnotationExtractor(val resolver: IAnnotationPropertyResolver) :
     IPulsarAnnotationExtractor {
 
@@ -25,7 +33,6 @@ class PulsarReaderAnnotationExtractor(val resolver: IAnnotationPropertyResolver)
         return annotatedBeanDetails
     }
 
-    // TODO: update exception
     private fun extractReaderAnnotation(
         beanName: String,
         bean: Any
@@ -42,9 +49,11 @@ class PulsarReaderAnnotationExtractor(val resolver: IAnnotationPropertyResolver)
                     annotation.map(resolver)
                 )
             } else {
-                throw PulsarListenerTypeNotSupportedSpringException(beanName)
+                throw PulsarListenerTypeNotSupportedForReaderSpringException(
+                    beanName
+                )
             }
         }
-        throw PulsarConsumerAnnotationNotFoundSpringException(beanName)
+        throw PulsarReaderAnnotationNotFoundSpringException(beanName)
     }
 }
