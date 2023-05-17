@@ -62,7 +62,7 @@ class PulsarListenerTypeNotSupportedForCustomerSpringException(beanName: String)
     )
 
 /**
- * Exception thrown when rader listener bean is not of supported types.
+ * Exception thrown when reader listener bean is not of supported types.
  */
 class PulsarListenerTypeNotSupportedForReaderSpringException(beanName: String) :
     PulsarSpringException(

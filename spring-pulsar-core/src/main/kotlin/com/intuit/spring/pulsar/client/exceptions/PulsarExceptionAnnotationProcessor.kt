@@ -29,11 +29,11 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
     }
 
     /**
-     * This method will construct the map(s) required for exception handling when producing/consuming Pulsar events
+     * This method will construct the map(s) required for exception handling when producing/consuming/reading Pulsar events
      * It will look up the spring beans with the class handler annotation
      * Will further look up the methods within such classes and identify the handler functions for each exception
      * Note to consumers: Define handler classes[PulsarExceptionHandlerClass]
-     * and functions[PulsarConsumerExceptionHandlerFunction]/[PulsarProducerExceptionHandlerFunction] within your module
+     * and functions[PulsarConsumerExceptionHandlerFunction]/[PulsarProducerExceptionHandlerFunction]/[PulsarReaderExceptionHandlerFunction] within your module
      */
     @Suppress("NestedBlockDepth")
     @PostConstruct
@@ -63,6 +63,11 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
             annotation.exceptions.forEach { exception ->
                 val handler = getHandlerFromProperty(bean, property)
                 checkForExistingHandlerAndUpdateMap(producerExceptionHandlerMap, exception, handler)
+            }
+        } else if (annotation is PulsarReaderExceptionHandlerFunction && isPulsarExceptionHandler(property)) {
+            annotation.exceptions.forEach { exception ->
+                val handler = getHandlerFromProperty(bean, property)
+                checkForExistingHandlerAndUpdateMap(readerExceptionHandlerMap, exception, handler)
             }
         }
     }
