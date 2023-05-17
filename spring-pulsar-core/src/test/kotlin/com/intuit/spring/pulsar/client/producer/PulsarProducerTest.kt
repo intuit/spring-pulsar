@@ -28,7 +28,7 @@ class PulsarProducerTest {
 
     @BeforeEach
     fun init() {
-        schema = mock(Schema::class.java) as Schema<String>
+        schema = Schema.STRING
         producer = mock(Producer::class.java) as Producer<String>
         pulsarProducer = PulsarProducer(
             delegate = producer,

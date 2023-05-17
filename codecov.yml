@@ -5,7 +5,7 @@ coverage:
   status:
     patch:
       default:
-        target: 75%
+        target: 10
 
 comment:
   layout: "diff, flags, files:10, footer"

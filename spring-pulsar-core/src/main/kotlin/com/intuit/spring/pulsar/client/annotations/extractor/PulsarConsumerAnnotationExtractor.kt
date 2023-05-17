@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
  * annotation from a spring bean.
  *
  * If the annotation is defined on the bean then
- * returns [AnnotationDetail] about the bean
+ * returns [ConsumerAnnotationDetail] about the bean
  * which includes as instance variable bean,
  * bean name and annotation object which was
  * found on the bean.
@@ -33,11 +33,11 @@ class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolve
         return annotatedBeanDetails
     }
 
-    private fun extractConsumerAnnotation(beanName: String, bean: Any): AnnotationDetail {
+    private fun extractConsumerAnnotation(beanName: String, bean: Any): ConsumerAnnotationDetail {
         val annotation: PulsarConsumer? = AnnotationUtils.findAnnotation(bean.javaClass, PulsarConsumer::class.java)
         annotation?.let {
             if (bean is MessageListener<*>) {
-                return AnnotationDetail(bean, beanName, annotation.map(resolver))
+                return ConsumerAnnotationDetail(beanName,bean, annotation.map(resolver))
             } else {
                 throw PulsarListenerTypeNotSupportedSpringException(beanName)
             }

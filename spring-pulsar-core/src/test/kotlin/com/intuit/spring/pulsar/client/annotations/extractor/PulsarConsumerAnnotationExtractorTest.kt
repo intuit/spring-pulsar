@@ -48,16 +48,19 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateAckWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateSubscriptionWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateDeadLetterPolicyWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateQueueWithAllPropertiesSet(annotatedBeanDetails[0])
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateAckWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateSubscriptionWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateDeadLetterPolicyWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateQueueWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
     }
 
     @Test
@@ -69,16 +72,19 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicDefaults(annotatedBeanDetails[0].pulsarConsumer.topic)
-        validateAckWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateSubscriptionWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateDeadLetterPolicyWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateQueueWithAllPropertiesSet(annotatedBeanDetails[0])
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.topic)
+        validateAckWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateSubscriptionWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateDeadLetterPolicyWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateQueueWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
     }
 
     @Test
@@ -90,16 +96,20 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateAckWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateSubscriptionWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateDeadLetterPolicyDefaults(annotatedBeanDetails[0].pulsarConsumer.deadLetterPolicy)
-        validateQueueWithAllPropertiesSet(annotatedBeanDetails[0])
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateAckWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateSubscriptionWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateDeadLetterPolicyDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail)
+            .pulsarConsumer.deadLetterPolicy)
+        validateQueueWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
     }
 
     @Test
@@ -111,16 +121,19 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateAckWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateSubscriptionWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateDeadLetterPolicyWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateQueueDefaults(annotatedBeanDetails[0].pulsarConsumer.queue)
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateAckWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateSubscriptionWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateDeadLetterPolicyWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateQueueDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.queue)
     }
 
     @Test
@@ -132,16 +145,19 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateAckWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateSubscriptionDefaults(annotatedBeanDetails[0].pulsarConsumer.subscription)
-        validateDeadLetterPolicyWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateQueueWithAllPropertiesSet(annotatedBeanDetails[0])
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateAckWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateSubscriptionDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.subscription)
+        validateDeadLetterPolicyWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateQueueWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
     }
 
     @Test
@@ -152,21 +168,28 @@ class PulsarConsumerAnnotationExtractorTest {
         )
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
         assertNotNull(annotatedBeanDetails)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerDefaults(annotatedBeanDetails[0].pulsarConsumer)
-        validateTopicDefaults(annotatedBeanDetails[0].pulsarConsumer.topic)
-        validateAckDefaults(annotatedBeanDetails[0].pulsarConsumer.ack)
-        validateSubscriptionDefaults(annotatedBeanDetails[0].pulsarConsumer.subscription)
-        validateQueueDefaults(annotatedBeanDetails[0].pulsarConsumer.queue)
-        validateDeadLetterPolicyDefaults(annotatedBeanDetails[0].pulsarConsumer.deadLetterPolicy)
+        validatePulsarConsumerDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer)
+        validateTopicDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.topic)
+        validateAckDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.ack)
+        validateSubscriptionDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.subscription)
+        validateQueueDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.queue)
+        validateDeadLetterPolicyDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail)
+            .pulsarConsumer.deadLetterPolicy)
     }
 
     @Test
@@ -198,16 +221,19 @@ class PulsarConsumerAnnotationExtractorTest {
 
         assertNotNull(annotatedBeanDetails)
         assertEquals(1, annotatedBeanDetails.size)
-        assertEquals("testBean", annotatedBeanDetails[0].beanName)
-        assertEquals(bean, annotatedBeanDetails[0].bean)
-        assertEquals(PulsarConsumerConfig::class, annotatedBeanDetails[0].pulsarConsumer.javaClass.kotlin)
+        assertEquals("testBean", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).beanName)
+        assertEquals(bean, (annotatedBeanDetails[0] as ConsumerAnnotationDetail).bean)
+        assertEquals(
+            PulsarConsumerConfig::class,
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.javaClass.kotlin
+        )
 
-        validatePulsarConsumerWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateTopicWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateAckDefaults(annotatedBeanDetails[0].pulsarConsumer.ack)
-        validateSubscriptionWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateDeadLetterPolicyWithAllPropertiesSet(annotatedBeanDetails[0])
-        validateQueueWithAllPropertiesSet(annotatedBeanDetails[0])
+        validatePulsarConsumerWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateTopicWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateAckDefaults((annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.ack)
+        validateSubscriptionWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateDeadLetterPolicyWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
+        validateQueueWithAllPropertiesSet((annotatedBeanDetails[0] as ConsumerAnnotationDetail))
     }
 
     @Test
@@ -222,11 +248,17 @@ class PulsarConsumerAnnotationExtractorTest {
             mutableMapOf("testBean" to bean)
         )
         assertNotNull(annotatedBeanDetails)
-        assertEquals("myClient", annotatedBeanDetails.get(0).pulsarConsumer.client)
-        assertEquals("myConsumer", annotatedBeanDetails.get(0).pulsarConsumer.name)
-        assertEquals("myTopic", annotatedBeanDetails.get(0).pulsarConsumer.topic.topicNames)
-        assertEquals("Key_Shared", annotatedBeanDetails.get(0).pulsarConsumer.subscription.subscriptionType)
-        assertEquals("mySub", annotatedBeanDetails.get(0).pulsarConsumer.subscription.subscriptionName)
+        assertEquals("myClient", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.client)
+        assertEquals("myConsumer", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.name)
+        assertEquals("myTopic", (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.topic.topicNames)
+        assertEquals(
+            "Key_Shared",
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.subscription.subscriptionType
+        )
+        assertEquals(
+            "mySub",
+            (annotatedBeanDetails[0] as ConsumerAnnotationDetail).pulsarConsumer.subscription.subscriptionName
+        )
     }
 
     @Test

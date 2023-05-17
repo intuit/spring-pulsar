@@ -1,6 +1,6 @@
 package com.intuit.spring.pulsar.client.consumer
 
-import com.intuit.spring.pulsar.client.annotations.extractor.AnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.SchemaConfig
 import com.intuit.spring.pulsar.client.config.SchemaType
@@ -18,7 +18,7 @@ interface IPulsarConsumerFactory<T> {
     /**
      * Method used to create low level [Consumer]
      */
-    fun createConsumer(annotationDetail: AnnotationDetail)
+    fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail)
 }
 
 /**
@@ -38,10 +38,10 @@ class PulsarConsumerFactory<T>(
      * fetched properties.If the passed clientName does not have
      * any consumer defined in props throws [PulsarConsumerAnnotationNotFoundSpringException]
      */
-    override fun createConsumer(annotationDetail: AnnotationDetail) {
-        var consumerCount: Int = annotationDetail.pulsarConsumer.count
+    override fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail) {
+        var consumerCount: Int = consumerAnnotationDetail.pulsarConsumer.count
         while (consumerCount > 0) {
-            startConsumer(createPulsarConsumer(annotationDetail))
+            startConsumer(createPulsarConsumer(consumerAnnotationDetail))
             consumerCount -= 1
         }
     }
@@ -50,11 +50,11 @@ class PulsarConsumerFactory<T>(
      * Creates and return a Pulsar Consumer builder of type
      * [ConsumerBuilder]
      */
-    private fun createPulsarConsumer(annotationDetail: AnnotationDetail): ConsumerBuilder<T> {
+    private fun createPulsarConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail): ConsumerBuilder<T> {
         val pulsarClient = clientFactory.getClient()
-        return PulsarConsumerBuilder(pulsarClient, createSchema(annotationDetail.pulsarConsumer.schema))
-            .withConsumerConfig(annotationDetail.pulsarConsumer)
-            .withListener(annotationDetail.bean)
+        return PulsarConsumerBuilder(pulsarClient, createSchema(consumerAnnotationDetail.pulsarConsumer.schema))
+            .withConsumerConfig(consumerAnnotationDetail.pulsarConsumer)
+            .withListener(consumerAnnotationDetail.bean)
             .build()
     }
 

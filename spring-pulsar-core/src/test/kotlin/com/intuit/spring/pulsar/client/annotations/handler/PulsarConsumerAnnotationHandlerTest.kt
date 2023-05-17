@@ -23,9 +23,9 @@ import org.mockito.Mockito.verify
 import org.springframework.context.ApplicationContext
 import org.springframework.core.env.Environment
 
-class PulsarAnnotationHandlerTest {
+class PulsarConsumerAnnotationHandlerTest {
 
-    private lateinit var annotationHandler: PulsarAnnotationHandler<MessageData>
+    private lateinit var annotationHandler: PulsarConsumerAnnotationHandler<MessageData>
     private lateinit var clientFactory: PulsarClientFactory
     private lateinit var applicationContext: ApplicationContext
     private lateinit var environment: Environment
@@ -39,7 +39,7 @@ class PulsarAnnotationHandlerTest {
         `when`(applicationContext.getBean(PulsarConsumerAnnotationExtractor::class.java))
             .thenReturn(PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)))
 
-        annotationHandler = PulsarAnnotationHandler(
+        annotationHandler = PulsarConsumerAnnotationHandler(
             annotationExtractor = PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)),
             pulsarConsumerFactory = PulsarConsumerFactory<MessageData>(clientFactory),
             applicationContext = applicationContext

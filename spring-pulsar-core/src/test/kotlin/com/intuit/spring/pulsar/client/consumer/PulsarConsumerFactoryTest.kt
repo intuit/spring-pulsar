@@ -1,6 +1,6 @@
 package com.intuit.spring.pulsar.client.consumer
 
-import com.intuit.spring.pulsar.client.annotations.extractor.AnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.PulsarConsumerConfig
 import org.apache.pulsar.client.api.ConsumerBuilder
@@ -32,7 +32,7 @@ class PulsarConsumerFactoryTest {
 
     @Test
     fun `validate createAndStartConsumer creates and start zero consumer`() {
-        val beanDetails: AnnotationDetail = mock(AnnotationDetail::class.java)
+        val beanDetails: ConsumerAnnotationDetail = mock(ConsumerAnnotationDetail::class.java)
         val consumerAnnotation: PulsarConsumerConfig = mock(PulsarConsumerConfig::class.java)
         `when`(beanDetails.pulsarConsumer).thenReturn(consumerAnnotation)
         `when`(consumerAnnotation.count).thenReturn(0)

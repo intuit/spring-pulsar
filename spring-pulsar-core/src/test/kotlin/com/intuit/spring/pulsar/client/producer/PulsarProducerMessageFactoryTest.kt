@@ -32,7 +32,7 @@ class PulsarProducerMessageFactoryTest {
         producerRecord = mock(ProducerRecord::class.java) as ProducerRecord<String>
         producer = mock(PulsarProducer::class.java) as PulsarProducer<String>
         messageBuilder = mock(TypedMessageBuilder::class.java) as TypedMessageBuilder<String>
-        schema = mock(Schema::class.java) as Schema<String>
+        schema = Schema.STRING
     }
 
     @Test
