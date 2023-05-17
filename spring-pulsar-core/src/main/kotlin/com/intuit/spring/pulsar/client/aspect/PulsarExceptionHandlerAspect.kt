@@ -36,6 +36,13 @@ class PulsarExceptionHandlerAspect(val pulsarExceptionAnnotationProcessor: Pulsa
     private fun getPulsarProducerActions(pulsarProducerAction: PulsarProducerAction) {}
 
     /**
+     * Pointcut definition for all reader actions
+     */
+    @Suppress("EmptyFunctionBlock", "UnusedPrivateMember")
+    @Pointcut("@annotation(pulsarReaderAction)")
+    private fun getPulsarReaderActions(pulsarReaderAction: PulsarReaderAction) {}
+
+    /**
      * Advice when executing pulsar consumer actions
      * Any pre/post-actions including exception handling delegation will be done here
      */
@@ -64,6 +71,22 @@ class PulsarExceptionHandlerAspect(val pulsarExceptionAnnotationProcessor: Pulsa
             log.error(ex.message, ex)
             pulsarExceptionAnnotationProcessor
                 .onPulsarProducerException(ExceptionHandlerParams(ex, pulsarProducerAction.action))
+        }
+    }
+
+    /**
+     * Advice when executing pulsar reader actions
+     * Any pre/post-actions including exception handling delegation will be done here
+     */
+    @Suppress("UnusedPrivateMember")
+    @Around("getPulsarReaderActions(pulsarReaderAction)")
+    fun handleReaderExceptions(joinPoint: ProceedingJoinPoint, pulsarReaderAction: PulsarReaderAction) {
+        try {
+            joinPoint.proceed()
+        } catch (ex: Exception) {
+            log.error(ex.message, ex)
+            pulsarExceptionAnnotationProcessor
+                .onPulsarReaderException(ExceptionHandlerParams(ex, pulsarReaderAction.action))
         }
     }
 
