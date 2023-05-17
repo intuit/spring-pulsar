@@ -7,6 +7,7 @@ import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupported
 import com.intuit.spring.pulsar.client.exceptions.PulsarReaderAnnotationNotFoundSpringException
 import org.apache.pulsar.client.api.ReaderListener
 import org.springframework.core.annotation.AnnotationUtils
+import org.springframework.stereotype.Component
 
 /**
  * Concrete class used for extraction of [PulsarReader]
@@ -18,6 +19,7 @@ import org.springframework.core.annotation.AnnotationUtils
  * bean name and annotation object which was
  * found on the bean.
  */
+@Component
 class PulsarReaderAnnotationExtractor(val resolver: IAnnotationPropertyResolver) :
     IPulsarAnnotationExtractor {
 

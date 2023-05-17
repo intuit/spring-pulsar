@@ -7,6 +7,7 @@ import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFou
 import com.intuit.spring.pulsar.client.exceptions.PulsarListenerTypeNotSupportedForCustomerSpringException
 import org.apache.pulsar.client.api.MessageListener
 import org.springframework.core.annotation.AnnotationUtils
+import org.springframework.stereotype.Component
 
 /**
  * Concrete class used for extraction of [PulsarConsumer]
@@ -18,6 +19,7 @@ import org.springframework.core.annotation.AnnotationUtils
  * bean name and annotation object which was
  * found on the bean.
  */
+@Component
 class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolver): IPulsarAnnotationExtractor {
 
     override fun extract(annotatedBeans: MutableMap<String, Any>): MutableList<AnnotationDetail> {
