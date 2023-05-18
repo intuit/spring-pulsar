@@ -33,7 +33,7 @@ class PulsarConsumerAnnotationExtractor(val resolver: IAnnotationPropertyResolve
         return annotatedBeanDetails
     }
 
-    private fun extractConsumerAnnotation(beanName: String, bean: Any): ConsumerAnnotationDetail {
+    private fun extractConsumerAnnotation(beanName: String, bean: Any): ConsumerAnnotationDetail<Any> {
         val annotation: PulsarConsumer? = AnnotationUtils.findAnnotation(bean.javaClass, PulsarConsumer::class.java)
         annotation?.let {
             if (bean is MessageListener<*>) {

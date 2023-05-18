@@ -8,6 +8,7 @@ import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFou
 import org.apache.pulsar.client.api.Consumer
 import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.Schema
+import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 
 /**
@@ -18,7 +19,7 @@ interface IPulsarConsumerFactory<T> {
     /**
      * Method used to create low level [Consumer]
      */
-    fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail)
+    fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>)
 }
 
 /**
@@ -28,6 +29,7 @@ interface IPulsarConsumerFactory<T> {
 @Suppress("UNCHECKED_CAST")
 @Component
 class PulsarConsumerFactory<T>(
+    private val applicationContext: ApplicationContext,
     private val clientFactory: IPulsarClientFactory
 ): IPulsarConsumerFactory<T> {
 
@@ -38,7 +40,7 @@ class PulsarConsumerFactory<T>(
      * fetched properties.If the passed clientName does not have
      * any consumer defined in props throws [PulsarConsumerAnnotationNotFoundSpringException]
      */
-    override fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail) {
+    override fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>) {
         var consumerCount: Int = consumerAnnotationDetail.pulsarConsumer.count
         while (consumerCount > 0) {
             startConsumer(createPulsarConsumer(consumerAnnotationDetail))
@@ -50,9 +52,11 @@ class PulsarConsumerFactory<T>(
      * Creates and return a Pulsar Consumer builder of type
      * [ConsumerBuilder]
      */
-    private fun createPulsarConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail): ConsumerBuilder<T> {
+    private fun createPulsarConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>): ConsumerBuilder<T> {
         val pulsarClient = clientFactory.getClient()
-        return PulsarConsumerBuilder(pulsarClient, createSchema(consumerAnnotationDetail.pulsarConsumer.schema))
+        return PulsarConsumerBuilder(applicationContext,
+            pulsarClient,
+            createSchema(consumerAnnotationDetail.pulsarConsumer.schema))
             .withConsumerConfig(consumerAnnotationDetail.pulsarConsumer)
             .withListener(consumerAnnotationDetail.bean)
             .build()

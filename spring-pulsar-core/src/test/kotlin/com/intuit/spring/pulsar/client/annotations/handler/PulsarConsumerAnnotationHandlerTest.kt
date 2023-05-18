@@ -41,7 +41,7 @@ class PulsarConsumerAnnotationHandlerTest {
 
         annotationHandler = PulsarConsumerAnnotationHandler(
             annotationExtractor = PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)),
-            pulsarConsumerFactory = PulsarConsumerFactory<MessageData>(clientFactory),
+            pulsarConsumerFactory = PulsarConsumerFactory<MessageData>(applicationContext,clientFactory),
             applicationContext = applicationContext
         )
     }

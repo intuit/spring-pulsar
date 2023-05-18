@@ -28,7 +28,7 @@ class PulsarConsumerAnnotationHandler<T>(
     override fun handle() {
         annotationExtractor.extract(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java))
             .forEach { annotatedBeanDetail ->
-                pulsarConsumerFactory.createConsumer(annotatedBeanDetail as ConsumerAnnotationDetail)
+                pulsarConsumerFactory.createConsumer(annotatedBeanDetail as ConsumerAnnotationDetail<T>)
             }
     }
 }

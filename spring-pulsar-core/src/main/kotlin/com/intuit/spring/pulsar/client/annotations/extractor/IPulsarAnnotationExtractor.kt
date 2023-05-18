@@ -43,10 +43,10 @@ open class AnnotationDetail(
     val beanName: String
 )
 
-class ConsumerAnnotationDetail(
+class ConsumerAnnotationDetail<T>(
     beanName: String,
     val bean: MessageListener<*>,
-    val pulsarConsumer: PulsarConsumerConfig
+    val pulsarConsumer: PulsarConsumerConfig<T>
 ) : AnnotationDetail(beanName = beanName)
 
 class ProducerAnnotationDetail(

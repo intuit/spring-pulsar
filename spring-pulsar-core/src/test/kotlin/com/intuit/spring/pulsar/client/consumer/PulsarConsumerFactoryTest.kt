@@ -13,6 +13,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.context.ApplicationContext
 
 @ExtendWith(MockitoExtension::class)
 class PulsarConsumerFactoryTest {
@@ -21,19 +22,23 @@ class PulsarConsumerFactoryTest {
     private lateinit var consumerFactory: PulsarConsumerFactory<ByteArray>
     private lateinit var pulsarClient: PulsarClient
     private lateinit var consumerBuilder: ConsumerBuilder<ByteArray>
+    private lateinit var applicationContext: ApplicationContext
 
     @BeforeEach
     fun init() {
+        applicationContext = mock(ApplicationContext::class.java)
         clientFactory = mock(IPulsarClientFactory::class.java)
         pulsarClient = mock(PulsarClient::class.java)
         consumerBuilder = mock(ConsumerBuilder::class.java) as ConsumerBuilder<ByteArray>
-        consumerFactory = PulsarConsumerFactory(clientFactory)
+        consumerFactory = PulsarConsumerFactory(applicationContext,clientFactory)
     }
 
     @Test
     fun `validate createAndStartConsumer creates and start zero consumer`() {
-        val beanDetails: ConsumerAnnotationDetail = mock(ConsumerAnnotationDetail::class.java)
-        val consumerAnnotation: PulsarConsumerConfig = mock(PulsarConsumerConfig::class.java)
+        val beanDetails: ConsumerAnnotationDetail<ByteArray> = mock(ConsumerAnnotationDetail::class.java)
+        as ConsumerAnnotationDetail<ByteArray>
+        val consumerAnnotation: PulsarConsumerConfig<ByteArray> = mock(PulsarConsumerConfig::class.java)
+        as PulsarConsumerConfig<ByteArray>
         `when`(beanDetails.pulsarConsumer).thenReturn(consumerAnnotation)
         `when`(consumerAnnotation.count).thenReturn(0)
         consumerFactory.createConsumer(beanDetails)
