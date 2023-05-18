@@ -1,4 +1,4 @@
-package com.intuit.spring.pulsar.client.annotations.consumer
+package com.intuit.spring.pulsar.client.annotations.common
 
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.config.SchemaConfig

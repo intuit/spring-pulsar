@@ -15,3 +15,11 @@ annotation class PulsarConsumerAction(val action: String)
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)
 annotation class PulsarProducerAction(val action: String)
+
+/**
+ * Annotation to be used on functions that read Pulsar events and need exception handling
+ * @param action - to reference the action under process
+ */
+@Target(AnnotationTarget.FUNCTION)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class PulsarReaderAction(val action: String)

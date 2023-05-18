@@ -57,7 +57,7 @@ class PulsarExceptionsTest {
 
     @Test
     fun `validate error message of invalid listener type exception`() {
-        val exception = PulsarListenerTypeNotSupportedSpringException("myBean")
+        val exception = PulsarListenerTypeNotSupportedForCustomerSpringException("myBean")
         assertEquals(
             "Only Listener of type IPulsarListener " +
                 "or MessageListener are supported: myBean",

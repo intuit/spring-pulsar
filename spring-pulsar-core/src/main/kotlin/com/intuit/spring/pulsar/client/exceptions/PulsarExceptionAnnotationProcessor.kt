@@ -14,11 +14,12 @@ import kotlin.reflect.jvm.javaType
 
 /**
  * This class is responsible for processing the classes and functions
- * that have annotations defined to be identified as exception handlers for Pulsar producers/consumers
+ * that have annotations defined to be identified as exception handlers for Pulsar producers/consumers/readers
  */
 @Component
 class PulsarExceptionAnnotationProcessor(private val applicationContext: ApplicationContext) {
     private val consumerExceptionHandlerMap: MutableMap<KClass<out Exception>, PulsarExceptionHandler> = mutableMapOf()
+    private val readerExceptionHandlerMap: MutableMap<KClass<out Exception>, PulsarExceptionHandler> = mutableMapOf()
     private val producerExceptionHandlerMap: MutableMap<KClass<out Exception>, PulsarExceptionHandler> = mutableMapOf()
     private val handlerClassAnnotation = PulsarExceptionHandlerClass::class.java
 
@@ -28,11 +29,11 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
     }
 
     /**
-     * This method will construct the map(s) required for exception handling when producing/consuming Pulsar events
+     * This method will construct the map(s) required for exception handling when producing/consuming/reading Pulsar events
      * It will look up the spring beans with the class handler annotation
      * Will further look up the methods within such classes and identify the handler functions for each exception
      * Note to consumers: Define handler classes[PulsarExceptionHandlerClass]
-     * and functions[PulsarConsumerExceptionHandlerFunction]/[PulsarProducerExceptionHandlerFunction] within your module
+     * and functions[PulsarConsumerExceptionHandlerFunction]/[PulsarProducerExceptionHandlerFunction]/[PulsarReaderExceptionHandlerFunction] within your module
      */
     @Suppress("NestedBlockDepth")
     @PostConstruct
@@ -62,6 +63,11 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
             annotation.exceptions.forEach { exception ->
                 val handler = getHandlerFromProperty(bean, property)
                 checkForExistingHandlerAndUpdateMap(producerExceptionHandlerMap, exception, handler)
+            }
+        } else if (annotation is PulsarReaderExceptionHandlerFunction && isPulsarExceptionHandler(property)) {
+            annotation.exceptions.forEach { exception ->
+                val handler = getHandlerFromProperty(bean, property)
+                checkForExistingHandlerAndUpdateMap(readerExceptionHandlerMap, exception, handler)
             }
         }
     }
@@ -113,6 +119,14 @@ class PulsarExceptionAnnotationProcessor(private val applicationContext: Applica
      */
     fun onPulsarConsumerException(exceptionHandlerParams: ExceptionHandlerParams) {
         val pulsarExceptionHandler = consumerExceptionHandlerMap[exceptionHandlerParams.exception.javaClass.kotlin]
+        handleException(pulsarExceptionHandler, exceptionHandlerParams)
+    }
+
+    /**
+     * Use the map to invoke the appropriate reader exception handler method
+     */
+    fun onPulsarReaderException(exceptionHandlerParams: ExceptionHandlerParams) {
+        val pulsarExceptionHandler = readerExceptionHandlerMap[exceptionHandlerParams.exception.javaClass.kotlin]
         handleException(pulsarExceptionHandler, exceptionHandlerParams)
     }
 

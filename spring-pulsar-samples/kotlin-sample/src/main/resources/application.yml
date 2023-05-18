@@ -18,6 +18,9 @@ pulsar:
       type: Key_Shared
     consumer:
       count: 1
+    reader:
+      startMessageId: earliest
+      name: kotlin-sample-reader01
   sample02:
     topic:
       name: kotlin-sample-topic02

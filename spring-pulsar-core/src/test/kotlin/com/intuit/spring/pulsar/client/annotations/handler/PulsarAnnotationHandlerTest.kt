@@ -1,14 +1,16 @@
 package com.intuit.spring.pulsar.client.annotations.handler
 
+import com.intuit.spring.pulsar.client.annotations.common.Schema
 import com.intuit.spring.pulsar.client.annotations.consumer.PulsarConsumer
-import com.intuit.spring.pulsar.client.annotations.consumer.Schema
 import com.intuit.spring.pulsar.client.annotations.consumer.Subscription
 import com.intuit.spring.pulsar.client.annotations.consumer.Topic
 import com.intuit.spring.pulsar.client.annotations.extractor.PulsarConsumerAnnotationExtractor
+import com.intuit.spring.pulsar.client.annotations.extractor.PulsarReaderAnnotationExtractor
 import com.intuit.spring.pulsar.client.annotations.resolver.AnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.client.PulsarClientFactory
 import com.intuit.spring.pulsar.client.consumer.PulsarConsumerFactory
 import com.intuit.spring.pulsar.client.consumer.listener.IPulsarListener
+import com.intuit.spring.pulsar.client.reader.PulsarReaderFactory
 import org.apache.pulsar.client.api.Consumer
 import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.Message
@@ -40,16 +42,18 @@ class PulsarAnnotationHandlerTest {
             .thenReturn(PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)))
 
         annotationHandler = PulsarAnnotationHandler(
-            annotationExtractor = PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)),
+            pulsarConsumerAnnotationExtractor = PulsarConsumerAnnotationExtractor(AnnotationPropertyResolver(environment)),
             pulsarConsumerFactory = PulsarConsumerFactory<MessageData>(clientFactory),
-            applicationContext = applicationContext
+            applicationContext = applicationContext,
+            pulsarReaderFactory = PulsarReaderFactory<MessageData>(clientFactory),
+            pulsarReaderAnnotationExtractor = PulsarReaderAnnotationExtractor(AnnotationPropertyResolver(environment))
         )
     }
 
     @Test
     fun validateHandleWhenNoConsumerDefined() {
         `when`(applicationContext.getBeansWithAnnotation(PulsarConsumer::class.java)).thenReturn(mutableMapOf())
-        annotationHandler.handle()
+        annotationHandler.createConsumers()
         verify(clientFactory, times(0)).getClient()
     }
 
@@ -66,7 +70,7 @@ class PulsarAnnotationHandlerTest {
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
             .thenReturn(consumerBuilder)
-        annotationHandler.handle()
+        annotationHandler.createConsumers()
         verify(clientFactory, times(2)).getClient()
         verify(consumerBuilder, times(2)).subscribe()
     }
@@ -84,7 +88,7 @@ class PulsarAnnotationHandlerTest {
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
             .thenReturn(consumerBuilder)
-        annotationHandler.handle()
+        annotationHandler.createConsumers()
         verify(clientFactory, times(2)).getClient()
         verify(consumerBuilder, times(2)).subscribe()
     }
@@ -102,7 +106,7 @@ class PulsarAnnotationHandlerTest {
         `when`(clientFactory.getClient()).thenReturn(pulsarClient)
         `when`(pulsarClient.newConsumer(any(org.apache.pulsar.client.api.Schema::class.java)))
             .thenReturn(consumerBuilder)
-        annotationHandler.handle()
+        annotationHandler.createConsumers()
         verify(clientFactory, times(2)).getClient()
         verify(consumerBuilder, times(2)).subscribe()
     }

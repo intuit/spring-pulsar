@@ -1,7 +1,6 @@
 package com.intuit.spring.pulsar.client.config
 
 import org.apache.commons.lang3.StringUtils
-import kotlin.reflect.KClass
 
 /**
  * Data class to hold pulsar consumer related properties
@@ -84,13 +83,4 @@ data class AckConfig(
 data class PropertyConfig(
     val key: String = StringUtils.EMPTY,
     val value: String = StringUtils.EMPTY
-)
-
-/**
- * Data class to hold pulsar consumer schema properties
- * after the property values are resolved.
- */
-data class SchemaConfig(
-    val type: SchemaType = SchemaType.BYTES,
-    val typeClass: KClass<*> = String::class
 )
