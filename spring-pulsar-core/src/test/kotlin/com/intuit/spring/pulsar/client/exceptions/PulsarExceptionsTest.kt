@@ -47,6 +47,17 @@ class PulsarExceptionsTest {
     }
 
     @Test
+    fun `validate error message of ReaderNotFoundException`() {
+        val beanName = "myBean"
+        val exception =
+            PulsarReaderAnnotationNotFoundSpringException(beanName)
+        assertEquals(
+            "Reader annotation is not found on bean $beanName",
+            exception.message
+        )
+    }
+
+    @Test
     fun `validate error message of ConsumerWithoutListenerException`() {
         val exception = PulsarConsumerWithoutListenerSpringException()
         assertEquals(
@@ -56,11 +67,21 @@ class PulsarExceptionsTest {
     }
 
     @Test
-    fun `validate error message of invalid listener type exception`() {
+    fun `validate error message of invalid consumer listener type exception`() {
         val exception = PulsarListenerTypeNotSupportedForCustomerSpringException("myBean")
         assertEquals(
             "Only Listener of type IPulsarListener " +
                 "or MessageListener are supported: myBean",
+            exception.message
+        )
+    }
+
+    @Test
+    fun `validate error message of invalid reader listener type exception`() {
+        val exception = PulsarListenerTypeNotSupportedForReaderSpringException("myBean")
+        assertEquals(
+            "Only Listener of type" +
+                    " ReaderListener are supported: myBean",
             exception.message
         )
     }

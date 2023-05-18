@@ -30,6 +30,9 @@ class PulsarExceptionHandlerAspectTest(
     @Mock
     private lateinit var producerAction: PulsarProducerAction
 
+    @Mock
+    private lateinit var readerAction: PulsarReaderAction
+
     @Test
     fun testHandleConsumerExceptionsWithoutException() {
         pulsarExceptionHandlerAspect.handleConsumerExceptions(proceedingJoinPoint, consumerAction)
@@ -71,6 +74,28 @@ class PulsarExceptionHandlerAspectTest(
             .onPulsarProducerException(
                 PulsarExceptionHandlerAspect
                     .ExceptionHandlerParams(exception, producerAction.action)
+            )
+    }
+
+    @Test
+    fun testHandleReaderExceptionsWithoutException() {
+        pulsarExceptionHandlerAspect.handleReaderExceptions(proceedingJoinPoint, readerAction)
+        verify(proceedingJoinPoint, times(1)).proceed()
+        verify(pulsarExceptionAnnotationProcessor, times(0))
+            .onPulsarReaderException(any())
+    }
+
+    @Test
+    fun testHandleReaderExceptionsWithException() {
+        val exception = IOException()
+        `when`(proceedingJoinPoint.proceed()).thenThrow(exception)
+        `when`(readerAction.action).thenReturn("action")
+        pulsarExceptionHandlerAspect.handleReaderExceptions(proceedingJoinPoint, readerAction)
+        verify(proceedingJoinPoint, times(1)).proceed()
+        verify(pulsarExceptionAnnotationProcessor, times(1))
+            .onPulsarReaderException(
+                PulsarExceptionHandlerAspect
+                    .ExceptionHandlerParams(exception, readerAction.action)
             )
     }
 }
