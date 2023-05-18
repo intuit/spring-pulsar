@@ -15,6 +15,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.Mockito.any
 import org.mockito.Mockito.mock
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.context.ApplicationContext
 import kotlin.test.assertNotNull
 
 @ExtendWith(MockitoExtension::class)
@@ -25,6 +26,7 @@ class PulsarProducerFactoryTest {
     private lateinit var producerConfig: PulsarProducerConfig<ByteArray>
     private lateinit var client: PulsarClient
     private lateinit var producerBuilder: ProducerBuilder<ByteArray>
+    private lateinit var applicationContext: ApplicationContext
 
     @BeforeEach
     fun init() {
@@ -32,7 +34,8 @@ class PulsarProducerFactoryTest {
         producerConfig = mock(PulsarProducerConfig::class.java) as PulsarProducerConfig<ByteArray>
         client = mock(PulsarClient::class.java)
         producerBuilder = mock(ProducerBuilder::class.java) as ProducerBuilder<ByteArray>
-        producerFactory = PulsarProducerFactory(producerConfig, clientFactory)
+        applicationContext = mock(ApplicationContext::class.java) as ApplicationContext
+        producerFactory = PulsarProducerFactory(producerConfig, clientFactory, applicationContext)
         `when`(producerConfig.schema).thenReturn(mock(Schema::class.java) as Schema<ByteArray>)
         `when`(producerConfig.batch).thenReturn(mock(PulsarProducerBatchingConfig::class.java))
         `when`(producerConfig.message).thenReturn(mock(PulsarProducerMessageConfig::class.java))

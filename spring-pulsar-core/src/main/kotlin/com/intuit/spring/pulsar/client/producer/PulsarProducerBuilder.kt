@@ -7,12 +7,15 @@ import org.apache.pulsar.client.api.ProducerBuilder
 import org.apache.pulsar.client.api.PulsarClient
 import org.apache.pulsar.client.api.Schema
 import java.util.concurrent.TimeUnit
+import org.apache.pulsar.client.api.interceptor.ProducerInterceptor
+import org.springframework.context.ApplicationContext
 
 /**
  * Builder class to build producer object from
  * configuration.
  */
-class PulsarProducerBuilder<T>(pulsarClient: PulsarClient, val schema: Schema<T>) {
+class PulsarProducerBuilder<T>(pulsarClient: PulsarClient, val schema: Schema<T>,
+                               val applicationContext: ApplicationContext) {
 
     private val builder: ProducerBuilder<T> = pulsarClient.newProducer(schema)
     private var autoFlush: Boolean = true
@@ -32,6 +35,9 @@ class PulsarProducerBuilder<T>(pulsarClient: PulsarClient, val schema: Schema<T>
             producer.autoFlush.let {
                 autoFlush = producer.autoFlush
             }
+            producer.interceptor?.let { builder.intercept(
+                applicationContext.getBean(producer.interceptor!!) as ProducerInterceptor
+            ) }
             withBatchConfig(producer.batch)
             withMessageConfig(producer.message)
         }

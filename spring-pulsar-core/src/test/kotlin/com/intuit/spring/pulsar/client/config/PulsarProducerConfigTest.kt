@@ -71,6 +71,7 @@ class PulsarProducerConfigTest {
             cryptoFailureAction = ProducerCryptoFailureAction.FAIL,
             message = PulsarProducerMessageConfig(),
             batch = PulsarProducerBatchingConfig(),
+            interceptor = "MyProducerInterceptor",
             autoFlush = false
         )
 
@@ -81,6 +82,7 @@ class PulsarProducerConfigTest {
         assertEquals(ProducerCryptoFailureAction.FAIL, producerConfig.cryptoFailureAction)
         assertNotNull(producerConfig.message)
         assertNotNull(producerConfig.batch)
+        assertEquals("MyProducerInterceptor", producerConfig.interceptor)
         assertEquals(false, producerConfig.autoFlush)
     }
 
