@@ -40,6 +40,7 @@ class PulsarProducerTemplateImpl<T>(
         applicationContext.getBean(PulsarClientFactory::class.java),
         applicationContext
     ).create()
+
     private val messageFactory: IPulsarProducerMessageFactory<T> =
         PulsarProducerMessageFactory()
 

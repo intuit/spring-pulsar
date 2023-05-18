@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component
         subscriptionName = "#{pulsar.sample01.subscription.name}",
         subscriptionType = "#{pulsar.sample01.subscription.type}"
     ),
+    interceptors = ["MyConsumerInterceptor"],
     count = "#{pulsar.sample01.consumer.count}"
 )
 class SampleConsumer: IPulsarListener<ByteArray> {

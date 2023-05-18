@@ -9,26 +9,31 @@ import com.intuit.spring.pulsar.client.config.TopicConfig
 import com.intuit.spring.pulsar.client.utils.convertToPropertiesMap
 import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.ConsumerCryptoFailureAction
+import org.apache.pulsar.client.api.ConsumerInterceptor
 import org.apache.pulsar.client.api.MessageListener
 import org.apache.pulsar.client.api.PulsarClient
 import org.apache.pulsar.client.api.RegexSubscriptionMode
 import org.apache.pulsar.client.api.Schema
 import org.apache.pulsar.client.api.SubscriptionInitialPosition
 import org.apache.pulsar.client.api.SubscriptionType
+import org.springframework.context.ApplicationContext
 import java.util.concurrent.TimeUnit
 
 /**
  * Builder class to populate low level pulsar consumer
  * builder object with defined client properties
  */
-class PulsarConsumerBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
+class PulsarConsumerBuilder<T>(val applicationContext: ApplicationContext,
+                               pulsarClient: PulsarClient,
+                               schema: Schema<T>) {
 
     private val builder: ConsumerBuilder<T> = pulsarClient.newConsumer(schema)
 
     /**
      * Populate consumer properties in builder
      */
-    fun withConsumerConfig(consumer: PulsarConsumerConfig): PulsarConsumerBuilder<T> {
+    @Suppress("SpreadOperator")
+    fun withConsumerConfig(consumer: PulsarConsumerConfig<T>): PulsarConsumerBuilder<T> {
         if (Int.MIN_VALUE != consumer.priorityLevel) {
             builder.priorityLevel(consumer.priorityLevel)
         }
@@ -37,6 +42,14 @@ class PulsarConsumerBuilder<T>(pulsarClient: PulsarClient, schema: Schema<T>) {
         }
         if (consumer.properties.isNotEmpty()) {
             builder.properties(convertToPropertiesMap(consumer.properties))
+        }
+        if (consumer.interceptors.isNotEmpty()){
+            val interceptorBeans: MutableList<ConsumerInterceptor<T>> = mutableListOf()
+            for(interceptor in consumer.interceptors) {
+                val interceptorBean = applicationContext.getBean(interceptor)
+                interceptorBean.let { interceptorBeans.add(interceptorBean as ConsumerInterceptor<T>) }
+            }
+            builder.intercept(*interceptorBeans.toTypedArray())
         }
         withAckConfig(consumer.ack)
         withQueueConfig(consumer.queue)

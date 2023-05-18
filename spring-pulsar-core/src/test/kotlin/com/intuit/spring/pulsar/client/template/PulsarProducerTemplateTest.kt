@@ -53,7 +53,7 @@ class PulsarProducerTemplateTest {
         messageBuilder =
             mock(TypedMessageBuilder::class.java) as TypedMessageBuilder<String>
         clientFactory = mock(PulsarClientFactory::class.java)
-        schema = mock(Schema::class.java) as Schema<String>
+        schema = Schema.STRING
         pulsarClient = mock(PulsarClient::class.java)
         pulsarProducerConfig =
             mock(PulsarProducerConfig::class.java) as PulsarProducerConfig<String>

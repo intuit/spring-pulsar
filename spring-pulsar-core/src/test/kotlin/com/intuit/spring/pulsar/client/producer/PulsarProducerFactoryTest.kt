@@ -36,7 +36,7 @@ class PulsarProducerFactoryTest {
         producerBuilder = mock(ProducerBuilder::class.java) as ProducerBuilder<ByteArray>
         applicationContext = mock(ApplicationContext::class.java) as ApplicationContext
         producerFactory = PulsarProducerFactory(producerConfig, clientFactory, applicationContext)
-        `when`(producerConfig.schema).thenReturn(mock(Schema::class.java) as Schema<ByteArray>)
+        `when`(producerConfig.schema).thenReturn(Schema.BYTES)
         `when`(producerConfig.batch).thenReturn(mock(PulsarProducerBatchingConfig::class.java))
         `when`(producerConfig.message).thenReturn(mock(PulsarProducerMessageConfig::class.java))
     }

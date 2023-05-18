@@ -3,6 +3,7 @@ package com.intuit.spring.pulsar.client.annotations.consumer
 import com.intuit.spring.pulsar.client.annotations.resolver.IAnnotationPropertyResolver
 import com.intuit.spring.pulsar.client.config.PulsarConsumerConfig
 import org.apache.commons.lang3.StringUtils
+import org.apache.pulsar.client.api.ConsumerInterceptor
 
 @Suppress("LongParameterList")
 @Target(AnnotationTarget.CLASS)
@@ -19,7 +20,8 @@ annotation class PulsarConsumer(
     val subscription: Subscription = Subscription(),
     val count: String = "1",
     val properties: Array<Property> = [],
-    val schema: Schema = Schema()
+    val schema: Schema = Schema(),
+    val interceptors: Array<String> = []
 )
 
 /**
@@ -29,7 +31,7 @@ annotation class PulsarConsumer(
  * and uses it to resolve property path definitions
  * in [PulsarConsumer]
  */
-fun PulsarConsumer.map(resolver: IAnnotationPropertyResolver): PulsarConsumerConfig {
+fun PulsarConsumer.map(resolver: IAnnotationPropertyResolver): PulsarConsumerConfig<Any> {
     return PulsarConsumerConfig(
         client = resolver.resolve(this.client),
         name = resolver.resolve(this.name),
@@ -43,6 +45,15 @@ fun PulsarConsumer.map(resolver: IAnnotationPropertyResolver): PulsarConsumerCon
         subscription = this.subscription.map(resolver),
         properties = this.properties.map { property -> property.map(resolver) }
             .toMutableList(),
-        schema = this.schema.map(resolver)
+        schema = this.schema.map(resolver),
+        interceptors = resolveInterceptors(this.interceptors,resolver)
     )
+}
+
+private fun resolveInterceptors(interceptors: Array<String>,resolver: IAnnotationPropertyResolver) : Set<String> {
+    val resolved: MutableSet<String> = mutableSetOf()
+    for(interceptor in interceptors) {
+        resolved.add(resolver.resolve(interceptor));
+    }
+    return resolved
 }

@@ -38,6 +38,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.junit.jupiter.MockitoExtension
+import org.springframework.context.ApplicationContext
 import java.util.concurrent.TimeUnit
 import kotlin.test.assertEquals
 
@@ -47,13 +48,15 @@ class PulsarConsumerBuilderTest {
     private lateinit var pulsarConsumerBuilder: PulsarConsumerBuilder<ByteArray>
     private lateinit var pulsarClient: PulsarClient
     private lateinit var consumerBuilder: ConsumerBuilder<ByteArray>
+    private lateinit var applicationContext: ApplicationContext
 
     @BeforeEach
     fun init() {
         consumerBuilder = mock(ConsumerBuilder::class.java) as ConsumerBuilder<ByteArray>
+        applicationContext = mock(ApplicationContext::class.java)
         pulsarClient = mock(PulsarClient::class.java)
         `when`(pulsarClient.newConsumer(Schema.BYTES)).thenReturn(consumerBuilder)
-        pulsarConsumerBuilder = PulsarConsumerBuilder(pulsarClient, Schema.BYTES)
+        pulsarConsumerBuilder = PulsarConsumerBuilder(applicationContext,pulsarClient, Schema.BYTES)
     }
 
     @Test

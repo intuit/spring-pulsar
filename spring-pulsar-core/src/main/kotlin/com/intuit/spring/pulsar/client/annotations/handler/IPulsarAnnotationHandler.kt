@@ -8,7 +8,7 @@ package com.intuit.spring.pulsar.client.annotations.handler
  * using the annotation data to create consumers
  * or producers.
  */
-interface IPulsarAnnotationHandler<T> {
+interface IPulsarAnnotationHandler {
 
     /**
      * Handles creation of consumers or producers

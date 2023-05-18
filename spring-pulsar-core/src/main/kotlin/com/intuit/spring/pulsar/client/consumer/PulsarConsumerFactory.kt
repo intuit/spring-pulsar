@@ -1,6 +1,6 @@
 package com.intuit.spring.pulsar.client.consumer
 
-import com.intuit.spring.pulsar.client.annotations.extractor.AnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.SchemaConfig
 import com.intuit.spring.pulsar.client.config.SchemaType
@@ -8,6 +8,7 @@ import com.intuit.spring.pulsar.client.exceptions.PulsarConsumerAnnotationNotFou
 import org.apache.pulsar.client.api.Consumer
 import org.apache.pulsar.client.api.ConsumerBuilder
 import org.apache.pulsar.client.api.Schema
+import org.springframework.context.ApplicationContext
 import org.springframework.stereotype.Component
 
 /**
@@ -18,7 +19,7 @@ interface IPulsarConsumerFactory<T> {
     /**
      * Method used to create low level [Consumer]
      */
-    fun createConsumer(annotationDetail: AnnotationDetail)
+    fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>)
 }
 
 /**
@@ -28,6 +29,7 @@ interface IPulsarConsumerFactory<T> {
 @Suppress("UNCHECKED_CAST")
 @Component
 class PulsarConsumerFactory<T>(
+    private val applicationContext: ApplicationContext,
     private val clientFactory: IPulsarClientFactory
 ): IPulsarConsumerFactory<T> {
 
@@ -38,10 +40,10 @@ class PulsarConsumerFactory<T>(
      * fetched properties.If the passed clientName does not have
      * any consumer defined in props throws [PulsarConsumerAnnotationNotFoundSpringException]
      */
-    override fun createConsumer(annotationDetail: AnnotationDetail) {
-        var consumerCount: Int = annotationDetail.pulsarConsumer.count
+    override fun createConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>) {
+        var consumerCount: Int = consumerAnnotationDetail.pulsarConsumer.count
         while (consumerCount > 0) {
-            startConsumer(createPulsarConsumer(annotationDetail))
+            startConsumer(createPulsarConsumer(consumerAnnotationDetail))
             consumerCount -= 1
         }
     }
@@ -50,11 +52,13 @@ class PulsarConsumerFactory<T>(
      * Creates and return a Pulsar Consumer builder of type
      * [ConsumerBuilder]
      */
-    private fun createPulsarConsumer(annotationDetail: AnnotationDetail): ConsumerBuilder<T> {
+    private fun createPulsarConsumer(consumerAnnotationDetail: ConsumerAnnotationDetail<T>): ConsumerBuilder<T> {
         val pulsarClient = clientFactory.getClient()
-        return PulsarConsumerBuilder(pulsarClient, createSchema(annotationDetail.pulsarConsumer.schema))
-            .withConsumerConfig(annotationDetail.pulsarConsumer)
-            .withListener(annotationDetail.bean)
+        return PulsarConsumerBuilder(applicationContext,
+            pulsarClient,
+            createSchema(consumerAnnotationDetail.pulsarConsumer.schema))
+            .withConsumerConfig(consumerAnnotationDetail.pulsarConsumer)
+            .withListener(consumerAnnotationDetail.bean)
             .build()
     }
 

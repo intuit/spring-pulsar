@@ -1,6 +1,6 @@
 package com.intuit.spring.pulsar.client
 
-import com.intuit.spring.pulsar.client.annotations.extractor.AnnotationDetail
+import com.intuit.spring.pulsar.client.annotations.extractor.ConsumerAnnotationDetail
 import com.intuit.spring.pulsar.client.config.AckConfig
 import com.intuit.spring.pulsar.client.config.DeadLetterPolicyConfig
 import com.intuit.spring.pulsar.client.config.PropertyConfig
@@ -71,14 +71,15 @@ fun mockDeadLetterTopic(
     return deadLetterPolicy
 }
 
-fun mockPulsarConsumerWithDefaults(): PulsarConsumerConfig {
+fun mockPulsarConsumerWithDefaults(): PulsarConsumerConfig<ByteArray> {
     val ack = mockAckWithDefaults()
     val topic = mockTopicWithDefaults()
     val queue = mockQueueWithDefaults()
     val subscription = mockSubscriptionWithDefaults()
     val deadLetterTopic = mockDeadLetterTopicWithDefaults()
 
-    val consumer: PulsarConsumerConfig = Mockito.mock(PulsarConsumerConfig::class.java)
+    val consumer: PulsarConsumerConfig<ByteArray> = Mockito.mock(PulsarConsumerConfig::class.java)
+    as PulsarConsumerConfig<ByteArray>
     Mockito.`when`(consumer.priorityLevel).thenReturn(Int.MIN_VALUE)
     Mockito.`when`(consumer.cryptoFailureAction).thenReturn(StringUtils.EMPTY)
     Mockito.`when`(consumer.ack).thenReturn(ack)
@@ -90,14 +91,16 @@ fun mockPulsarConsumerWithDefaults(): PulsarConsumerConfig {
     return consumer
 }
 
-fun mockPulsarConsumerWithDummyValues(): PulsarConsumerConfig {
+fun mockPulsarConsumerWithDummyValues(): PulsarConsumerConfig<ByteArray> {
     val ack = mockAckWithDefaults()
     val topic = mockTopicWithDefaults()
     val queue = mockQueueWithDefaults()
     val subscription = mockSubscriptionWithDefaults()
     val deadLetterTopic = mockDeadLetterTopicWithDefaults()
-    val properties = mutableListOf(Mockito.mock(PropertyConfig::class.java), Mockito.mock(PropertyConfig::class.java))
-    val consumer: PulsarConsumerConfig = Mockito.mock(PulsarConsumerConfig::class.java)
+    val properties = mutableListOf(Mockito.mock(PropertyConfig::class.java),
+        Mockito.mock(PropertyConfig::class.java))
+    val consumer: PulsarConsumerConfig<ByteArray> = Mockito.mock(PulsarConsumerConfig::class.java)
+    as PulsarConsumerConfig<ByteArray>
     Mockito.`when`(consumer.priorityLevel).thenReturn(1)
     Mockito.`when`(consumer.cryptoFailureAction).thenReturn(ConsumerCryptoFailureAction.CONSUME.name)
     Mockito.`when`(consumer.ack).thenReturn(ack)
@@ -145,7 +148,7 @@ fun validateQueueDefaults(queue: QueueConfig) {
     assertEquals(true, queue.autoUpdatePartitions)
 }
 
-fun validatePulsarConsumerDefaults(pulsarConsumer: PulsarConsumerConfig) {
+fun validatePulsarConsumerDefaults(pulsarConsumer: PulsarConsumerConfig<ByteArray>) {
     assertEquals("", pulsarConsumer.client)
     assertEquals("", pulsarConsumer.name)
     assertEquals(Int.MIN_VALUE, pulsarConsumer.priorityLevel)
@@ -228,7 +231,7 @@ fun validatePulsarConsumer(
     expectedPriorityLevel: Int,
     expectedCryptoFailureAction: String,
     expectedCount: Int,
-    actual: PulsarConsumerConfig
+    actual: PulsarConsumerConfig<ByteArray>
 ) {
     assertEquals(expectedClient, actual.client)
     assertEquals(expectedName, actual.name)
@@ -237,63 +240,63 @@ fun validatePulsarConsumer(
     assertEquals(expectedCount, actual.count)
 }
 
-fun validateTopicWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateTopicWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validateTopic(
         expectedTopicNames = "myTopic",
         expectedTopicPatterns = "myTopicPattern",
-        actual = annotationDetail.pulsarConsumer.topic
+        actual = consumerAnnotationDetail.pulsarConsumer.topic
     )
 }
 
-fun validateQueueWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateQueueWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validateQueue(
         expectedReceiverQueueSize = 20,
         expectedMaxTotalReceiverQueueSizeAcrossPartitions = 60,
         expectedReadCompacted = true,
         expectedPatternAutoDiscoveryPeriod = 10,
         expectedAutoUpdatePartitions = false,
-        actual = annotationDetail.pulsarConsumer.queue
+        actual = consumerAnnotationDetail.pulsarConsumer.queue
     )
 }
 
-fun validateAckWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateAckWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validateAck(
         expectedAckTimeout = "10ms",
         expectedAcknowledgementsGroupTime = "100ms",
         expectedTickDuration = "1000ms",
         expectedSync = false,
-        actual = annotationDetail.pulsarConsumer.ack
+        actual = consumerAnnotationDetail.pulsarConsumer.ack
     )
 }
 
-fun validateSubscriptionWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateSubscriptionWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validateSubscription(
         expectedSubscriptionTypes = "Key_Shared",
         expectedSubscriptionName = "mySub",
         expectedSubscriptionInitialPosition = "0",
         expectedRegexSubscriptionMode = "PersistentOnly",
         expectedReplicateSubscriptionState = true,
-        actual = annotationDetail.pulsarConsumer.subscription
+        actual = consumerAnnotationDetail.pulsarConsumer.subscription
     )
 }
 
-fun validateDeadLetterPolicyWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validateDeadLetterPolicyWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validateDeadLetterPolicy(
         expectedNegativeAckRedeliveryDelay = "100ms",
         expectedMaxRedeliverCount = 3,
         expectedRetryLetterTopic = "retryTopic",
         expectedDeadLetterTopic = "deadLetterTopic",
-        actual = annotationDetail.pulsarConsumer.deadLetterPolicy
+        actual = consumerAnnotationDetail.pulsarConsumer.deadLetterPolicy
     )
 }
 
-fun validatePulsarConsumerWithAllPropertiesSet(annotationDetail: AnnotationDetail) {
+fun validatePulsarConsumerWithAllPropertiesSet(consumerAnnotationDetail: ConsumerAnnotationDetail<ByteArray>) {
     validatePulsarConsumer(
         expectedClient = "myClient",
         expectedName = "myConsumer",
         expectedPriorityLevel = 1,
         expectedCryptoFailureAction = "FAIL",
         expectedCount = 1,
-        actual = annotationDetail.pulsarConsumer
+        actual = consumerAnnotationDetail.pulsarConsumer
     )
 }

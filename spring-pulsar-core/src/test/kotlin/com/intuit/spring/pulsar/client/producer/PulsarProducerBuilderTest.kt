@@ -39,8 +39,8 @@ class PulsarProducerBuilderTest {
     fun init() {
         producerBuilder =
             mock(ProducerBuilder::class.java) as ProducerBuilder<ByteArray>
-        schema = mock(Schema::class.java) as Schema<ByteArray>
         applicationContext = mock(ApplicationContext::class.java) as ApplicationContext
+        schema = Schema.BYTES
         val pulsarClient = mock(PulsarClient::class.java)
         `when`(pulsarClient.newProducer(any(Schema::class.java))).thenReturn(
             producerBuilder
