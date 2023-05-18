@@ -23,6 +23,7 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import java.time.Duration
 import java.util.concurrent.TimeUnit
+import org.springframework.context.ApplicationContext
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 import kotlin.test.assertNotNull
@@ -32,18 +33,20 @@ class PulsarProducerBuilderTest {
     private lateinit var producerBuilder: ProducerBuilder<ByteArray>
     private lateinit var pulsarProducerBuilder: PulsarProducerBuilder<ByteArray>
     private lateinit var schema: Schema<ByteArray>
+    private lateinit var applicationContext: ApplicationContext
 
     @BeforeEach
     fun init() {
         producerBuilder =
             mock(ProducerBuilder::class.java) as ProducerBuilder<ByteArray>
+        applicationContext = mock(ApplicationContext::class.java) as ApplicationContext
         schema = Schema.BYTES
         val pulsarClient = mock(PulsarClient::class.java)
         `when`(pulsarClient.newProducer(any(Schema::class.java))).thenReturn(
             producerBuilder
         )
         pulsarProducerBuilder =
-            PulsarProducerBuilder<ByteArray>(pulsarClient, schema)
+            PulsarProducerBuilder<ByteArray>(pulsarClient, schema, applicationContext)
     }
 
     @Test

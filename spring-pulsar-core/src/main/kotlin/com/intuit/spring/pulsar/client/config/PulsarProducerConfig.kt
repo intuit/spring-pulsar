@@ -6,6 +6,7 @@ import org.apache.pulsar.client.api.MessageRoutingMode
 import org.apache.pulsar.client.api.ProducerCryptoFailureAction
 import org.apache.pulsar.client.api.Schema
 import java.time.Duration
+import org.apache.pulsar.client.api.interceptor.ProducerInterceptor
 
 /**
  * Properties mapping class for producer configuration
@@ -21,6 +22,7 @@ data class PulsarProducerConfig<T>(
     val cryptoFailureAction: ProducerCryptoFailureAction? = null,
     val message: PulsarProducerMessageConfig = PulsarProducerMessageConfig(),
     val batch: PulsarProducerBatchingConfig = PulsarProducerBatchingConfig(),
+    val interceptor: String? = null,
 
     /**
      * Below properties are not part of pulsar
