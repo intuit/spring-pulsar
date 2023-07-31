@@ -3,6 +3,7 @@ package com.intuit.spring.pulsar.client.producer
 import com.intuit.spring.pulsar.client.client.IPulsarClientFactory
 import com.intuit.spring.pulsar.client.config.PulsarProducerConfig
 import com.intuit.spring.pulsar.client.exceptions.PulsarProducerNotFoundSpringException
+import org.springframework.context.ApplicationContext
 
 /**
  * Factory class to create Pulsar Spring producer using the
@@ -10,7 +11,8 @@ import com.intuit.spring.pulsar.client.exceptions.PulsarProducerNotFoundSpringEx
  */
 class PulsarProducerFactory<T>(
     private val config: PulsarProducerConfig<T>,
-    private val clientFactory: IPulsarClientFactory
+    private val clientFactory: IPulsarClientFactory,
+    private val applicationContext: ApplicationContext
 ) {
 
     /**
@@ -20,6 +22,6 @@ class PulsarProducerFactory<T>(
      */
     fun create(): PulsarProducer<T> {
         val pulsarClient = clientFactory.getClient()
-        return PulsarProducerBuilder(pulsarClient, config.schema).withProducerConfig(config).build()
+        return PulsarProducerBuilder(pulsarClient, config.schema, applicationContext).withProducerConfig(config).build()
     }
 }

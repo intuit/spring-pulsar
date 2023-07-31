@@ -9,7 +9,7 @@ class PulsarConsumerConfigTest {
 
     @Test
     fun `validate PulsarConsumer creation with default value`() {
-        val pulsarConsumerConfig = PulsarConsumerConfig()
+        val pulsarConsumerConfig = PulsarConsumerConfig<ByteArray>()
 
         assertEquals(StringUtils.EMPTY, pulsarConsumerConfig.client)
         assertEquals(StringUtils.EMPTY, pulsarConsumerConfig.name)
@@ -27,7 +27,7 @@ class PulsarConsumerConfigTest {
 
     @Test
     fun `validate PulsarConsumer creation with arguments`() {
-        val pulsarConsumerConfig = PulsarConsumerConfig(
+        val pulsarConsumerConfig = PulsarConsumerConfig<ByteArray>(
             client = "client",
             name = "name",
             priorityLevel = 1,

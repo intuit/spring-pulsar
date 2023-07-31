@@ -1,13 +1,14 @@
 package com.intuit.spring.pulsar.client.config
 
 import org.apache.commons.lang3.StringUtils
+import org.apache.pulsar.client.api.ConsumerInterceptor
 import kotlin.reflect.KClass
 
 /**
  * Data class to hold pulsar consumer related properties
  * after the property values are resolved.
  */
-data class PulsarConsumerConfig(
+data class PulsarConsumerConfig<T>(
     val client: String = StringUtils.EMPTY,
     val name: String = StringUtils.EMPTY,
     val priorityLevel: Int = Int.MIN_VALUE,
@@ -19,7 +20,8 @@ data class PulsarConsumerConfig(
     val subscription: SubscriptionConfig = SubscriptionConfig(),
     val count: Int = 1,
     val properties: MutableList<PropertyConfig> = ArrayList(),
-    val schema: SchemaConfig = SchemaConfig()
+    val schema: SchemaConfig = SchemaConfig(),
+    val interceptors: Set<String> = mutableSetOf()
 )
 
 /**
