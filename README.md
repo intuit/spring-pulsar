@@ -285,6 +285,32 @@ Below is the code snippet to define consumer in Java based application
             }
        }
 
+#### Property Resolution Feature
+While creating the @PulsarConsumer annotation, you can utilize Spring's property resolution feature to directly incorporate values from your application.yml or application.properties file into the consumer properties.
+
+For instance, if you have defined properties in your application file as follows:
+
+        pulsar:
+            sample01:
+                topic:
+                    name: java-sample-topic01
+                subscription:
+                    name: java-sample-sub01
+                    type: Key_Shared
+                consumer:
+                    count: 1
+
+You can use them in your consumer by providing the property path, and they will be resolved automatically:
+
+    @PulsarConsumer(
+    topic = Topic(topicNames = "#{pulsar.sample01.topic.name}"),
+    subscription = Subscription(
+        subscriptionName = "#{pulsar.sample01.subscription.name}",
+        subscriptionType = "#{pulsar.sample01.subscription.type}"
+    ),
+    count = "#{pulsar.sample01.consumer.count}"
+)
+
 ## Error Handling
 
 This library provides exception handling capabilities, both while producing and consuming a message,
