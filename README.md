@@ -309,7 +309,7 @@ You can use them in your consumer by providing the property path, and they will 
         subscriptionType = "#{pulsar.sample01.subscription.type}"
     ),
     count = "#{pulsar.sample01.consumer.count}"
-)
+    )
 
 ## Error Handling
 
